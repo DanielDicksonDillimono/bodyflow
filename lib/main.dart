@@ -1,4 +1,5 @@
 import 'package:bodyflow/navigation/router.dart';
+import 'package:bodyflow/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'BodyFlow',
-      theme: ThemeData(useMaterial3: true),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       routerConfig: router(),
     );
   }

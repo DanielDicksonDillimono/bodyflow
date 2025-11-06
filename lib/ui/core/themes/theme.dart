@@ -1,3 +1,4 @@
+import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AppTheme {
@@ -10,54 +11,45 @@ abstract final class AppTheme {
     labelSmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
   );
 
-  // static ThemeData lightTheme = ThemeData(
-  //   useMaterial3: true,
-  //   colorScheme: AppColors.lightColorScheme,
-  //   scaffoldBackgroundColor: AppColors.grey1,
-  //   appBarTheme: const AppBarTheme(
-  //     backgroundColor: AppColors.grey1,
-  //     foregroundColor: AppColors.black1,
-  //     elevation: 0,
-  //   ),
-  //   textTheme: const TextTheme(
-  //     bodyLarge: TextStyle(color: AppColors.black1),
-  //     bodyMedium: TextStyle(color: AppColors.black1),
-  //     bodySmall: TextStyle(color: AppColors.black1),
-  //   ),
-  // );
   static ThemeData lightTheme = ThemeData(
-    //brightness: Brightness.light,
+    brightness: Brightness.light,
     useMaterial3: true,
     textTheme: AppTheme.textTheme,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Color(0x002194F2),
-      brightness: Brightness.light,
+    colorScheme: AppColors.lightColorScheme,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.appBlue,
+        foregroundColor: Colors.white,
+      ),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      filled: true,
+      fillColor: AppColors.grey1,
+      prefixIconColor: AppColors.appBlue,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
     ),
   );
 
   static ThemeData darkTheme = ThemeData(
-    //brightness: Brightness.dark,
+    brightness: Brightness.dark,
     useMaterial3: true,
     textTheme: AppTheme.textTheme,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Color(0x002194F2),
-      brightness: Brightness.light,
+    colorScheme: AppColors.darkColorScheme,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.appBlue,
+        foregroundColor: Colors.white,
+      ),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      labelStyle: TextStyle(color: AppColors.grey1),
+      prefixIconColor: AppColors.appBlue,
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
     ),
   );
-
-  // static ThemeData darkTheme = ThemeData(
-  //   useMaterial3: true,
-  //   colorScheme: AppColors.darkColorScheme,
-  //   scaffoldBackgroundColor: AppColors.grey2,
-  //   appBarTheme: const AppBarTheme(
-  //     backgroundColor: AppColors.grey2,
-  //     foregroundColor: AppColors.white1,
-  //     elevation: 0,
-  //   ),
-  //   textTheme: const TextTheme(
-  //     bodyLarge: TextStyle(color: AppColors.white1),
-  //     bodyMedium: TextStyle(color: AppColors.white1),
-  //     bodySmall: TextStyle(color: AppColors.white1),
-  //   ),
-  // );
 }

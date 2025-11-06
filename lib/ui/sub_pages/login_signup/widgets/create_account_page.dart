@@ -26,7 +26,7 @@ class CreateAccountPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
-                      prefix: Icon(Icons.email_outlined),
+                      prefixIcon: Icon(Icons.email_outlined),
                     ),
                   ),
                   const SizedBox(height: 16.0),
@@ -36,7 +36,7 @@ class CreateAccountPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
-                      prefix: Icon(Icons.lock_outline),
+                      prefixIcon: Icon(Icons.lock_outline),
                     ),
                     obscureText: true,
                   ),
@@ -47,7 +47,7 @@ class CreateAccountPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
-                      prefix: Icon(Icons.lock_outline),
+                      prefixIcon: Icon(Icons.lock_outline),
                     ),
                     obscureText: true,
                   ),

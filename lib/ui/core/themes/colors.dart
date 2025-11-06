@@ -38,7 +38,10 @@ abstract final class AppColors {
     onSecondary: AppColors.black1,
     surface: AppColors.black1,
     onSurface: Colors.white,
+    outline: AppColors.appBlue,
     error: Colors.black,
     onError: AppColors.red1,
+    secondaryContainer: AppColors.white1,
+    onSecondaryContainer: AppColors.appBlue,
   );
 }
