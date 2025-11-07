@@ -9,6 +9,8 @@ abstract final class Dimens {
 
   /// General vertical padding used to separate UI items
   static const paddingVertical = 24.0;
+  static const paddingVerticalLarge = 40.0;
+  static const paddingVerticalSmall = 12.0;
 
   static const paddingCard = 16.0;
   static const paddingCardHorizontal = 12.0;
@@ -40,9 +42,9 @@ abstract final class Dimens {
 
   /// Symmetric padding for screen edges
   EdgeInsets get edgeInsetsScreenSymmetric => EdgeInsets.symmetric(
-        horizontal: paddingScreenHorizontal,
-        vertical: paddingScreenVertical,
-      );
+    horizontal: paddingScreenHorizontal,
+    vertical: paddingScreenVertical,
+  );
 
   static const Dimens desktop = _DimensDesktop();
   static const Dimens mobile = _DimensMobile();
