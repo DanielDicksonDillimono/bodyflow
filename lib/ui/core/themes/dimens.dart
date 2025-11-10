@@ -19,7 +19,7 @@ abstract final class Dimens {
   static const paddingButtonHorizontal = 16.0;
   static const paddingButtonVertical = 8.0;
   static const paddingTextField = 12.0;
-  static const textCardHeightFactor = 0.1;
+  static const textCardHeightFactor = 0.2;
   static const textCardWidthFactor = 0.2;
 
   /// Horizontal padding for screen edges

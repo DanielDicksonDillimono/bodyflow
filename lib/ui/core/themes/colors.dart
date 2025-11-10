@@ -34,14 +34,14 @@ abstract final class AppColors {
     brightness: Brightness.dark,
     primary: appBlue,
     onPrimary: Colors.white,
-    secondary: AppColors.white1,
+    secondary: grey1,
     onSecondary: AppColors.black1,
     surface: AppColors.black1,
-    onSurface: Colors.white,
+    onSurface: grey3,
     outline: AppColors.appBlue,
     error: Colors.black,
     onError: AppColors.red1,
-    secondaryContainer: AppColors.white1,
+    secondaryContainer: Color.fromARGB(255, 33, 33, 33),
     onSecondaryContainer: AppColors.appBlue,
   );
 }
