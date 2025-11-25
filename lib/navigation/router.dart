@@ -1,4 +1,5 @@
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
+import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,7 @@ GoRouter router() => GoRouter(
             GoRoute(
               path: Routes.generate,
               builder: (context, state) {
-                return const Scaffold(
-                  body: Center(child: Text('Generate Page')),
-                );
+                return GeneratorPage();
               },
             ),
           ],

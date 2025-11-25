@@ -15,6 +15,10 @@ abstract final class AppTheme {
       fontWeight: FontWeight.bold,
     ),
     titleLarge: GoogleFonts.openSans(fontSize: 24, fontWeight: FontWeight.bold),
+    displayLarge: GoogleFonts.poppins(
+      fontSize: 57,
+      fontWeight: FontWeight.w900,
+    ),
   );
 
   static ThemeData lightTheme = ThemeData(
@@ -39,6 +43,9 @@ abstract final class AppTheme {
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
     ),
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -62,6 +69,9 @@ abstract final class AppTheme {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
+    ),
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
     ),
   );
 }

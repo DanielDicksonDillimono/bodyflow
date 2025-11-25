@@ -48,75 +48,82 @@ class HomePage extends StatelessWidget {
                       child: Row(
                         children: [
                           //turn this into a listview builde. Using this as a card.
-                          Container(
-                            margin: const EdgeInsets.only(right: 12.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: Dimens.textCardWidth(context),
-                                  height: Dimens.textCardHeight(context),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.appBlue.withValues(
-                                      alpha: 0.8,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Workout A',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(color: AppColors.grey1),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: Dimens.textCardWidth(context),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 8.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.timer,
-                                            color: Colors.white,
-                                            size: 16.0,
-                                          ),
-                                          SizedBox(width: 4.0),
-                                          Text(
-                                            '45 mins',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(color: Colors.white),
-                                          ),
-                                        ],
+                          GestureDetector(
+                            onTap: () => {},
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 12.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: Dimens.textCardWidth(context),
+                                    height: Dimens.textCardHeight(context),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.appBlue.withValues(
+                                        alpha: 0.8,
                                       ),
-                                      SizedBox(height: 4.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.fitness_center,
-                                            color: Colors.white,
-                                            size: 16.0,
-                                          ),
-                                          Text(
-                                            'Full Body Blast',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(color: Colors.white),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Workout A',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(color: AppColors.grey1),
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: Dimens.textCardWidth(context),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 8.0),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.timer,
+                                              color: Colors.white,
+                                              size: 16.0,
+                                            ),
+                                            SizedBox(width: 4.0),
+                                            Text(
+                                              '45 mins',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    color: Colors.white,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 4.0),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.fitness_center,
+                                              color: Colors.white,
+                                              size: 16.0,
+                                            ),
+                                            Text(
+                                              'Full Body Blast',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    color: Colors.white,
+                                                  ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Container(
