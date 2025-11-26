@@ -79,13 +79,13 @@ class GeneratorPage extends StatelessWidget {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SingleChildScrollView(
-            child: ListenableBuilder(
-              listenable: model,
-              builder: (context, value) {
-                return model.isGenerating
-                    ? Loading()
-                    : Column(
+          child: ListenableBuilder(
+            listenable: model,
+            builder: (context, value) {
+              return model.isGenerating
+                  ? Loading()
+                  : SingleChildScrollView(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
@@ -106,22 +106,6 @@ class GeneratorPage extends StatelessWidget {
                               horizontal: 16,
                               vertical: 16,
                             ),
-                            // child: RichText(
-                            //   text: TextSpan(
-                            //     // text: 'Generator',
-                            //     // style: Theme.of(context).textTheme.headlineLarge,
-                            //     children: [
-                            //       TextSpan(
-                            //         text: 'Generator',
-                            //         style: Theme.of(context).textTheme.headlineLarge,
-                            //       ),
-                            //       TextSpan(
-                            //         text: 'Subtitle',
-                            //         style: Theme.of(context).textTheme.bodyLarge,
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -134,9 +118,16 @@ class GeneratorPage extends StatelessWidget {
                                 ),
                                 //SizedBox(height: 8),
                                 Text(
-                                  'Create your workout sessions or schedules',
+                                  'Create workout sessions or schedules',
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(color: Colors.white70),
+                                ),
+                                Text(
+                                  'Sessions are one-time workouts,'
+                                  'while schedules are recurring plans.',
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(color: Colors.white70),
+                                  textAlign: TextAlign.center,
                                 ),
                               ],
                             ),
@@ -449,6 +440,7 @@ class GeneratorPage extends StatelessWidget {
                                               crossAxisSpacing: 10,
                                               childAspectRatio: 3,
                                             ),
+                                        itemCount: BodyPart.values.length,
                                         itemBuilder: (context, index) {
                                           final bodyPart =
                                               BodyPart.values[index];
@@ -502,25 +494,29 @@ class GeneratorPage extends StatelessWidget {
                                             ),
                                           );
                                         },
-                                        itemCount: BodyPart.values.length,
                                       ),
                                     ],
                                   ),
                           ),
                           SizedBox(height: 80),
                         ],
-                      );
-              },
-            ),
+                      ),
+                    );
+            },
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          model.generateWorkout();
-        },
-        label: const Text('Generate'),
-        icon: const Icon(Icons.fitness_center),
+      floatingActionButton: ListenableBuilder(
+        listenable: model,
+        builder: (context, value) => model.isGenerating
+            ? SizedBox()
+            : FloatingActionButton.extended(
+                onPressed: () {
+                  model.generateWorkout();
+                },
+                label: Text('Generate'),
+                icon: const Icon(Icons.fitness_center),
+              ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
