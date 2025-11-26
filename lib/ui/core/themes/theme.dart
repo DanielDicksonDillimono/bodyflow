@@ -14,7 +14,7 @@ abstract final class AppTheme {
       fontSize: 32,
       fontWeight: FontWeight.bold,
     ),
-    titleLarge: GoogleFonts.openSans(fontSize: 24, fontWeight: FontWeight.bold),
+    titleLarge: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
     displayLarge: GoogleFonts.poppins(
       fontSize: 57,
       fontWeight: FontWeight.w900,
