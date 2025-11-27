@@ -38,15 +38,7 @@ class PasswordRecoveryPage extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Handle password recovery logic here
-                    },
-                    // style: ElevatedButton.styleFrom(
-                    //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    //   shape: RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(8.0),
-                    //   ),
-                    // ),
+                    onPressed: () {},
                     style: Theme.of(context).elevatedButtonTheme.style,
                     child: const Text('Send Recovery Email'),
                   ),
