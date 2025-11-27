@@ -1,5 +1,6 @@
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/widgets/workout_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -48,8 +49,16 @@ class HomePage extends StatelessWidget {
                       child: Row(
                         children: [
                           //turn this into a listview builde. Using this as a card.
-                          GestureDetector(
-                            onTap: () => {},
+                          InkWell(
+                            onTap: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const WorkoutPage(),
+                                ),
+                              ),
+                            },
+                            splashColor: AppColors.appBlue,
                             child: Container(
                               margin: const EdgeInsets.only(right: 12.0),
                               child: Column(
