@@ -7,7 +7,7 @@ abstract final class AppTheme {
     bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
     bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
     bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-    labelLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    labelLarge: GoogleFonts.roboto(fontSize: 15, fontWeight: FontWeight.normal),
     labelMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
     labelSmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
     headlineLarge: GoogleFonts.openSans(
@@ -31,8 +31,10 @@ abstract final class AppTheme {
     colorScheme: AppColors.lightColorScheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontWeight: FontWeight.bold),
         backgroundColor: AppColors.appBlue,
         foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
@@ -58,8 +60,10 @@ abstract final class AppTheme {
     colorScheme: AppColors.darkColorScheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontWeight: FontWeight.bold),
         backgroundColor: AppColors.appBlue,
         foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
@@ -71,7 +75,7 @@ abstract final class AppTheme {
       ),
     ),
     buttonTheme: ButtonThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),
   );
 }

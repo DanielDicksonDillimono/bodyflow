@@ -60,13 +60,7 @@ class CreateAccountPage extends StatelessWidget {
                           onPressed: () {
                             // Handle login logic here
                           },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
+                          style: Theme.of(context).elevatedButtonTheme.style,
                           child: const Text('Create Account'),
                         ),
                       ),

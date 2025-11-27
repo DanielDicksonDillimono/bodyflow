@@ -1,8 +1,10 @@
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  final LoginViewmodel model = LoginViewmodel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +18,11 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Text(
                     'BODYFLOW',
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    style: Theme.of(context).brightness == Brightness.dark
+                        ? Theme.of(context).textTheme.headlineLarge
+                        : Theme.of(context).textTheme.headlineLarge?.copyWith(
+                            color: Colors.black,
+                          ),
                   ),
                   SizedBox(height: 50.0),
                   TextFormField(
@@ -41,12 +47,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             // Handle login logic here
                           },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
+                          style: Theme.of(context).elevatedButtonTheme.style,
                           child: const Text('Login'),
                         ),
                       ),
@@ -72,9 +73,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16.0),
                       TextButton(
-                        onPressed: () {
-                          // Handle forgot password logic here
-                        },
+                        onPressed: () => model.goToPasswordRecovery(context),
                         child: const Text('Forgot Password?'),
                       ),
                     ],

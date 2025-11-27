@@ -2,6 +2,7 @@ import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
@@ -15,7 +16,11 @@ GoRouter router() => GoRouter(
       path: Routes.signUp,
       builder: (context, state) => const CreateAccountPage(),
     ),
-    GoRoute(path: Routes.login, builder: (context, state) => const LoginPage()),
+    GoRoute(path: Routes.login, builder: (context, state) => LoginPage()),
+    GoRoute(
+      path: Routes.passwordRecovery,
+      builder: (context, state) => PasswordRecoveryPage(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           ScaffoldWithBottomNavBar(navigationShell: navigationShell),
@@ -61,7 +66,7 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   // final bool isloggedIn =
   //     context.read<UserAuthentication>().currentUser() != null;
 
-  final bool isloggedIn = true;
+  final bool isloggedIn = false;
 
   if (!isloggedIn) {
     // return state.fullPath == Routes.signUp ? Routes.signUp : Routes.login;
