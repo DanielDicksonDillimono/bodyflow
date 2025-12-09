@@ -64,8 +64,12 @@ flutter:
   assets:
     - assets/images/barbell.jpg
     - assets/images/boxjump.jpg
+    - assets/images/logoSlogan.png
+    - assets/images/logoSloganHR.png
+    - assets/images/logo.png
     - assets/Themes/darkTheme.json
     - assets/Themes/lightTheme.json
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

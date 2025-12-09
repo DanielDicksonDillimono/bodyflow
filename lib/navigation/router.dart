@@ -1,6 +1,7 @@
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
+import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:flutter/material.dart';
@@ -49,11 +50,7 @@ GoRouter router() => GoRouter(
           routes: [
             GoRoute(
               path: Routes.profile,
-              builder: (context, state) {
-                return const Scaffold(
-                  body: Center(child: Text('Profile Page')),
-                );
-              },
+              builder: (context, state) => ProfilePage(),
             ),
           ],
         ),
@@ -63,36 +60,20 @@ GoRouter router() => GoRouter(
 );
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
-  // final bool isloggedIn =
-  //     context.read<UserAuthentication>().currentUser() != null;
-
-  final bool isloggedIn = true;
-
-  if (!isloggedIn) {
-    // return state.fullPath == Routes.signUp ? Routes.signUp : Routes.login;
-    switch (state.fullPath) {
-      case Routes.login:
-        return Routes.login; // Already on login page
-      case Routes.signUp:
-        return Routes.signUp; // Redirect to sign up page
-      case Routes.passwordRecovery:
-        return Routes.passwordRecovery; // Redirect to password recovery page
-      default:
-        return Routes.login; // Default redirect to login page
-    }
+  switch (state.fullPath) {
+    case Routes.login:
+      return Routes.login; // Already on login page
+    case Routes.signUp:
+      return Routes.signUp; // Redirect to sign up page
+    case Routes.passwordRecovery:
+      return Routes.passwordRecovery; // Redirect to password recovery page
+    case Routes.home:
+      return Routes.home; // Redirect to home page
+    case Routes.generate:
+      return Routes.generate; // Redirect to generator page
+    case Routes.profile:
+      return Routes.profile; // Redirect to profile page
+    default:
+      return Routes.home; // Default redirect to login page
   }
-  if (isloggedIn && state.fullPath == Routes.login) {
-    return Routes.home;
-  }
-
-  // switch (state.fullPath) {
-  //   case Routes.login:
-  //     return Routes.login; // Already on login page
-  //   case Routes.signUp:
-  //     return Routes.signUp; // Redirect to sign up page
-  //   case Routes.passwordRecovery:
-  //     return Routes.passwordRecovery; // Redirect to password recovery page
-  //   default:
-  //     return Routes.login; // Default redirect to login page
-  // }
 }
