@@ -1,3 +1,5 @@
+import 'package:bodyflow/domain/misc/globalenums.dart';
+import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +9,13 @@ class ProfilePageViewmodel extends ChangeNotifier {
   bool loggedIn = false;
   bool get isLoading => false;
   bool get isLoggedIn => loggedIn;
+  List<Stat> get stats => [
+    Stat(statType: StatType.workouts, value: '42'),
+    Stat(statType: StatType.calories, value: '12,345'),
+    Stat(statType: StatType.hours, value: '67'),
+    Stat(statType: StatType.day, value: 'Wednesday'),
+    Stat(statType: StatType.bodyPart, value: 'Legs'),
+  ];
   void toggleLoggedIn() {
     loggedIn = !loggedIn;
     notifyListeners();
@@ -82,5 +91,11 @@ class ProfilePageViewmodel extends ChangeNotifier {
   void signIn(BuildContext context) {
     // Implement sign-in logic here
     context.go(Routes.login);
+  }
+
+  void signOut() {
+    // Implement sign-out logic here
+    loggedIn = false;
+    notifyListeners();
   }
 }

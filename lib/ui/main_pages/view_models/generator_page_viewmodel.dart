@@ -1,6 +1,5 @@
+import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:flutter/material.dart';
-
-enum ActivityType { session, schedule }
 
 class GeneratorPageViewModel with ChangeNotifier {
   GlobalKey<FormState> timeKey = GlobalKey<FormState>();
@@ -119,5 +118,3 @@ enum BodyPart {
   shoulders,
   core,
 }
-
-enum Days { monday, tuesday, wednesday, thursday, friday, saturday, sunday }

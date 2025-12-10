@@ -2,6 +2,7 @@ import 'package:bodyflow/ui/core/loading.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:bodyflow/domain/misc/globalenums.dart';
 
 class GeneratorPage extends StatelessWidget {
   GeneratorPage({super.key});
