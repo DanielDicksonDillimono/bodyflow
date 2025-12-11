@@ -90,7 +90,8 @@ class ProfilePageViewmodel extends ChangeNotifier {
 
   void signIn(BuildContext context) {
     // Implement sign-in logic here
-    context.go(Routes.login);
+    //context.go(Routes.login);
+    //Navigator.pushNamed(context, Routes.login);
   }
 
   void signOut() {

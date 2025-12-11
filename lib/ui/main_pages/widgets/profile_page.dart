@@ -119,7 +119,7 @@ class ProfilePage extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () => viewModel.signIn(context),
+                                onPressed: () => viewModel.signOut(),
                                 style: Theme.of(
                                   context,
                                 ).elevatedButtonTheme.style,

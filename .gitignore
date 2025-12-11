@@ -19,6 +19,9 @@ packages
 pubspec.lock
 android/
 web/
+firebase.json
+/lib/firebase_options.dart
+firepit-log.txt
 
 # IntelliJ related
 *.iml
