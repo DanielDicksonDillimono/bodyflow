@@ -24,13 +24,13 @@ class PasswordRecoveryPage extends StatelessWidget {
                 ),
                 SizedBox(height: 50.0),
                 Text(
-                  'Enter email to receicve password reset link',
+                  'Enter email to receive a password reset link',
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Enter your email',
+                    labelText: 'Email',
                     prefixIcon: Icon(Icons.email_outlined),
                   ),
                 ),
@@ -40,7 +40,7 @@ class PasswordRecoveryPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: Theme.of(context).elevatedButtonTheme.style,
-                    child: const Text('Send Recovery Email'),
+                    child: const Text('Reset'),
                   ),
                 ),
               ],
