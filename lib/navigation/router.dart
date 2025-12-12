@@ -4,6 +4,7 @@ import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/widgets/workout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
@@ -21,6 +22,10 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.passwordRecovery,
       builder: (context, state) => PasswordRecoveryPage(),
+    ),
+    GoRoute(
+      path: Routes.workout,
+      builder: (context, state) => const WorkoutPage(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
@@ -73,6 +78,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       return Routes.generate; // Redirect to generator page
     case Routes.profile:
       return Routes.profile; // Redirect to profile page
+    case Routes.workout:
+      return Routes.workout; // Redirect to workout page
     default:
       return Routes.home; // Default redirect to login page
   }

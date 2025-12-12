@@ -1,7 +1,8 @@
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/ui/sub_pages/login_signup/widgets/workout_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -50,14 +51,7 @@ class HomePage extends StatelessWidget {
                         children: [
                           //turn this into a listview builde. Using this as a card.
                           InkWell(
-                            onTap: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const WorkoutPage(),
-                                ),
-                              ),
-                            },
+                            onTap: () => context.go(Routes.workout),
                             splashColor: AppColors.appBlue,
                             child: Container(
                               margin: const EdgeInsets.only(right: 12.0),
