@@ -1,3 +1,4 @@
+import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
@@ -5,6 +6,7 @@ import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/core/wigets/stats_card.dart';
 import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -12,47 +14,55 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<UserAuthentication>(context);
+    final isAuthenticated = authService.currentUser() != null;
+
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.75,
-              // child: Column(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     SizedBox(height: 16),
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Image(image: AssetImage('assets/images/logo.png')),
-              //         TextButton(
-              //           onPressed: () => viewModel.showAboutPage(context),
-              //           child: Text('About BodyFlow'),
-              //         ),
-              //       ],
-              //     ),
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Text(
-              //           'Sign in or create an account to create workout schedules and to view your personal workout stats',
-              //           textAlign: TextAlign.center,
-              //           style: Theme.of(context).textTheme.bodyLarge,
-              //         ),
-              //         SizedBox(
-              //           width: double.infinity,
-              //           child: ElevatedButton(
-              //             onPressed: () => viewModel.signIn(context),
-              //             style: Theme.of(context).elevatedButtonTheme.style,
-              //             child: const Text('Sign In'),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              child: Column(
+              child: !isAuthenticated
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(height: 16),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(image: AssetImage('assets/images/logo.png')),
+                            TextButton(
+                              onPressed: () => viewModel.showAboutPage(context),
+                              child: Text('About BodyFlow'),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: Dimens.of(context).edgeInsetsScreenHorizontal,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Sign in or create an account to create workout schedules and to view your personal workout stats',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              SizedBox(height: 16),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () => viewModel.signIn(context),
+                                  style: Theme.of(context).elevatedButtonTheme.style,
+                                  child: const Text('Sign In'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(

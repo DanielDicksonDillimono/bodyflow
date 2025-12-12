@@ -71,8 +71,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       state.fullPath == Routes.signUp ||
       state.fullPath == Routes.passwordRecovery;
 
-  // If user is not authenticated and trying to access protected pages
-  if (!isAuthenticated && !isOnAuthPage) {
+  // If user is not authenticated and trying to access the generate page (protected)
+  if (!isAuthenticated && state.fullPath == Routes.generate) {
     return Routes.login;
   }
 
@@ -81,6 +81,6 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
     return Routes.home;
   }
 
-  // No redirect needed
+  // No redirect needed - users can browse home and profile without authentication
   return null;
 }
