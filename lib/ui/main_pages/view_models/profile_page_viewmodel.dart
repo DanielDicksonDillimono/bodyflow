@@ -1,8 +1,10 @@
+import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePageViewmodel extends ChangeNotifier {
   ProfilePageViewmodel();
@@ -67,21 +69,6 @@ class ProfilePageViewmodel extends ChangeNotifier {
         ),
       ),
     );
-    // showAboutDialog(
-    //   context: context,
-    //   applicationName: 'BodyFlow',
-    //   applicationVersion: '1.0.0',
-    //   applicationLegalese: '© 2025 DeeFormed All rights reserved.',
-    //   applicationIcon: Image.asset('assets/images/logo.png'),
-    //   children: [
-    //     const Padding(
-    //       padding: EdgeInsets.only(top: 15.0),
-    //       child: Text(
-    //         'BodyFlow is your ultimate workout companion, designed to help you achieve your fitness goals with personalized workout plans and intuitive tracking features.',
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 
   void openWebsite() {
@@ -89,14 +76,73 @@ class ProfilePageViewmodel extends ChangeNotifier {
   }
 
   void signIn(BuildContext context) {
-    // Implement sign-in logic here
-    //context.go(Routes.login);
-    //Navigator.pushNamed(context, Routes.login);
+    context.go(Routes.login);
   }
 
-  void signOut() {
-    // Implement sign-out logic here
-    loggedIn = false;
-    notifyListeners();
+  Future<void> signOut(BuildContext context) async {
+    try {
+      final authService = Provider.of<UserAuthentication>(context, listen: false);
+      await authService.signOut();
+      
+      if (context.mounted) {
+        context.go(Routes.login);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> deleteAccount(BuildContext context) async {
+    // Show confirmation dialog
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete Account'),
+        content: Text('Are you sure you want to delete your account? This action cannot be undone.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      final authService = Provider.of<UserAuthentication>(context, listen: false);
+      await authService.deleteUser();
+      
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Account deleted successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        context.go(Routes.login);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }

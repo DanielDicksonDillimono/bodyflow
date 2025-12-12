@@ -119,7 +119,7 @@ class ProfilePage extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () => viewModel.signOut(),
+                                onPressed: () => viewModel.signOut(context),
                                 style: Theme.of(
                                   context,
                                 ).elevatedButtonTheme.style,
@@ -127,7 +127,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => viewModel.signOut(),
+                              onPressed: () => viewModel.deleteAccount(context),
                               child: Text(
                                 'Delete Account',
                                 style: Theme.of(context).textTheme.labelLarge

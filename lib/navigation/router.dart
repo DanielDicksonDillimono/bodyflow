@@ -1,3 +1,4 @@
+import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
@@ -8,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:provider/provider.dart';
 
 GoRouter router() => GoRouter(
   initialLocation: Routes.home,
   redirect: _redirect,
+  refreshListenable: null, // Can be enhanced to listen to auth state changes
   routes: [
     GoRoute(
       path: Routes.signUp,
@@ -60,20 +63,24 @@ GoRouter router() => GoRouter(
 );
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
-  switch (state.fullPath) {
-    case Routes.login:
-      return Routes.login; // Already on login page
-    case Routes.signUp:
-      return Routes.signUp; // Redirect to sign up page
-    case Routes.passwordRecovery:
-      return Routes.passwordRecovery; // Redirect to password recovery page
-    case Routes.home:
-      return Routes.home; // Redirect to home page
-    case Routes.generate:
-      return Routes.generate; // Redirect to generator page
-    case Routes.profile:
-      return Routes.profile; // Redirect to profile page
-    default:
-      return Routes.home; // Default redirect to login page
+  final authService = Provider.of<UserAuthentication>(context, listen: false);
+  final user = authService.currentUser();
+  final isAuthenticated = user != null;
+  
+  final isOnAuthPage = state.fullPath == Routes.login ||
+      state.fullPath == Routes.signUp ||
+      state.fullPath == Routes.passwordRecovery;
+
+  // If user is not authenticated and trying to access protected pages
+  if (!isAuthenticated && !isOnAuthPage) {
+    return Routes.login;
   }
+
+  // If user is authenticated and trying to access auth pages, redirect to home
+  if (isAuthenticated && isOnAuthPage) {
+    return Routes.home;
+  }
+
+  // No redirect needed
+  return null;
 }
