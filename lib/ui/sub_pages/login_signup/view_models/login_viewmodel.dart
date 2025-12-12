@@ -49,6 +49,7 @@ class LoginViewmodel extends ChangeNotifier {
     context.go(Routes.passwordRecovery);
   }
 
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
