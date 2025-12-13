@@ -29,7 +29,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => CreateAccountViewmodel(),
         ),
-        Provider(
+        ChangeNotifierProvider(
           create: (context) => LoginViewmodel(),
         ),
       ],
