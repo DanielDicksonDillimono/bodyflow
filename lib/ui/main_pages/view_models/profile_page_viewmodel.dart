@@ -1,8 +1,6 @@
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
-import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfilePageViewmodel extends ChangeNotifier {
   ProfilePageViewmodel();
@@ -67,21 +65,6 @@ class ProfilePageViewmodel extends ChangeNotifier {
         ),
       ),
     );
-    // showAboutDialog(
-    //   context: context,
-    //   applicationName: 'BodyFlow',
-    //   applicationVersion: '1.0.0',
-    //   applicationLegalese: '© 2025 DeeFormed All rights reserved.',
-    //   applicationIcon: Image.asset('assets/images/logo.png'),
-    //   children: [
-    //     const Padding(
-    //       padding: EdgeInsets.only(top: 15.0),
-    //       child: Text(
-    //         'BodyFlow is your ultimate workout companion, designed to help you achieve your fitness goals with personalized workout plans and intuitive tracking features.',
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 
   void openWebsite() {
