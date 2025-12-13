@@ -3,14 +3,14 @@ import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
+import 'package:provider/provider.dart';
 
 class GeneratorPage extends StatelessWidget {
   GeneratorPage({super.key});
 
-  final GeneratorPageViewModel model = GeneratorPageViewModel();
-
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<GeneratorPageViewModel>(context, listen: false);
     //final double height = MediaQuery.of(context).size.height * 0.8;
     return Scaffold(
       body: SafeArea(
