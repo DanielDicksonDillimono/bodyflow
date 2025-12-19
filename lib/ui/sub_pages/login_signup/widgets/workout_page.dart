@@ -113,23 +113,40 @@ class WorkoutPage extends StatelessWidget {
                   children: [
                     _buildExerciseCard(
                       context,
-                      title: 'Cardio',
-                      duration: '10 minutes',
-                      imagePath: 'assets/images/threadmill.jpg',
+                      exercise: Exercise(
+                        name: 'Cardio',
+                        imagePath: 'assets/images/threadmill.jpg',
+                        durationMinutes: 10,
+                        description: 'Cardiovascular exercise to improve endurance and burn calories.',
+                        instructions: 'Start at a comfortable pace. Gradually increase intensity. Maintain steady breathing throughout.',
+                        difficulty: 'Easy',
+                      ),
                     ),
                     SizedBox(width: Dimens.paddingHorizontal),
                     _buildExerciseCard(
                       context,
-                      title: 'Squats',
-                      reps: '5sets of 10 reps',
-                      imagePath: 'assets/images/frontSquat.jpg',
+                      exercise: Exercise(
+                        name: 'Squats',
+                        imagePath: 'assets/images/frontSquat.jpg',
+                        sets: 5,
+                        reps: 10,
+                        description: 'A fundamental lower body exercise targeting quads, hamstrings, and glutes.',
+                        instructions: 'Stand with feet shoulder-width apart. Lower your body by bending knees and hips. Keep chest up and back straight. Push through heels to return to start.',
+                        difficulty: 'Medium',
+                      ),
                     ),
                     SizedBox(width: Dimens.paddingHorizontal),
                     _buildExerciseCard(
                       context,
-                      title: 'Deadlifts',
-                      reps: '3sets of 12 reps',
-                      imagePath: 'assets/images/barbell.jpg',
+                      exercise: Exercise(
+                        name: 'Deadlifts',
+                        imagePath: 'assets/images/barbell.jpg',
+                        sets: 3,
+                        reps: 12,
+                        description: 'Compound exercise for building overall strength, targeting back, legs, and core.',
+                        instructions: 'Stand with feet hip-width apart. Bend at hips and knees to grip bar. Keep back straight and lift by extending hips and knees. Lower with control.',
+                        difficulty: 'Hard',
+                      ),
                     ),
                   ],
                 ),
@@ -144,24 +161,24 @@ class WorkoutPage extends StatelessWidget {
 
   Widget _buildExerciseCard(
     BuildContext context, {
-    required String title,
-    String? duration,
-    String? reps,
-    required String imagePath,
+    required Exercise exercise,
   }) {
+    // Format display text for the card
+    String displayText;
+    if (exercise.durationMinutes != null) {
+      displayText = '${exercise.durationMinutes} minutes';
+    } else if (exercise.sets != null && exercise.reps != null) {
+      displayText = '${exercise.sets}sets of ${exercise.reps} reps';
+    } else if (exercise.sets != null) {
+      displayText = '${exercise.sets} sets';
+    } else if (exercise.reps != null) {
+      displayText = '${exercise.reps} reps';
+    } else {
+      displayText = '';
+    }
+
     return InkWell(
       onTap: () {
-        // Create an Exercise object to pass to the exercise page
-        final exercise = Exercise(
-          name: title,
-          imagePath: imagePath,
-          durationMinutes: duration != null ? int.tryParse(duration.split(' ').first) : null,
-          sets: reps != null ? int.tryParse(reps.split('sets').first) : null,
-          reps: reps != null ? int.tryParse(reps.split('of ').last.split(' ').first) : null,
-          description: 'A comprehensive exercise for building strength and endurance.',
-          instructions: 'Perform the exercise with proper form. Maintain controlled movements throughout. Rest between sets as needed.',
-          difficulty: 'Medium',
-        );
         context.push(Routes.exercise, extra: exercise);
       },
       child: Container(
@@ -176,7 +193,7 @@ class WorkoutPage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
-                  image: AssetImage(imagePath),
+                  image: AssetImage(exercise.imagePath ?? 'assets/images/barbell.jpg'),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                     Colors.black.withValues(alpha: 0.3),
@@ -186,7 +203,7 @@ class WorkoutPage extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  title,
+                  exercise.name,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -205,14 +222,14 @@ class WorkoutPage extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    duration != null ? Icons.access_time : Icons.fitness_center,
+                    exercise.durationMinutes != null ? Icons.access_time : Icons.fitness_center,
                     size: 16,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
                   SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      duration ?? reps ?? '',
+                      displayText,
                       style: Theme.of(context).textTheme.bodySmall,
                       overflow: TextOverflow.ellipsis,
                     ),

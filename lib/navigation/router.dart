@@ -27,7 +27,15 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.exercise,
       builder: (context, state) {
-        final exercise = state.extra as Exercise;
+        final exercise = state.extra as Exercise?;
+        if (exercise == null) {
+          // Navigate back if exercise is null
+          return const Scaffold(
+            body: Center(
+              child: Text('Exercise not found'),
+            ),
+          );
+        }
         return ExercisePage(exercise: exercise);
       },
     ),
