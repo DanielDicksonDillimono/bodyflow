@@ -68,6 +68,9 @@ flutter:
   assets:
     - assets/images/barbell.jpg
     - assets/images/boxjump.jpg
+    - assets/images/squat.jpg
+    - assets/images/frontSquat.jpg
+    - assets/images/threadmill.jpg
     - assets/images/logoSlogan.png
     - assets/images/logoSloganHR.png
     - assets/images/logo.png
