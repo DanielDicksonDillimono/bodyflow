@@ -24,10 +24,7 @@ abstract final class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     useMaterial3: true,
-    textTheme: AppTheme.textTheme.apply(
-      // bodyColor: AppColors.white1,
-      displayColor: AppColors.white1,
-    ),
+    textTheme: AppTheme.textTheme,
     colorScheme: AppColors.lightColorScheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -53,10 +50,7 @@ abstract final class AppTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
-    textTheme: AppTheme.textTheme.apply(
-      bodyColor: AppColors.white1,
-      displayColor: AppColors.white1,
-    ),
+    textTheme: AppTheme.textTheme,
     colorScheme: AppColors.darkColorScheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

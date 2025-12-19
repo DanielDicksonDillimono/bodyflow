@@ -1,5 +1,3 @@
-import 'package:bodyflow/domain/misc/globalenums.dart';
-import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/core/wigets/stats_card.dart';

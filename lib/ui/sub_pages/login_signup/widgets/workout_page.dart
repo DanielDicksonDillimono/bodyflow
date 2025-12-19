@@ -59,10 +59,8 @@ class WorkoutPage extends StatelessWidget {
                     // Workout Title
                     Text(
                       'LEGS',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 32,
-                          ),
+                      style: Theme.of(context).textTheme.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.bold, fontSize: 32),
                     ),
                     SizedBox(height: Dimens.paddingVerticalSmall),
                     // Duration
@@ -149,43 +147,31 @@ class WorkoutPage extends StatelessWidget {
     required String imagePath,
   }) {
     return Container(
-      width: 170,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
+      margin: const EdgeInsets.only(right: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Exercise Image
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            child: Container(
-              height: 140,
-              width: 170,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withValues(alpha: 0.3),
-                    BlendMode.darken,
-                  ),
+          Container(
+            width: Dimens.textCardWidth(context),
+            height: Dimens.textCardHeight(context),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withValues(alpha: 0.3),
+                  BlendMode.darken,
                 ),
               ),
-              child: Center(
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+            ),
+            child: Center(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -193,6 +179,7 @@ class WorkoutPage extends StatelessWidget {
           // Exercise Details
           Container(
             padding: const EdgeInsets.all(12),
+            width: Dimens.textCardWidth(context),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
