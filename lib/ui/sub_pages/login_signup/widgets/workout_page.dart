@@ -1,5 +1,8 @@
 import 'package:bodyflow/ui/core/themes/dimens.dart';
+import 'package:bodyflow/domain/models/exercise.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutPage extends StatelessWidget {
   const WorkoutPage({super.key});
@@ -146,63 +149,79 @@ class WorkoutPage extends StatelessWidget {
     String? reps,
     required String imagePath,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(right: 12.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Exercise Image
-          Container(
-            width: Dimens.textCardWidth(context),
-            height: Dimens.textCardHeight(context),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withValues(alpha: 0.3),
-                  BlendMode.darken,
-                ),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          // Exercise Details
-          Container(
-            padding: const EdgeInsets.all(12),
-            width: Dimens.textCardWidth(context),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  duration != null ? Icons.access_time : Icons.fitness_center,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    duration ?? reps ?? '',
-                    style: Theme.of(context).textTheme.bodySmall,
-                    overflow: TextOverflow.ellipsis,
+    return InkWell(
+      onTap: () {
+        // Create an Exercise object to pass to the exercise page
+        final exercise = Exercise(
+          name: title,
+          imagePath: imagePath,
+          durationMinutes: duration != null ? int.tryParse(duration.split(' ').first) : null,
+          sets: reps != null ? int.tryParse(reps.split('sets').first) : null,
+          reps: reps != null ? int.tryParse(reps.split('of ').last.split(' ').first) : null,
+          description: 'A comprehensive exercise for building strength and endurance.',
+          instructions: 'Perform the exercise with proper form. Maintain controlled movements throughout. Rest between sets as needed.',
+          difficulty: 'Medium',
+        );
+        context.push(Routes.exercise, extra: exercise);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Exercise Image
+            Container(
+              width: Dimens.textCardWidth(context),
+              height: Dimens.textCardHeight(context),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withValues(alpha: 0.3),
+                    BlendMode.darken,
                   ),
                 ),
-              ],
+              ),
+              child: Center(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+            // Exercise Details
+            Container(
+              padding: const EdgeInsets.all(12),
+              width: Dimens.textCardWidth(context),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    duration != null ? Icons.access_time : Icons.fitness_center,
+                    size: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      duration ?? reps ?? '',
+                      style: Theme.of(context).textTheme.bodySmall,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

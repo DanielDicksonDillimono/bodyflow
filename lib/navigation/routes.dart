@@ -7,4 +7,5 @@ abstract class Routes {
   static const passwordRecovery = '/password_recovery';
   static const profile = '/profile';
   static const generate = '/generate';
+  static const exercise = '/exercise';
 }

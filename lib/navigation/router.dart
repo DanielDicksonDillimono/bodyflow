@@ -4,6 +4,8 @@ import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
+import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
+import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
@@ -21,6 +23,13 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.passwordRecovery,
       builder: (context, state) => PasswordRecoveryPage(),
+    ),
+    GoRoute(
+      path: Routes.exercise,
+      builder: (context, state) {
+        final exercise = state.extra as Exercise;
+        return ExercisePage(exercise: exercise);
+      },
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
