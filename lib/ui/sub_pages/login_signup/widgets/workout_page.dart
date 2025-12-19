@@ -168,7 +168,7 @@ class WorkoutPage extends StatelessWidget {
     if (exercise.durationMinutes != null) {
       displayText = '${exercise.durationMinutes} minutes';
     } else if (exercise.sets != null && exercise.reps != null) {
-      displayText = '${exercise.sets}sets of ${exercise.reps} reps';
+      displayText = '${exercise.sets} sets of ${exercise.reps} reps';
     } else if (exercise.sets != null) {
       displayText = '${exercise.sets} sets';
     } else if (exercise.reps != null) {

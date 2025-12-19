@@ -91,6 +91,6 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
     case Routes.profile:
       return Routes.profile; // Redirect to profile page
     default:
-      return Routes.home; // Default redirect to login page
+      return Routes.home; // Default redirect to home page
   }
 }
