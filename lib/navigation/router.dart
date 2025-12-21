@@ -1,3 +1,4 @@
+import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
@@ -15,12 +16,27 @@ GoRouter router() => GoRouter(
   routes: [
     GoRoute(
       path: Routes.signUp,
-      builder: (context, state) => const CreateAccountPage(),
+      pageBuilder: (context, state) => buildPageWithPlatformTransitions(
+        context: context,
+        state: state,
+        child: const CreateAccountPage(),
+      ),
     ),
-    GoRoute(path: Routes.login, builder: (context, state) => LoginPage()),
+    GoRoute(
+      path: Routes.login,
+      pageBuilder: (context, state) => buildPageWithPlatformTransitions(
+        context: context,
+        state: state,
+        child: LoginPage(),
+      ),
+    ),
     GoRoute(
       path: Routes.passwordRecovery,
-      builder: (context, state) => PasswordRecoveryPage(),
+      pageBuilder: (context, state) => buildPageWithPlatformTransitions(
+        context: context,
+        state: state,
+        child: PasswordRecoveryPage(),
+      ),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
