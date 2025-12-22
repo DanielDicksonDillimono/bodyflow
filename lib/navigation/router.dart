@@ -31,9 +31,7 @@ GoRouter router() => GoRouter(
         if (exercise == null) {
           // Navigate back if exercise is null
           return const Scaffold(
-            body: Center(
-              child: Text('Exercise not found'),
-            ),
+            body: Center(child: Text('Exercise not found')),
           );
         }
         return ExercisePage(exercise: exercise);
@@ -90,6 +88,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       return Routes.generate; // Redirect to generator page
     case Routes.profile:
       return Routes.profile; // Redirect to profile page
+    case Routes.exercise:
+      return Routes.exercise; // Redirect to exercise page
     default:
       return Routes.home; // Default redirect to home page
   }
