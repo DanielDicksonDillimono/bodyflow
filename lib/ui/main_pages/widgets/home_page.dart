@@ -1,6 +1,6 @@
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/ui/sub_pages/login_signup/widgets/workout_page.dart';
+import 'package:bodyflow/ui/sub_pages/workout/widgets/workout_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const WorkoutPage(),
+                                  builder: (context) => WorkoutPage(),
                                 ),
                               ),
                             },

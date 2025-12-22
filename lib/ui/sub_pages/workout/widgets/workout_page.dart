@@ -1,13 +1,14 @@
 import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/domain/models/exercise.dart';
-import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/sub_pages/workout/view_model/workout_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class WorkoutPage extends StatelessWidget {
-  const WorkoutPage({super.key});
+  final WorkoutPageViewmodel viewModel = WorkoutPageViewmodel();
+
+  WorkoutPage({super.key});
 
   List<Exercise> _getExercises() {
     return [
@@ -23,8 +24,10 @@ class WorkoutPage extends StatelessWidget {
         imagePath: 'assets/images/frontSquat.jpg',
         sets: 5,
         reps: 10,
-        description: 'Lower body exercise targeting quads, hamstrings, and glutes.',
-        instructions: 'Stand shoulder-width apart. Lower by bending knees and hips. Keep back straight. Return to start.',
+        description:
+            'Lower body exercise targeting quads, hamstrings, and glutes.',
+        instructions:
+            'Stand shoulder-width apart. Lower by bending knees and hips. Keep back straight. Return to start.',
         difficulty: 'Medium',
       ),
       Exercise(
@@ -33,7 +36,8 @@ class WorkoutPage extends StatelessWidget {
         sets: 3,
         reps: 12,
         description: 'Full body compound exercise for strength building.',
-        instructions: 'Stand with feet hip-width. Bend at hips and knees, grip bar. Lift by extending hips and knees.',
+        instructions:
+            'Stand with feet hip-width. Bend at hips and knees, grip bar. Lift by extending hips and knees.',
         difficulty: 'Hard',
       ),
     ];
@@ -144,47 +148,13 @@ class WorkoutPage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   padding: Dimens.of(context).edgeInsetsScreenHorizontal,
                   itemCount: _getExercises().length,
-                  separatorBuilder: (context, index) => SizedBox(width: Dimens.paddingHorizontal),
+                  separatorBuilder: (context, index) =>
+                      SizedBox(width: Dimens.paddingHorizontal),
                   itemBuilder: (context, index) {
                     final exercise = _getExercises()[index];
-                    return _buildExerciseCard(
-                      context,
-                      exercise: Exercise(
-                        name: 'Cardio',
-                        imagePath: 'assets/images/threadmill.jpg',
-                        durationMinutes: 10,
-                        description: 'Cardiovascular exercise to improve endurance and burn calories.',
-                        instructions: 'Start at a comfortable pace. Gradually increase intensity. Maintain steady breathing throughout.',
-                        difficulty: 'Easy',
-                      ),
-                    ),
-                    SizedBox(width: Dimens.paddingHorizontal),
-                    _buildExerciseCard(
-                      context,
-                      exercise: Exercise(
-                        name: 'Squats',
-                        imagePath: 'assets/images/frontSquat.jpg',
-                        sets: 5,
-                        reps: 10,
-                        description: 'A fundamental lower body exercise targeting quads, hamstrings, and glutes.',
-                        instructions: 'Stand with feet shoulder-width apart. Lower your body by bending knees and hips. Keep chest up and back straight. Push through heels to return to start.',
-                        difficulty: 'Medium',
-                      ),
-                    ),
-                    SizedBox(width: Dimens.paddingHorizontal),
-                    _buildExerciseCard(
-                      context,
-                      exercise: Exercise(
-                        name: 'Deadlifts',
-                        imagePath: 'assets/images/barbell.jpg',
-                        sets: 3,
-                        reps: 12,
-                        description: 'Compound exercise for building overall strength, targeting back, legs, and core.',
-                        instructions: 'Stand with feet hip-width apart. Bend at hips and knees to grip bar. Keep back straight and lift by extending hips and knees. Lower with control.',
-                        difficulty: 'Hard',
-                      ),
-                    ),
-                  ],
+
+                    return _buildExerciseCard(context, exercise: exercise);
+                  },
                 ),
               ),
               SizedBox(height: Dimens.paddingVertical),
@@ -229,7 +199,9 @@ class WorkoutPage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
-                  image: AssetImage(exercise.imagePath ?? 'assets/images/barbell.jpg'),
+                  image: AssetImage(
+                    exercise.imagePath ?? 'assets/images/barbell.jpg',
+                  ),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                     Colors.black.withValues(alpha: 0.3),
@@ -253,12 +225,16 @@ class WorkoutPage extends StatelessWidget {
               width: Dimens.textCardWidth(context),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(12),
+                ),
               ),
               child: Row(
                 children: [
                   Icon(
-                    exercise.durationMinutes != null ? Icons.access_time : Icons.fitness_center,
+                    exercise.durationMinutes != null
+                        ? Icons.access_time
+                        : Icons.fitness_center,
                     size: 16,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
