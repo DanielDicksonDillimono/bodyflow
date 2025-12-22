@@ -1,7 +1,7 @@
 class Exercise {
   final String name;
   final String? description;
-  final String imagePath;
+  final String? imagePath;
   final int? sets;
   final int? reps;
   final int? durationMinutes;

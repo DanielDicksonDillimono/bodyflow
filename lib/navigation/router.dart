@@ -7,6 +7,8 @@ import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
+import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
+import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
@@ -58,6 +60,19 @@ GoRouter router() => GoRouter(
           state: state,
           child: ExercisePage(exercise: exercise),
         );
+      },
+    ),
+    GoRoute(
+      path: Routes.exercise,
+      builder: (context, state) {
+        final exercise = state.extra as Exercise?;
+        if (exercise == null) {
+          // Navigate back if exercise is null
+          return const Scaffold(
+            body: Center(child: Text('Exercise not found')),
+          );
+        }
+        return ExercisePage(exercise: exercise);
       },
     ),
     StatefulShellRoute.indexedStack(
@@ -113,7 +128,9 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       return Routes.generate; // Redirect to generator page
     case Routes.profile:
       return Routes.profile; // Redirect to profile page
+    case Routes.exercise:
+      return Routes.exercise; // Redirect to exercise page
     default:
-      return Routes.home; // Default redirect to login page
+      return Routes.home; // Default redirect to home page
   }
 }

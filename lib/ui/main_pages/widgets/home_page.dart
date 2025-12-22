@@ -49,6 +49,7 @@ class HomePage extends StatelessWidget {
                       child: Row(
                         children: [
                           //turn this into a listview builde. Using this as a card.
+                          //Extract to a widget later.
                           InkWell(
                             onTap: () => {
                               Navigator.push(
