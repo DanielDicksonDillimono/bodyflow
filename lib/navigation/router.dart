@@ -1,8 +1,10 @@
+import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
+import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,26 @@ GoRouter router() => GoRouter(
         state: state,
         child: PasswordRecoveryPage(),
       ),
+    ),
+    GoRoute(
+      path: Routes.exercise,
+      pageBuilder: (context, state) {
+        final exercise = state.extra as Exercise?;
+        if (exercise == null) {
+          return buildPageWithPlatformTransitions(
+            context: context,
+            state: state,
+            child: Scaffold(
+              body: Center(child: Text('Exercise not found')),
+            ),
+          );
+        }
+        return buildPageWithPlatformTransitions(
+          context: context,
+          state: state,
+          child: ExercisePage(exercise: exercise),
+        );
+      },
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
@@ -83,6 +105,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       return Routes.signUp; // Redirect to sign up page
     case Routes.passwordRecovery:
       return Routes.passwordRecovery; // Redirect to password recovery page
+    case Routes.exercise:
+      return Routes.exercise; // Redirect to exercise page
     case Routes.home:
       return Routes.home; // Redirect to home page
     case Routes.generate:
