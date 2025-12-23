@@ -50,7 +50,9 @@ class _GeneratorPageState extends State<GeneratorPage> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: const AssetImage('assets/images/barbell.jpg'),
+                                image: const AssetImage(
+                                  'assets/images/barbell.jpg',
+                                ),
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                   Colors.black.withValues(alpha: 0.5),
@@ -79,7 +81,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       ?.copyWith(color: Colors.white70),
                                 ),
                                 Text(
-                                  'Sessions are one-time workouts,'
+                                  'Workouts are one-time sessions,'
                                   'while schedules are recurring plans.',
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(color: Colors.white70),
@@ -195,8 +197,10 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       ),
                                       const SizedBox(height: 16),
                                       BodyPartSelectionGrid(
-                                        selectedBodyParts: model.selectedBodyParts,
-                                        onBodyPartToggle: model.addOrRemoveBodyPart,
+                                        selectedBodyParts:
+                                            model.selectedBodyParts,
+                                        onBodyPartToggle:
+                                            model.addOrRemoveBodyPart,
                                       ),
                                       const SizedBox(height: 32),
                                       Text(
@@ -260,8 +264,10 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       ),
                                       const SizedBox(height: 16),
                                       BodyPartSelectionGrid(
-                                        selectedBodyParts: model.selectedBodyParts,
-                                        onBodyPartToggle: model.addOrRemoveBodyPart,
+                                        selectedBodyParts:
+                                            model.selectedBodyParts,
+                                        onBodyPartToggle:
+                                            model.addOrRemoveBodyPart,
                                       ),
                                     ],
                                   ),
