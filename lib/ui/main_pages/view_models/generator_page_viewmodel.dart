@@ -2,9 +2,11 @@ import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:flutter/material.dart';
 
 class GeneratorPageViewModel with ChangeNotifier {
-  GlobalKey<FormState> timeKey = GlobalKey<FormState>();
   final timeController = TextEditingController.fromValue(
-    TextEditingValue(text: '30', selection: TextSelection.collapsed(offset: 2)),
+    const TextEditingValue(
+      text: '30',
+      selection: TextSelection.collapsed(offset: 2),
+    ),
   );
   bool _isGenerating = false;
 
@@ -28,7 +30,6 @@ class GeneratorPageViewModel with ChangeNotifier {
     if (_activityType == ActivityType.session) return;
     _activityType = ActivityType.session;
     clearSelections();
-    // notifyListeners();
   }
 
   void clearSelections() {
@@ -41,7 +42,6 @@ class GeneratorPageViewModel with ChangeNotifier {
     if (_activityType == ActivityType.schedule) return;
     _activityType = ActivityType.schedule;
     clearSelections();
-    // notifyListeners();
   }
 
   void setSessionLength(int minutes) {
@@ -76,8 +76,8 @@ class GeneratorPageViewModel with ChangeNotifier {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Get a life!'),
-        content: Text(
+        title: const Text('Get a life!'),
+        content: const Text(
           'More than 2 hour workout? You should really get a life outside of the gym.',
         ),
         actions: [
@@ -86,7 +86,7 @@ class GeneratorPageViewModel with ChangeNotifier {
               timeController.text = '120';
               Navigator.of(context).pop();
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),

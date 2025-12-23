@@ -48,9 +48,9 @@ class _GeneratorPageState extends State<GeneratorPage> {
                           Container(
                             height: 200,
                             width: double.infinity,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/images/barbell.jpg'),
+                                image: const AssetImage('assets/images/barbell.jpg'),
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                   Colors.black.withValues(alpha: 0.5),
@@ -73,7 +73,6 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       .headlineLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
-                                //SizedBox(height: 8),
                                 Text(
                                   'Create workout sessions or schedules',
                                   style: Theme.of(context).textTheme.bodyLarge
@@ -236,9 +235,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       ),
                                       const SizedBox(height: 16),
                                       TextFormField(
-                                        key: model.timeKey,
                                         controller: model.timeController,
-
                                         decoration: const InputDecoration(
                                           hintText:
                                               'Enter session length in minutes',
@@ -269,7 +266,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                     ],
                                   ),
                           ),
-                          SizedBox(height: 80),
+                          const SizedBox(height: 80),
                         ],
                       ),
                     );
