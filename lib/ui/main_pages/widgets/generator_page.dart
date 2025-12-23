@@ -1,4 +1,5 @@
 import 'package:bodyflow/ui/core/loading.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
 import 'package:bodyflow/ui/main_pages/widgets/body_part_selection_grid.dart';
@@ -30,6 +31,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
@@ -69,20 +71,19 @@ class _GeneratorPageState extends State<GeneratorPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Generator',
+                                  localization.generator,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
                                 Text(
-                                  'Create workout sessions or schedules',
+                                  localization.generatorSubtitle,
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(color: Colors.white70),
                                 ),
                                 Text(
-                                  'Workouts are one-time sessions,'
-                                  'while schedules are recurring plans.',
+                                  localization.generatorDescription,
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(color: Colors.white70),
                                   textAlign: TextAlign.center,
@@ -124,7 +125,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                     elevation: WidgetStatePropertyAll(0),
                                   ),
                                   child: Text(
-                                    'Workout',
+                                    localization.workout,
                                     style: TextStyle(
                                       color:
                                           model.activityType ==
@@ -164,7 +165,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                     elevation: WidgetStatePropertyAll(0),
                                   ),
                                   child: Text(
-                                    'Schedule',
+                                    localization.schedule,
                                     style: TextStyle(
                                       color:
                                           model.activityType ==
@@ -190,7 +191,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                     children: [
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Split',
+                                        localization.split,
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
@@ -204,7 +205,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       ),
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Days',
+                                        localization.days,
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
@@ -223,13 +224,13 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
-                                          text: 'Time',
+                                          text: localization.time,
                                           style: Theme.of(
                                             context,
                                           ).textTheme.titleLarge,
                                           children: [
                                             TextSpan(
-                                              text: ' (in minutes)',
+                                              text: localization.timeInMinutes,
                                               style: Theme.of(
                                                 context,
                                               ).textTheme.bodyMedium,
@@ -240,9 +241,9 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       const SizedBox(height: 16),
                                       TextFormField(
                                         controller: model.timeController,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
                                           hintText:
-                                              'Enter session length in minutes',
+                                              localization.enterSessionLength,
                                         ),
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {
@@ -257,7 +258,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                       ),
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Target',
+                                        localization.target,
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
@@ -288,7 +289,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                 onPressed: () {
                   model.generateWorkout(context);
                 },
-                label: const Text('Generate'),
+                label: Text(localization.generate),
                 icon: const Icon(Icons.fitness_center),
               ),
       ),

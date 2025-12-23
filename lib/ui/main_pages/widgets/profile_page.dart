@@ -1,3 +1,4 @@
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/core/wigets/stats_card.dart';
@@ -10,6 +11,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -75,7 +77,7 @@ class ProfilePage extends StatelessWidget {
                           children: [
                             SizedBox(height: Dimens.paddingVerticalSmall),
                             Text(
-                              'Last Months Stats',
+                              localization.lastMonthsStats,
                               style: Theme.of(context).textTheme.headlineLarge
                                   ?.copyWith(color: Colors.white),
                             ),
@@ -104,7 +106,7 @@ class ProfilePage extends StatelessWidget {
                             Image(image: AssetImage('assets/images/logo.png')),
                             TextButton(
                               onPressed: () => viewModel.showAboutPage(context),
-                              child: Text('About BodyFlow'),
+                              child: Text(localization.aboutBodyflow),
                             ),
                           ],
                         ),
@@ -121,13 +123,13 @@ class ProfilePage extends StatelessWidget {
                                 style: Theme.of(
                                   context,
                                 ).elevatedButtonTheme.style,
-                                child: const Text('Sign out'),
+                                child: Text(localization.signOut),
                               ),
                             ),
                             TextButton(
                               onPressed: () => viewModel.signOut(),
                               child: Text(
-                                'Delete Account',
+                                localization.deleteAccount,
                                 style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(color: AppColors.red1),
                               ),

@@ -1,3 +1,4 @@
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/sub_pages/workout/widgets/workout_page.dart';
@@ -9,9 +10,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome', style: Theme.of(context).textTheme.titleLarge),
+        title: Text(localization.welcome, style: Theme.of(context).textTheme.titleLarge),
         centerTitle: false,
       ),
       body: SafeArea(
@@ -39,7 +41,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     SizedBox(height: Dimens.paddingVerticalSmall),
                     Text(
-                      'Recently generated',
+                      localization.recentlyGenerated,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineLarge?.copyWith(color: Colors.white),
@@ -69,7 +71,7 @@ class HomePage extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        'Workout A',
+                                        localization.workoutA,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
@@ -93,7 +95,7 @@ class HomePage extends StatelessWidget {
                                             ),
                                             SizedBox(width: 4.0),
                                             Text(
-                                              '45 mins',
+                                              localization.minutes45,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium
@@ -112,7 +114,7 @@ class HomePage extends StatelessWidget {
                                               size: 16.0,
                                             ),
                                             Text(
-                                              'Full Body Blast',
+                                              localization.fullBodyBlast,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium
@@ -145,7 +147,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'Workout A',
+                                      localization.workoutA,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
@@ -169,7 +171,7 @@ class HomePage extends StatelessWidget {
                                           ),
                                           SizedBox(width: 4.0),
                                           Text(
-                                            '45 mins',
+                                            localization.minutes45,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium
@@ -186,7 +188,7 @@ class HomePage extends StatelessWidget {
                                             size: 16.0,
                                           ),
                                           Text(
-                                            'Full Body Blast',
+                                            localization.fullBodyBlast,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium
@@ -216,7 +218,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'Workout A',
+                                      localization.workoutA,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
@@ -240,7 +242,7 @@ class HomePage extends StatelessWidget {
                                           ),
                                           SizedBox(width: 4.0),
                                           Text(
-                                            '45 mins',
+                                            localization.minutes45,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium
@@ -257,7 +259,7 @@ class HomePage extends StatelessWidget {
                                             size: 16.0,
                                           ),
                                           Text(
-                                            'Full Body Blast',
+                                            localization.fullBodyBlast,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium
@@ -299,7 +301,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     SizedBox(height: Dimens.paddingVerticalSmall),
                     Text(
-                      'Quick Workouts',
+                      localization.quickWorkouts,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineLarge?.copyWith(color: Colors.white),

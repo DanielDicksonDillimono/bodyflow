@@ -1,4 +1,5 @@
 import 'package:bodyflow/domain/models/exercise.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class ExercisePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -119,7 +121,7 @@ class ExercisePage extends StatelessWidget {
                     if (exercise.instructions != null) ...[
                       SizedBox(height: Dimens.paddingVertical),
                       Text(
-                        'Instructions',
+                        localization.instructions,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -155,21 +157,21 @@ class ExercisePage extends StatelessWidget {
             _buildStatItem(
               context,
               icon: Icons.repeat,
-              label: 'Sets',
+              label: localization.sets,
               value: '${exercise.sets}',
             ),
           if (exercise.reps != null)
             _buildStatItem(
               context,
               icon: Icons.fitness_center,
-              label: 'Reps',
+              label: localization.reps,
               value: '${exercise.reps}',
             ),
           if (exercise.durationMinutes != null)
             _buildStatItem(
               context,
               icon: Icons.access_time,
-              label: 'Duration',
+              label: localization.duration,
               value: '${exercise.durationMinutes} min',
             ),
         ],

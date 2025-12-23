@@ -1,5 +1,6 @@
 import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/sub_pages/workout/view_model/workout_page_viewmodel.dart';
 import 'package:flutter/material.dart';

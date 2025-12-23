@@ -1,4 +1,5 @@
 import 'package:bodyflow/domain/misc/globalenums.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 
 class GeneratorPageViewModel with ChangeNotifier {
@@ -73,12 +74,13 @@ class GeneratorPageViewModel with ChangeNotifier {
   }
 
   void showGetALifeMessage(BuildContext context) {
+    final localization = AppLocalization.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Get a life!'),
-        content: const Text(
-          'More than 2 hour workout? You should really get a life outside of the gym.',
+        title: Text(localization.getALife),
+        content: Text(
+          localization.getALifeMessage,
         ),
         actions: [
           TextButton(
@@ -86,7 +88,7 @@ class GeneratorPageViewModel with ChangeNotifier {
               timeController.text = '120';
               Navigator.of(context).pop();
             },
-            child: const Text('OK'),
+            child: Text(localization.ok),
           ),
         ],
       ),
@@ -94,12 +96,13 @@ class GeneratorPageViewModel with ChangeNotifier {
   }
 
   Future<void> generateWorkout(BuildContext context) async {
+    final localization = AppLocalization.of(context);
     // Validate selections based on activity type
     if (_selectedBodyParts.isEmpty) {
       _showValidationError(
         context,
-        'No body parts selected',
-        'Please select at least one body part to generate a workout.',
+        localization.noBodyPartsSelected,
+        localization.selectBodyPartMessage,
       );
       return;
     }
@@ -107,8 +110,8 @@ class GeneratorPageViewModel with ChangeNotifier {
     if (_activityType == ActivityType.schedule && _selectedDays.isEmpty) {
       _showValidationError(
         context,
-        'No days selected',
-        'Please select at least one day for your schedule.',
+        localization.noDaysSelected,
+        localization.selectDayMessage,
       );
       return;
     }
@@ -118,8 +121,8 @@ class GeneratorPageViewModel with ChangeNotifier {
       if (minutes <= 0) {
         _showValidationError(
           context,
-          'Invalid duration',
-          'Please enter a valid session length greater than 0 minutes.',
+          localization.invalidDuration,
+          localization.invalidDurationMessage,
         );
         return;
       }
@@ -139,6 +142,7 @@ class GeneratorPageViewModel with ChangeNotifier {
     String title,
     String message,
   ) {
+    final localization = AppLocalization.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -147,7 +151,7 @@ class GeneratorPageViewModel with ChangeNotifier {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: Text(localization.ok),
           ),
         ],
       ),

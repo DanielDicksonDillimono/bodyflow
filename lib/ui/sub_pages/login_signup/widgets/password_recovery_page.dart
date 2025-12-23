@@ -1,9 +1,11 @@
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 
 class PasswordRecoveryPage extends StatelessWidget {
   const PasswordRecoveryPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -15,7 +17,7 @@ class PasswordRecoveryPage extends StatelessWidget {
               children: [
                 SizedBox(height: 100.0),
                 Text(
-                  'Password\nRecovery',
+                  localization.passwordRecovery,
                   style: Theme.of(context).brightness == Brightness.dark
                       ? Theme.of(context).textTheme.headlineLarge
                       : Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -24,13 +26,13 @@ class PasswordRecoveryPage extends StatelessWidget {
                 ),
                 SizedBox(height: 50.0),
                 Text(
-                  'Enter email to receive a password reset link',
+                  localization.passwordResetInstruction,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
+                  decoration: InputDecoration(
+                    labelText: localization.email,
                     prefixIcon: Icon(Icons.email_outlined),
                   ),
                 ),
@@ -40,7 +42,7 @@ class PasswordRecoveryPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: Theme.of(context).elevatedButtonTheme.style,
-                    child: const Text('Reset'),
+                    child: Text(localization.reset),
                   ),
                 ),
               ],
