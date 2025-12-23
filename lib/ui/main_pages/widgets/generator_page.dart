@@ -1,81 +1,37 @@
 import 'package:bodyflow/ui/core/loading.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/widgets/body_part_selection_grid.dart';
+import 'package:bodyflow/ui/main_pages/widgets/day_selection_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 
-class GeneratorPage extends StatelessWidget {
-  GeneratorPage({super.key});
+class GeneratorPage extends StatefulWidget {
+  const GeneratorPage({super.key});
 
-  final GeneratorPageViewModel model = GeneratorPageViewModel();
+  @override
+  State<GeneratorPage> createState() => _GeneratorPageState();
+}
+
+class _GeneratorPageState extends State<GeneratorPage> {
+  late final GeneratorPageViewModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    model = GeneratorPageViewModel();
+  }
+
+  @override
+  void dispose() {
+    model.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //final double height = MediaQuery.of(context).size.height * 0.8;
     return Scaffold(
       body: SafeArea(
-        // child: CustomScrollView(
-        //   slivers: [
-        //     SliverPersistentHeader(
-        //       delegate: GeneratorPageHeader(height),
-        //       pinned: true,
-        //     ),
-        //     ListenableBuilder(
-        //       listenable: model,
-        //       builder: (context, child) => SliverFloatingHeader(
-        //         child: Padding(
-        //           padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-        //           child: Row(
-        //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-        //             children: [
-        //               ElevatedButton(
-        //                 onPressed: () {
-        //                   model.setActivityAsSession();
-        //                 },
-        //                 style: ButtonStyle(
-        //                   backgroundColor: WidgetStateProperty.all(
-        //                     model.activityType == ActivityType.session
-        //                         ? Theme.of(context).colorScheme.primary
-        //                         : Theme.of(
-        //                             context,
-        //                           ).colorScheme.primaryContainer,
-        //                   ),
-        //                 ),
-        //                 child: Text('Session'),
-        //               ),
-        //               ElevatedButton(
-        //                 onPressed: () {
-        //                   model.setActivityAsSchedule();
-        //                 },
-        //                 style: ButtonStyle(
-        //                   backgroundColor: WidgetStateProperty.all(
-        //                     model.activityType == ActivityType.schedule
-        //                         ? Theme.of(context).colorScheme.primary
-        //                         : Theme.of(
-        //                             context,
-        //                           ).colorScheme.primaryContainer,
-        //                   ),
-        //                 ),
-        //                 child: Text('Schedule'),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     SliverList.builder(
-        //       itemCount: model.items.length,
-        //       itemBuilder: (context, index) {
-        //         final item = model.items[index];
-        //         return ListTile(
-        //           title: Text(item.title ?? ''),
-        //           subtitle: Text(item.subtitle ?? ''),
-        //         );
-        //       },
-        //     ),
-        //   ],
-        // ),
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -84,7 +40,7 @@ class GeneratorPage extends StatelessWidget {
             listenable: model,
             builder: (context, value) {
               return model.isGenerating
-                  ? Loading()
+                  ? const Loading()
                   : SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +50,7 @@ class GeneratorPage extends StatelessWidget {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/images/barbell.jpg'),
+                                image: const AssetImage('assets/images/barbell.jpg'),
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                   Colors.black.withValues(alpha: 0.5),
@@ -117,7 +73,6 @@ class GeneratorPage extends StatelessWidget {
                                       .headlineLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
-                                //SizedBox(height: 8),
                                 Text(
                                   'Create workout sessions or schedules',
                                   style: Theme.of(context).textTheme.bodyLarge
@@ -167,7 +122,7 @@ class GeneratorPage extends StatelessWidget {
                                     elevation: WidgetStatePropertyAll(0),
                                   ),
                                   child: Text(
-                                    'Session',
+                                    'Workout',
                                     style: TextStyle(
                                       color:
                                           model.activityType ==
@@ -233,153 +188,27 @@ class GeneratorPage extends StatelessWidget {
                                     children: [
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Select Body Parts',
+                                        'Split',
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
                                       ),
                                       const SizedBox(height: 16),
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        // padding: Dimens.of(
-                                        //   context,
-                                        // ).edgeInsetsScreenHorizontal,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing: 10,
-                                              crossAxisSpacing: 10,
-                                              childAspectRatio: 3,
-                                            ),
-                                        itemCount: BodyPart.values.length,
-                                        itemBuilder: (context, index) {
-                                          final bodyPart =
-                                              BodyPart.values[index];
-                                          return ElevatedButton(
-                                            onPressed: () {
-                                              // Handle button press
-                                              model.addOrRemoveBodyPart(
-                                                bodyPart,
-                                              );
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                    model.selectedBodyParts
-                                                            .contains(bodyPart)
-                                                        ? Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary
-                                                        : Colors.white,
-                                                  ),
-                                              side: WidgetStatePropertyAll(
-                                                BorderSide(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                Theme.of(
-                                                      context,
-                                                    ).buttonTheme.shape
-                                                    as OutlinedBorder,
-                                              ),
-                                              elevation: WidgetStatePropertyAll(
-                                                0,
-                                              ),
-                                            ),
-                                            child: FittedBox(
-                                              child: Text(
-                                                bodyPart.name,
-                                                style: TextStyle(
-                                                  color:
-                                                      model.selectedBodyParts
-                                                          .contains(bodyPart)
-                                                      ? Colors.white
-                                                      : Theme.of(
-                                                          context,
-                                                        ).colorScheme.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                      BodyPartSelectionGrid(
+                                        selectedBodyParts: model.selectedBodyParts,
+                                        onBodyPartToggle: model.addOrRemoveBodyPart,
                                       ),
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Select Days',
+                                        'Days',
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
                                       ),
                                       const SizedBox(height: 16),
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        // padding: Dimens.of(
-                                        //   context,
-                                        // ).edgeInsetsScreenHorizontal,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing: 16,
-                                              crossAxisSpacing: 16,
-                                              childAspectRatio: 3,
-                                            ),
-                                        itemCount: Days.values.length,
-                                        itemBuilder: (context, index) {
-                                          final day = Days.values[index];
-                                          return ElevatedButton(
-                                            onPressed: () {
-                                              // Handle button press
-                                              model.addOrRemoveDay(day);
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                    model.selectedDays.contains(
-                                                          day,
-                                                        )
-                                                        ? Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary
-                                                        : Colors.white,
-                                                  ),
-                                              side: WidgetStatePropertyAll(
-                                                BorderSide(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                Theme.of(
-                                                      context,
-                                                    ).buttonTheme.shape
-                                                    as OutlinedBorder,
-                                              ),
-                                              elevation: WidgetStatePropertyAll(
-                                                0,
-                                              ),
-                                            ),
-                                            child: FittedBox(
-                                              child: Text(
-                                                day.name,
-                                                style: TextStyle(
-                                                  color:
-                                                      model.selectedDays
-                                                          .contains(day)
-                                                      ? Colors.white
-                                                      : Theme.of(
-                                                          context,
-                                                        ).colorScheme.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                      DaySelectionGrid(
+                                        selectedDays: model.selectedDays,
+                                        onDayToggle: model.addOrRemoveDay,
                                       ),
                                     ],
                                   )
@@ -390,7 +219,7 @@ class GeneratorPage extends StatelessWidget {
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
-                                          text: 'Session Length',
+                                          text: 'Time',
                                           style: Theme.of(
                                             context,
                                           ).textTheme.titleLarge,
@@ -406,10 +235,8 @@ class GeneratorPage extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 16),
                                       TextFormField(
-                                        key: model.timeKey,
                                         controller: model.timeController,
-
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           hintText:
                                               'Enter session length in minutes',
                                         ),
@@ -417,11 +244,11 @@ class GeneratorPage extends StatelessWidget {
                                         onChanged: (value) {
                                           final minutes =
                                               int.tryParse(value) ?? 0;
-                                          minutes > 120
-                                              ? model.showGetALifeMessage(
-                                                  context,
-                                                )
-                                              : model.setSessionLength(minutes);
+                                          if (minutes > 120) {
+                                            model.showGetALifeMessage(context);
+                                          } else if (minutes > 0) {
+                                            model.setSessionLength(minutes);
+                                          }
                                         },
                                       ),
                                       const SizedBox(height: 32),
@@ -432,74 +259,14 @@ class GeneratorPage extends StatelessWidget {
                                         ).textTheme.titleLarge,
                                       ),
                                       const SizedBox(height: 16),
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing: 10,
-                                              crossAxisSpacing: 10,
-                                              childAspectRatio: 3,
-                                            ),
-                                        itemCount: BodyPart.values.length,
-                                        itemBuilder: (context, index) {
-                                          final bodyPart =
-                                              BodyPart.values[index];
-                                          return ElevatedButton(
-                                            onPressed: () {
-                                              // Handle button press
-                                              model.addOrRemoveBodyPart(
-                                                bodyPart,
-                                              );
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                    model.selectedBodyParts
-                                                            .contains(bodyPart)
-                                                        ? Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary
-                                                        : Colors.white,
-                                                  ),
-                                              side: WidgetStatePropertyAll(
-                                                BorderSide(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                Theme.of(
-                                                      context,
-                                                    ).buttonTheme.shape
-                                                    as OutlinedBorder,
-                                              ),
-                                              elevation: WidgetStatePropertyAll(
-                                                0,
-                                              ),
-                                            ),
-                                            child: FittedBox(
-                                              child: Text(
-                                                bodyPart.name,
-                                                style: TextStyle(
-                                                  color:
-                                                      model.selectedBodyParts
-                                                          .contains(bodyPart)
-                                                      ? Colors.white
-                                                      : Theme.of(
-                                                          context,
-                                                        ).colorScheme.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                      BodyPartSelectionGrid(
+                                        selectedBodyParts: model.selectedBodyParts,
+                                        onBodyPartToggle: model.addOrRemoveBodyPart,
                                       ),
                                     ],
                                   ),
                           ),
-                          SizedBox(height: 80),
+                          const SizedBox(height: 80),
                         ],
                       ),
                     );
@@ -510,12 +277,12 @@ class GeneratorPage extends StatelessWidget {
       floatingActionButton: ListenableBuilder(
         listenable: model,
         builder: (context, value) => model.isGenerating
-            ? SizedBox()
+            ? const SizedBox()
             : FloatingActionButton.extended(
                 onPressed: () {
-                  model.generateWorkout();
+                  model.generateWorkout(context);
                 },
-                label: Text('Generate'),
+                label: const Text('Generate'),
                 icon: const Icon(Icons.fitness_center),
               ),
       ),
