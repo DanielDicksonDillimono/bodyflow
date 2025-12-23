@@ -3,13 +3,14 @@ import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/core/wigets/stats_card.dart';
 import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-  final ProfilePageViewmodel viewModel = ProfilePageViewmodel();
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<ProfilePageViewmodel>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Center(

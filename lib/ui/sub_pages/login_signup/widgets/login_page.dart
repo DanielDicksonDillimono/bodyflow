@@ -2,12 +2,14 @@ import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final LoginViewmodel model = LoginViewmodel();
+
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<LoginViewmodel>(context, listen: false);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(

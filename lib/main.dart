@@ -2,6 +2,10 @@ import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/firebase_options.dart';
 import 'package:bodyflow/navigation/router.dart';
 import 'package:bodyflow/ui/core/themes/theme.dart';
+import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/create_account_viewmodel.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +19,18 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserAuthentication(FirebaseAuth.instance),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GeneratorPageViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfilePageViewmodel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateAccountViewmodel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginViewmodel(),
         ),
       ],
       child: const MyApp(),
