@@ -94,10 +94,28 @@ class GeneratorPageViewModel with ChangeNotifier {
   }
 
   Future<void> generateWorkout() async {
+    // Validate selections based on activity type
+    if (_selectedBodyParts.isEmpty) {
+      // Cannot generate without body part selection
+      return;
+    }
+    
+    if (_activityType == ActivityType.schedule && _selectedDays.isEmpty) {
+      // Cannot generate schedule without day selection
+      return;
+    }
+    
+    if (_activityType == ActivityType.session && _sessionLengthInMinutes <= 0) {
+      // Cannot generate session without valid duration
+      return;
+    }
+    
     setIsGenerating(true);
     // Simulate workout generation delay
     await Future.delayed(const Duration(seconds: 2));
     setIsGenerating(false);
+    
+    // TODO: Implement actual workout generation logic
   }
 
   @override
@@ -105,16 +123,4 @@ class GeneratorPageViewModel with ChangeNotifier {
     timeController.dispose();
     super.dispose();
   }
-}
-
-enum BodyPart {
-  fullBody,
-  upperBody,
-  lowerBody,
-  arms,
-  legs,
-  back,
-  chest,
-  shoulders,
-  core,
 }

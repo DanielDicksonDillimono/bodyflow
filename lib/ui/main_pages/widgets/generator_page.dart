@@ -1,6 +1,8 @@
 import 'package:bodyflow/ui/core/loading.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/widgets/body_part_selection_grid.dart';
+import 'package:bodyflow/ui/main_pages/widgets/day_selection_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 
@@ -233,153 +235,27 @@ class GeneratorPage extends StatelessWidget {
                                     children: [
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Select Body Parts',
+                                        'Split',
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
                                       ),
                                       const SizedBox(height: 16),
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        // padding: Dimens.of(
-                                        //   context,
-                                        // ).edgeInsetsScreenHorizontal,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing: 10,
-                                              crossAxisSpacing: 10,
-                                              childAspectRatio: 3,
-                                            ),
-                                        itemCount: BodyPart.values.length,
-                                        itemBuilder: (context, index) {
-                                          final bodyPart =
-                                              BodyPart.values[index];
-                                          return ElevatedButton(
-                                            onPressed: () {
-                                              // Handle button press
-                                              model.addOrRemoveBodyPart(
-                                                bodyPart,
-                                              );
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                    model.selectedBodyParts
-                                                            .contains(bodyPart)
-                                                        ? Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary
-                                                        : Colors.white,
-                                                  ),
-                                              side: WidgetStatePropertyAll(
-                                                BorderSide(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                Theme.of(
-                                                      context,
-                                                    ).buttonTheme.shape
-                                                    as OutlinedBorder,
-                                              ),
-                                              elevation: WidgetStatePropertyAll(
-                                                0,
-                                              ),
-                                            ),
-                                            child: FittedBox(
-                                              child: Text(
-                                                bodyPart.name,
-                                                style: TextStyle(
-                                                  color:
-                                                      model.selectedBodyParts
-                                                          .contains(bodyPart)
-                                                      ? Colors.white
-                                                      : Theme.of(
-                                                          context,
-                                                        ).colorScheme.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                      BodyPartSelectionGrid(
+                                        selectedBodyParts: model.selectedBodyParts,
+                                        onBodyPartToggle: model.addOrRemoveBodyPart,
                                       ),
                                       const SizedBox(height: 32),
                                       Text(
-                                        'Select Days',
+                                        'Days',
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleLarge,
                                       ),
                                       const SizedBox(height: 16),
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        // padding: Dimens.of(
-                                        //   context,
-                                        // ).edgeInsetsScreenHorizontal,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing: 16,
-                                              crossAxisSpacing: 16,
-                                              childAspectRatio: 3,
-                                            ),
-                                        itemCount: Days.values.length,
-                                        itemBuilder: (context, index) {
-                                          final day = Days.values[index];
-                                          return ElevatedButton(
-                                            onPressed: () {
-                                              // Handle button press
-                                              model.addOrRemoveDay(day);
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                    model.selectedDays.contains(
-                                                          day,
-                                                        )
-                                                        ? Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary
-                                                        : Colors.white,
-                                                  ),
-                                              side: WidgetStatePropertyAll(
-                                                BorderSide(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                Theme.of(
-                                                      context,
-                                                    ).buttonTheme.shape
-                                                    as OutlinedBorder,
-                                              ),
-                                              elevation: WidgetStatePropertyAll(
-                                                0,
-                                              ),
-                                            ),
-                                            child: FittedBox(
-                                              child: Text(
-                                                day.name,
-                                                style: TextStyle(
-                                                  color:
-                                                      model.selectedDays
-                                                          .contains(day)
-                                                      ? Colors.white
-                                                      : Theme.of(
-                                                          context,
-                                                        ).colorScheme.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                      DaySelectionGrid(
+                                        selectedDays: model.selectedDays,
+                                        onDayToggle: model.addOrRemoveDay,
                                       ),
                                     ],
                                   )
@@ -390,7 +266,7 @@ class GeneratorPage extends StatelessWidget {
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
-                                          text: 'Session Length',
+                                          text: 'Time',
                                           style: Theme.of(
                                             context,
                                           ).textTheme.titleLarge,
@@ -409,7 +285,7 @@ class GeneratorPage extends StatelessWidget {
                                         key: model.timeKey,
                                         controller: model.timeController,
 
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           hintText:
                                               'Enter session length in minutes',
                                         ),
@@ -432,69 +308,9 @@ class GeneratorPage extends StatelessWidget {
                                         ).textTheme.titleLarge,
                                       ),
                                       const SizedBox(height: 16),
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing: 10,
-                                              crossAxisSpacing: 10,
-                                              childAspectRatio: 3,
-                                            ),
-                                        itemCount: BodyPart.values.length,
-                                        itemBuilder: (context, index) {
-                                          final bodyPart =
-                                              BodyPart.values[index];
-                                          return ElevatedButton(
-                                            onPressed: () {
-                                              // Handle button press
-                                              model.addOrRemoveBodyPart(
-                                                bodyPart,
-                                              );
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                    model.selectedBodyParts
-                                                            .contains(bodyPart)
-                                                        ? Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary
-                                                        : Colors.white,
-                                                  ),
-                                              side: WidgetStatePropertyAll(
-                                                BorderSide(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                              ),
-                                              shape: WidgetStatePropertyAll(
-                                                Theme.of(
-                                                      context,
-                                                    ).buttonTheme.shape
-                                                    as OutlinedBorder,
-                                              ),
-                                              elevation: WidgetStatePropertyAll(
-                                                0,
-                                              ),
-                                            ),
-                                            child: FittedBox(
-                                              child: Text(
-                                                bodyPart.name,
-                                                style: TextStyle(
-                                                  color:
-                                                      model.selectedBodyParts
-                                                          .contains(bodyPart)
-                                                      ? Colors.white
-                                                      : Theme.of(
-                                                          context,
-                                                        ).colorScheme.primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                      BodyPartSelectionGrid(
+                                        selectedBodyParts: model.selectedBodyParts,
+                                        onBodyPartToggle: model.addOrRemoveBodyPart,
                                       ),
                                     ],
                                   ),
