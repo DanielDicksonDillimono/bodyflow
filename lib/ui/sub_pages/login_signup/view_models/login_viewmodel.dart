@@ -13,6 +13,6 @@ class LoginViewmodel {
 
   void goToPasswordRecovery(BuildContext context) {
     // Implement password recovery logic here
-    context.go(Routes.passwordRecovery);
+    context.push(Routes.passwordRecovery);
   }
 }

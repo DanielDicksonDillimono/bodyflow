@@ -1,6 +1,8 @@
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePageViewmodel extends ChangeNotifier {
   ProfilePageViewmodel();
@@ -73,8 +75,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
 
   void signIn(BuildContext context) {
     // Implement sign-in logic here
-    //context.go(Routes.login);
-    //Navigator.pushNamed(context, Routes.login);
+    context.push(Routes.login);
   }
 
   void signOut() {

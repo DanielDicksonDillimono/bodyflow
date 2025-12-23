@@ -1,4 +1,5 @@
 import 'package:bodyflow/domain/models/exercise.dart';
+import 'package:bodyflow/domain/models/workout.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
@@ -7,8 +8,7 @@ import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
-import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
-import 'package:bodyflow/domain/models/exercise.dart';
+import 'package:bodyflow/ui/sub_pages/workout/widgets/workout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
@@ -50,9 +50,7 @@ GoRouter router() => GoRouter(
           return buildPageWithPlatformTransitions(
             context: context,
             state: state,
-            child: Scaffold(
-              body: Center(child: Text('Exercise not found')),
-            ),
+            child: Scaffold(body: Center(child: Text('Exercise not found'))),
           );
         }
         return buildPageWithPlatformTransitions(
@@ -62,17 +60,26 @@ GoRouter router() => GoRouter(
         );
       },
     ),
+    //this is the new route for workout page
     GoRoute(
-      path: Routes.exercise,
-      builder: (context, state) {
-        final exercise = state.extra as Exercise?;
-        if (exercise == null) {
-          // Navigate back if exercise is null
-          return const Scaffold(
-            body: Center(child: Text('Exercise not found')),
-          );
-        }
-        return ExercisePage(exercise: exercise);
+      path: Routes.workout,
+      pageBuilder: (context, state) {
+        final workout = state.extra as Workout?;
+        // if (workout == null) {
+        //   // Navigate back if workout is null
+        //   //return const Scaffold(body: Center(child: Text('Workout not found')));
+
+        //   return buildPageWithPlatformTransitions(
+        //     context: context,
+        //     state: state,
+        //     child: Scaffold(body: Center(child: Text('Workout not found'))),
+        //   );
+        // }
+        return buildPageWithPlatformTransitions(
+          context: context,
+          state: state,
+          child: WorkoutPage(),
+        );
       },
     ),
     StatefulShellRoute.indexedStack(
@@ -83,9 +90,11 @@ GoRouter router() => GoRouter(
           routes: [
             GoRoute(
               path: Routes.home,
-              builder: (context, state) {
-                return HomePage();
-              },
+              pageBuilder: (context, state) => buildPageWithPlatformTransitions(
+                context: context,
+                state: state,
+                child: HomePage(),
+              ),
             ),
           ],
         ),
@@ -93,9 +102,11 @@ GoRouter router() => GoRouter(
           routes: [
             GoRoute(
               path: Routes.generate,
-              builder: (context, state) {
-                return GeneratorPage();
-              },
+              pageBuilder: (context, state) => buildPageWithPlatformTransitions(
+                context: context,
+                state: state,
+                child: GeneratorPage(),
+              ),
             ),
           ],
         ),
@@ -103,7 +114,11 @@ GoRouter router() => GoRouter(
           routes: [
             GoRoute(
               path: Routes.profile,
-              builder: (context, state) => ProfilePage(),
+              pageBuilder: (context, state) => buildPageWithPlatformTransitions(
+                context: context,
+                state: state,
+                child: ProfilePage(),
+              ),
             ),
           ],
         ),
@@ -128,8 +143,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       return Routes.generate; // Redirect to generator page
     case Routes.profile:
       return Routes.profile; // Redirect to profile page
-    case Routes.exercise:
-      return Routes.exercise; // Redirect to exercise page
+    case Routes.workout:
+      return Routes.workout; // Redirect to workout page
     default:
       return Routes.home; // Default redirect to home page
   }

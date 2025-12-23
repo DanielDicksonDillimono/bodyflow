@@ -1,3 +1,4 @@
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -58,7 +59,7 @@ class LoginPage extends StatelessWidget {
                           const Text("Don't have an account?"),
                           TextButton(
                             onPressed: () {
-                              context.go('/signup');
+                              context.push(Routes.signUp);
                               // Handle navigation to signup page
                             },
                             child: Text(

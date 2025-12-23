@@ -1,3 +1,4 @@
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -69,7 +70,7 @@ class CreateAccountPage extends StatelessWidget {
                       const SizedBox(height: 16.0),
                       TextButton(
                         onPressed: () {
-                          context.go('/login');
+                          context.push(Routes.login);
                         },
                         child: const Text('Already have an account'),
                       ),

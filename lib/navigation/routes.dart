@@ -8,4 +8,5 @@ abstract class Routes {
   static const profile = '/profile';
   static const generate = '/generate';
   static const exercise = '/exercise';
+  static const workout = '/workout';
 }
