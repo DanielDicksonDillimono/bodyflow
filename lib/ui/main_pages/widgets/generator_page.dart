@@ -6,78 +6,32 @@ import 'package:bodyflow/ui/main_pages/widgets/day_selection_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 
-class GeneratorPage extends StatelessWidget {
-  GeneratorPage({super.key});
+class GeneratorPage extends StatefulWidget {
+  const GeneratorPage({super.key});
 
-  final GeneratorPageViewModel model = GeneratorPageViewModel();
+  @override
+  State<GeneratorPage> createState() => _GeneratorPageState();
+}
+
+class _GeneratorPageState extends State<GeneratorPage> {
+  late final GeneratorPageViewModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    model = GeneratorPageViewModel();
+  }
+
+  @override
+  void dispose() {
+    model.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //final double height = MediaQuery.of(context).size.height * 0.8;
     return Scaffold(
       body: SafeArea(
-        // child: CustomScrollView(
-        //   slivers: [
-        //     SliverPersistentHeader(
-        //       delegate: GeneratorPageHeader(height),
-        //       pinned: true,
-        //     ),
-        //     ListenableBuilder(
-        //       listenable: model,
-        //       builder: (context, child) => SliverFloatingHeader(
-        //         child: Padding(
-        //           padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-        //           child: Row(
-        //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-        //             children: [
-        //               ElevatedButton(
-        //                 onPressed: () {
-        //                   model.setActivityAsSession();
-        //                 },
-        //                 style: ButtonStyle(
-        //                   backgroundColor: WidgetStateProperty.all(
-        //                     model.activityType == ActivityType.session
-        //                         ? Theme.of(context).colorScheme.primary
-        //                         : Theme.of(
-        //                             context,
-        //                           ).colorScheme.primaryContainer,
-        //                   ),
-        //                 ),
-        //                 child: Text('Session'),
-        //               ),
-        //               ElevatedButton(
-        //                 onPressed: () {
-        //                   model.setActivityAsSchedule();
-        //                 },
-        //                 style: ButtonStyle(
-        //                   backgroundColor: WidgetStateProperty.all(
-        //                     model.activityType == ActivityType.schedule
-        //                         ? Theme.of(context).colorScheme.primary
-        //                         : Theme.of(
-        //                             context,
-        //                           ).colorScheme.primaryContainer,
-        //                   ),
-        //                 ),
-        //                 child: Text('Schedule'),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     SliverList.builder(
-        //       itemCount: model.items.length,
-        //       itemBuilder: (context, index) {
-        //         final item = model.items[index];
-        //         return ListTile(
-        //           title: Text(item.title ?? ''),
-        //           subtitle: Text(item.subtitle ?? ''),
-        //         );
-        //       },
-        //     ),
-        //   ],
-        // ),
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -86,7 +40,7 @@ class GeneratorPage extends StatelessWidget {
             listenable: model,
             builder: (context, value) {
               return model.isGenerating
-                  ? Loading()
+                  ? const Loading()
                   : SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +48,7 @@ class GeneratorPage extends StatelessWidget {
                           Container(
                             height: 200,
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage('assets/images/barbell.jpg'),
                                 fit: BoxFit.cover,
@@ -169,7 +123,7 @@ class GeneratorPage extends StatelessWidget {
                                     elevation: WidgetStatePropertyAll(0),
                                   ),
                                   child: Text(
-                                    'Session',
+                                    'Workout',
                                     style: TextStyle(
                                       color:
                                           model.activityType ==
@@ -326,12 +280,12 @@ class GeneratorPage extends StatelessWidget {
       floatingActionButton: ListenableBuilder(
         listenable: model,
         builder: (context, value) => model.isGenerating
-            ? SizedBox()
+            ? const SizedBox()
             : FloatingActionButton.extended(
                 onPressed: () {
-                  model.generateWorkout();
+                  model.generateWorkout(context);
                 },
-                label: Text('Generate'),
+                label: const Text('Generate'),
                 icon: const Icon(Icons.fitness_center),
               ),
       ),

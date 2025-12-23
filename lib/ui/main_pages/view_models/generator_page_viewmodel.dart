@@ -93,20 +93,32 @@ class GeneratorPageViewModel with ChangeNotifier {
     );
   }
 
-  Future<void> generateWorkout() async {
+  Future<void> generateWorkout(BuildContext context) async {
     // Validate selections based on activity type
     if (_selectedBodyParts.isEmpty) {
-      // Cannot generate without body part selection
+      _showValidationError(
+        context,
+        'No body parts selected',
+        'Please select at least one body part to generate a workout.',
+      );
       return;
     }
     
     if (_activityType == ActivityType.schedule && _selectedDays.isEmpty) {
-      // Cannot generate schedule without day selection
+      _showValidationError(
+        context,
+        'No days selected',
+        'Please select at least one day for your schedule.',
+      );
       return;
     }
     
     if (_activityType == ActivityType.session && _sessionLengthInMinutes <= 0) {
-      // Cannot generate session without valid duration
+      _showValidationError(
+        context,
+        'Invalid duration',
+        'Please enter a valid session length greater than 0 minutes.',
+      );
       return;
     }
     
@@ -116,6 +128,26 @@ class GeneratorPageViewModel with ChangeNotifier {
     setIsGenerating(false);
     
     // TODO: Implement actual workout generation logic
+  }
+
+  void _showValidationError(
+    BuildContext context,
+    String title,
+    String message,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
