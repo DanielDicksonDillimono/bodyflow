@@ -113,13 +113,17 @@ class GeneratorPageViewModel with ChangeNotifier {
       return;
     }
     
-    if (_activityType == ActivityType.session && _sessionLengthInMinutes <= 0) {
-      _showValidationError(
-        context,
-        'Invalid duration',
-        'Please enter a valid session length greater than 0 minutes.',
-      );
-      return;
+    if (_activityType == ActivityType.session) {
+      final minutes = int.tryParse(timeController.text) ?? 0;
+      if (minutes <= 0) {
+        _showValidationError(
+          context,
+          'Invalid duration',
+          'Please enter a valid session length greater than 0 minutes.',
+        );
+        return;
+      }
+      _sessionLengthInMinutes = minutes;
     }
     
     setIsGenerating(true);

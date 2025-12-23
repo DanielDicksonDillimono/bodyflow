@@ -244,11 +244,11 @@ class _GeneratorPageState extends State<GeneratorPage> {
                                         onChanged: (value) {
                                           final minutes =
                                               int.tryParse(value) ?? 0;
-                                          minutes > 120
-                                              ? model.showGetALifeMessage(
-                                                  context,
-                                                )
-                                              : model.setSessionLength(minutes);
+                                          if (minutes > 120) {
+                                            model.showGetALifeMessage(context);
+                                          } else if (minutes > 0) {
+                                            model.setSessionLength(minutes);
+                                          }
                                         },
                                       ),
                                       const SizedBox(height: 32),
