@@ -1,0 +1,19 @@
+/// Configuration template for the AI service
+/// 
+/// SETUP INSTRUCTIONS:
+/// 1. Copy this file to ai_config.dart (same directory)
+///    cp lib/data/services/ai_config.dart.template lib/data/services/ai_config.dart
+/// 2. Get a Gemini API key from https://aistudio.google.com/app/apikey
+/// 3. In ai_config.dart, replace 'YOUR_API_KEY_HERE' with your actual API key
+/// 
+/// NOTE: ai_config.dart is gitignored to protect your API key
+class AiConfig {
+  /// Gemini API key for workout generation
+  /// 
+  /// To enable AI features, replace 'YOUR_API_KEY_HERE' with your actual API key
+  static const String geminiApiKey = 'YOUR_API_KEY_HERE';
+  
+  /// Check if the API key is configured
+  static bool get isConfigured => 
+      geminiApiKey != 'YOUR_API_KEY_HERE' && geminiApiKey.isNotEmpty;
+}

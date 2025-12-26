@@ -1,3 +1,5 @@
+import 'package:bodyflow/data/services/ai_config.dart';
+import 'package:bodyflow/data/services/ai_workout_service.dart';
 import 'package:bodyflow/ui/core/loading.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
@@ -19,7 +21,12 @@ class _GeneratorPageState extends State<GeneratorPage> {
   @override
   void initState() {
     super.initState();
-    model = GeneratorPageViewModel();
+    // Initialize AI service if API key is configured
+    AiWorkoutService? aiService;
+    if (AiConfig.isConfigured) {
+      aiService = AiWorkoutService(AiConfig.geminiApiKey);
+    }
+    model = GeneratorPageViewModel(aiService: aiService);
   }
 
   @override
