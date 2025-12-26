@@ -167,10 +167,12 @@ class GeneratorPageViewModel with ChangeNotifier {
       }
     } catch (e) {
       setIsGenerating(false);
+      // Log the actual error for debugging
+      debugPrint('Workout generation error: $e');
       _showValidationError(
         context,
         'Generation Failed',
-        'Failed to generate workout: ${e.toString()}',
+        'Unable to generate workout at this time. Please check your internet connection and try again.',
       );
     }
   }

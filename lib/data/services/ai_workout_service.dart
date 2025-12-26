@@ -4,6 +4,10 @@ import 'package:bodyflow/domain/models/workout.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class AiWorkoutService {
+  static const String _defaultWorkoutImage = 'assets/images/barbell.jpg';
+  static const int _defaultScheduleDuration = 60;
+  static final RegExp _digitExtractor = RegExp(r'[^\d]');
+  
   final GenerativeModel _model;
 
   AiWorkoutService(String apiKey)
@@ -187,10 +191,10 @@ Keep it concise and practical.
         currentInstructions = null;
       } else if (line.toLowerCase().startsWith('sets:')) {
         final setsStr = line.substring(5).trim();
-        currentSets = int.tryParse(setsStr.replaceAll(RegExp(r'[^\d]'), ''));
+        currentSets = int.tryParse(setsStr.replaceAll(_digitExtractor, ''));
       } else if (line.toLowerCase().startsWith('reps:')) {
         final repsStr = line.substring(5).trim();
-        currentReps = int.tryParse(repsStr.replaceAll(RegExp(r'[^\d]'), ''));
+        currentReps = int.tryParse(repsStr.replaceAll(_digitExtractor, ''));
       } else if (line.toLowerCase().startsWith('instructions:')) {
         currentInstructions = line.substring('instructions:'.length).trim();
       }
@@ -210,7 +214,7 @@ Keep it concise and practical.
     return Workout(
       name: workoutName,
       description: description,
-      imagePath: 'assets/images/barbell.jpg',
+      imagePath: _defaultWorkoutImage,
       durationMinutes: durationMinutes,
       exercises: exercises.isNotEmpty ? exercises : null,
     );
@@ -248,7 +252,7 @@ Keep it concise and practical.
           description = line.substring('DESCRIPTION:'.length).trim();
         } else if (line.startsWith('DURATION:')) {
           final durationStr = line.substring('DURATION:'.length).trim();
-          durationMinutes = int.tryParse(durationStr.replaceAll(RegExp(r'[^\d]'), '')) ?? 60;
+          durationMinutes = int.tryParse(durationStr.replaceAll(_digitExtractor, '')) ?? _defaultScheduleDuration;
         } else if (RegExp(r'^\d+\.\s+').hasMatch(line)) {
           // Save previous exercise if exists
           if (currentExerciseName != null) {
@@ -268,10 +272,10 @@ Keep it concise and practical.
           currentInstructions = null;
         } else if (line.toLowerCase().startsWith('sets:')) {
           final setsStr = line.substring(5).trim();
-          currentSets = int.tryParse(setsStr.replaceAll(RegExp(r'[^\d]'), ''));
+          currentSets = int.tryParse(setsStr.replaceAll(_digitExtractor, ''));
         } else if (line.toLowerCase().startsWith('reps:')) {
           final repsStr = line.substring(5).trim();
-          currentReps = int.tryParse(repsStr.replaceAll(RegExp(r'[^\d]'), ''));
+          currentReps = int.tryParse(repsStr.replaceAll(_digitExtractor, ''));
         } else if (line.toLowerCase().startsWith('instructions:')) {
           currentInstructions = line.substring('instructions:'.length).trim();
         }
@@ -293,7 +297,7 @@ Keep it concise and practical.
         scheduleMap[currentDay] = Workout(
           name: workoutName,
           description: description,
-          imagePath: 'assets/images/barbell.jpg',
+          imagePath: _defaultWorkoutImage,
           durationMinutes: durationMinutes,
           exercises: exercises.isNotEmpty ? exercises : null,
         );
@@ -306,7 +310,7 @@ Keep it concise and practical.
         scheduleMap[day] = Workout(
           name: '${_dayToString(day)} Workout',
           description: 'Rest day or light activity',
-          imagePath: 'assets/images/barbell.jpg',
+          imagePath: _defaultWorkoutImage,
           durationMinutes: 30,
         );
       }
