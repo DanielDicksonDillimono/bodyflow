@@ -1,16 +1,70 @@
 # bodyflow
 
-A new Flutter project.
+Create time-efficient workout plans with AI-powered generation.
+
+## Features
+
+- **AI-Powered Workout Generation**: Generate personalized workout sessions based on target body parts and duration
+- **Weekly Schedule Creation**: Create balanced training schedules across multiple days
+- **Firebase Integration**: User authentication and data persistence
+- **Modern UI**: Clean, intuitive interface for workout planning
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK (^3.8.1)
+- Firebase account for authentication
+- Google Gemini API key for AI workout generation
+
+### Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/DanielDicksonDillimono/bodyflow.git
+   cd bodyflow
+   ```
+
+2. **Install dependencies**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Configure AI Workout Generation**
+   
+   See [AI_SETUP.md](AI_SETUP.md) for detailed instructions on setting up the Gemini AI integration.
+   
+   Quick steps:
+   ```bash
+   cp lib/data/services/ai_config.dart.template lib/data/services/ai_config.dart
+   # Edit ai_config.dart and add your Gemini API key
+   ```
+
+4. **Run the application**
+   ```bash
+   flutter run
+   ```
+
+## Project Structure
+
+- `lib/data/` - Data layer (services, database)
+- `lib/domain/` - Domain models and business logic
+- `lib/ui/` - User interface components
+- `lib/navigation/` - App routing and navigation
+
+## AI Workout Generation
+
+The app uses Google's Gemini AI model to generate:
+- Custom workout sessions with exercises, sets, and reps
+- Weekly training schedules with balanced splits
+- Personalized exercise instructions
+
+For more information, see [AI_SETUP.md](AI_SETUP.md).
+
+## Resources
+
+For help getting started with Flutter development:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Flutter online documentation](https://docs.flutter.dev/)
