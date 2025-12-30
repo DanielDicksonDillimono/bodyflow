@@ -1,4 +1,5 @@
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ class LoginPage extends StatelessWidget {
   final LoginViewmodel model = LoginViewmodel();
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -18,7 +20,7 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'BODYFLOW',
+                    localization.bodyflow,
                     style: Theme.of(context).brightness == Brightness.dark
                         ? Theme.of(context).textTheme.headlineLarge
                         : Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -27,15 +29,15 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 50.0),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+                    decoration: InputDecoration(
+                      labelText: localization.email,
                       prefixIcon: Icon(Icons.email_outlined),
                     ),
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: localization.password,
                       prefixIcon: const Icon(Icons.lock_outline),
                     ),
                   ),
@@ -49,21 +51,21 @@ class LoginPage extends StatelessWidget {
                             // Handle login logic here
                           },
                           style: Theme.of(context).elevatedButtonTheme.style,
-                          child: const Text('Login'),
+                          child: Text(localization.login),
                         ),
                       ),
                       const SizedBox(height: 16.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?"),
+                          Text(localization.dontHaveAccount),
                           TextButton(
                             onPressed: () {
                               context.push(Routes.signUp);
                               // Handle navigation to signup page
                             },
                             child: Text(
-                              'Sign Up',
+                              localization.signUp,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
@@ -75,7 +77,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 16.0),
                       TextButton(
                         onPressed: () => model.goToPasswordRecovery(context),
-                        child: const Text('Forgot Password?'),
+                        child: Text(localization.forgotPassword),
                       ),
                     ],
                   ),

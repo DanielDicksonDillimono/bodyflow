@@ -1,3 +1,4 @@
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,13 +7,14 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.create), label: 'Create'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Me'),
+        destinations: [
+          NavigationDestination(icon: Icon(Icons.home), label: localization.home),
+          NavigationDestination(icon: Icon(Icons.create), label: localization.create),
+          NavigationDestination(icon: Icon(Icons.person), label: localization.me),
         ],
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (int index) {

@@ -1,4 +1,5 @@
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +8,7 @@ class CreateAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -17,13 +19,13 @@ class CreateAccountPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'BODYFLOW',
+                    localization.bodyflow,
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   SizedBox(height: 50.0),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+                    decoration: InputDecoration(
+                      labelText: localization.email,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
@@ -32,8 +34,8 @@ class CreateAccountPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+                    decoration: InputDecoration(
+                      labelText: localization.password,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
@@ -43,8 +45,8 @@ class CreateAccountPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Repeat Password',
+                    decoration: InputDecoration(
+                      labelText: localization.repeatPassword,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
@@ -62,7 +64,7 @@ class CreateAccountPage extends StatelessWidget {
                             // Handle login logic here
                           },
                           style: Theme.of(context).elevatedButtonTheme.style,
-                          child: const Text('Create Account'),
+                          child: Text(localization.createAccount),
                         ),
                       ),
                       const SizedBox(height: 16.0),
@@ -72,7 +74,7 @@ class CreateAccountPage extends StatelessWidget {
                         onPressed: () {
                           context.push(Routes.login);
                         },
-                        child: const Text('Already have an account'),
+                        child: Text(localization.alreadyHaveAccount),
                       ),
                     ],
                   ),

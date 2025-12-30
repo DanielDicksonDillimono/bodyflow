@@ -1,6 +1,7 @@
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,6 +23,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
   }
 
   void showAboutPage(BuildContext context) {
+    final localization = AppLocalization.of(context);
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -45,12 +47,12 @@ class ProfilePageViewmodel extends ChangeNotifier {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 16),
-              TextButton(onPressed: openWebsite, child: Text('Visit Website')),
+              TextButton(onPressed: openWebsite, child: Text(localization.visitWebsite)),
               TextButton(
                 onPressed: () {
                   showLicensePage(
                     context: context,
-                    applicationName: 'BodyFlow',
+                    applicationName: localization.appName,
                     applicationVersion: '1.0.0',
                     applicationLegalese:
                         '© 2025 DeeFormed All rights reserved.',
@@ -60,7 +62,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
                     ),
                   );
                 },
-                child: Text('Licenses'),
+                child: Text(localization.licenses),
               ),
             ],
           ),
