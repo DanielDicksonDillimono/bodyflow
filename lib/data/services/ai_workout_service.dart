@@ -1,29 +1,29 @@
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/domain/models/workout.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:firebase_ai/firebase_ai.dart';
 
 class AiWorkoutService {
   static const String _defaultWorkoutImage = 'assets/images/barbell.jpg';
   static const int _defaultScheduleDuration = 60;
   static final RegExp _digitExtractor = RegExp(r'[^\d]');
-  
+
   final GenerativeModel _model;
 
   AiWorkoutService(String apiKey)
-      : _model = GenerativeModel(
-          model: 'gemini-1.5-flash',
-          apiKey: apiKey,
-        );
+    : _model = FirebaseAI.googleAI().generativeModel(model: 'google-2.5-flash');
 
   /// Generates a single workout session based on body parts and duration
   Future<Workout> generateWorkout({
     required List<BodyPart> bodyParts,
     required int durationMinutes,
   }) async {
-    final bodyPartsStr = bodyParts.map((bp) => _bodyPartToString(bp)).join(', ');
-    
-    final prompt = '''
+    final bodyPartsStr = bodyParts
+        .map((bp) => _bodyPartToString(bp))
+        .join(', ');
+
+    final prompt =
+        '''
 Generate a workout session with the following specifications:
 - Target body parts: $bodyPartsStr
 - Duration: $durationMinutes minutes
@@ -52,7 +52,7 @@ Keep it concise and practical.
 
     final content = [Content.text(prompt)];
     final response = await _model.generateContent(content);
-    
+
     if (response.text == null) {
       throw Exception('Failed to generate workout');
     }
@@ -65,10 +65,13 @@ Keep it concise and practical.
     required List<BodyPart> bodyParts,
     required List<Days> days,
   }) async {
-    final bodyPartsStr = bodyParts.map((bp) => _bodyPartToString(bp)).join(', ');
+    final bodyPartsStr = bodyParts
+        .map((bp) => _bodyPartToString(bp))
+        .join(', ');
     final daysStr = days.map((d) => _dayToString(d)).join(', ');
-    
-    final prompt = '''
+
+    final prompt =
+        '''
 Generate a weekly workout schedule with the following specifications:
 - Target body parts: $bodyPartsStr
 - Training days: $daysStr
@@ -104,7 +107,7 @@ Keep it concise and practical.
 
     final content = [Content.text(prompt)];
     final response = await _model.generateContent(content);
-    
+
     if (response.text == null) {
       throw Exception('Failed to generate schedule');
     }
@@ -154,7 +157,11 @@ Keep it concise and practical.
     }
   }
 
-  Workout _parseWorkoutResponse(String response, int durationMinutes, String bodyPartsStr) {
+  Workout _parseWorkoutResponse(
+    String response,
+    int durationMinutes,
+    String bodyPartsStr,
+  ) {
     final lines = response.split('\n');
     String workoutName = 'Custom Workout';
     String description = 'AI-generated workout for $bodyPartsStr';
@@ -167,7 +174,7 @@ Keep it concise and practical.
 
     for (var line in lines) {
       line = line.trim();
-      
+
       if (line.startsWith('WORKOUT NAME:')) {
         workoutName = line.substring('WORKOUT NAME:'.length).trim();
       } else if (line.startsWith('DESCRIPTION:')) {
@@ -175,17 +182,21 @@ Keep it concise and practical.
       } else if (RegExp(r'^\d+\.\s+').hasMatch(line)) {
         // Save previous exercise if exists
         if (currentExerciseName != null) {
-          exercises.add(Exercise(
-            name: currentExerciseName,
-            imagePath: null,
-            sets: currentSets,
-            reps: currentReps,
-            instructions: currentInstructions,
-          ));
+          exercises.add(
+            Exercise(
+              name: currentExerciseName,
+              imagePath: null,
+              sets: currentSets,
+              reps: currentReps,
+              instructions: currentInstructions,
+            ),
+          );
         }
-        
+
         // Start new exercise
-        currentExerciseName = line.replaceFirst(RegExp(r'^\d+\.\s+'), '').trim();
+        currentExerciseName = line
+            .replaceFirst(RegExp(r'^\d+\.\s+'), '')
+            .trim();
         currentSets = null;
         currentReps = null;
         currentInstructions = null;
@@ -202,13 +213,15 @@ Keep it concise and practical.
 
     // Add the last exercise
     if (currentExerciseName != null) {
-      exercises.add(Exercise(
-        name: currentExerciseName,
-        imagePath: null,
-        sets: currentSets,
-        reps: currentReps,
-        instructions: currentInstructions,
-      ));
+      exercises.add(
+        Exercise(
+          name: currentExerciseName,
+          imagePath: null,
+          sets: currentSets,
+          reps: currentReps,
+          instructions: currentInstructions,
+        ),
+      );
     }
 
     return Workout(
@@ -242,7 +255,7 @@ Keep it concise and practical.
 
       for (var line in lines) {
         line = line.trim();
-        
+
         if (line.startsWith('DAY:')) {
           final dayStr = line.substring('DAY:'.length).trim().toLowerCase();
           currentDay = _parseDayFromString(dayStr);
@@ -252,21 +265,27 @@ Keep it concise and practical.
           description = line.substring('DESCRIPTION:'.length).trim();
         } else if (line.startsWith('DURATION:')) {
           final durationStr = line.substring('DURATION:'.length).trim();
-          durationMinutes = int.tryParse(durationStr.replaceAll(_digitExtractor, '')) ?? _defaultScheduleDuration;
+          durationMinutes =
+              int.tryParse(durationStr.replaceAll(_digitExtractor, '')) ??
+              _defaultScheduleDuration;
         } else if (RegExp(r'^\d+\.\s+').hasMatch(line)) {
           // Save previous exercise if exists
           if (currentExerciseName != null) {
-            exercises.add(Exercise(
-              name: currentExerciseName,
-              imagePath: null,
-              sets: currentSets,
-              reps: currentReps,
-              instructions: currentInstructions,
-            ));
+            exercises.add(
+              Exercise(
+                name: currentExerciseName,
+                imagePath: null,
+                sets: currentSets,
+                reps: currentReps,
+                instructions: currentInstructions,
+              ),
+            );
           }
-          
+
           // Start new exercise
-          currentExerciseName = line.replaceFirst(RegExp(r'^\d+\.\s+'), '').trim();
+          currentExerciseName = line
+              .replaceFirst(RegExp(r'^\d+\.\s+'), '')
+              .trim();
           currentSets = null;
           currentReps = null;
           currentInstructions = null;
@@ -283,13 +302,15 @@ Keep it concise and practical.
 
       // Add the last exercise
       if (currentExerciseName != null) {
-        exercises.add(Exercise(
-          name: currentExerciseName,
-          imagePath: null,
-          sets: currentSets,
-          reps: currentReps,
-          instructions: currentInstructions,
-        ));
+        exercises.add(
+          Exercise(
+            name: currentExerciseName,
+            imagePath: null,
+            sets: currentSets,
+            reps: currentReps,
+            instructions: currentInstructions,
+          ),
+        );
       }
 
       // Add workout to schedule if we have a valid day

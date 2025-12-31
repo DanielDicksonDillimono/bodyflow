@@ -1,4 +1,3 @@
-import 'package:bodyflow/data/services/ai_config.dart';
 import 'package:bodyflow/data/services/ai_workout_service.dart';
 import 'package:bodyflow/ui/core/loading.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';

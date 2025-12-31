@@ -39,9 +39,10 @@ dependencies:
   google_fonts: ^6.3.2
   provider: ^6.1.5+1
   firebase_auth: ^6.1.2
-  firebase_core: ^4.2.1
+  firebase_core: ^4.3.0
   cloud_firestore: ^6.1.0
   google_generative_ai: ^0.4.6
+  firebase_ai: ^3.6.1
 
 dev_dependencies:
   flutter_test:
