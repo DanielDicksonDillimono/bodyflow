@@ -1,4 +1,3 @@
-import 'package:bodyflow/data/services/ai_workout_service.dart';
 import 'package:bodyflow/ui/core/loading.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
@@ -7,32 +6,9 @@ import 'package:bodyflow/ui/main_pages/widgets/day_selection_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 
-class GeneratorPage extends StatefulWidget {
-  const GeneratorPage({super.key});
-
-  @override
-  State<GeneratorPage> createState() => _GeneratorPageState();
-}
-
-class _GeneratorPageState extends State<GeneratorPage> {
-  late final GeneratorPageViewModel model;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize AI service if API key is configured
-    AiWorkoutService? aiService;
-    if (AiConfig.isConfigured) {
-      aiService = AiWorkoutService(AiConfig.geminiApiKey);
-    }
-    model = GeneratorPageViewModel(aiService: aiService);
-  }
-
-  @override
-  void dispose() {
-    model.dispose();
-    super.dispose();
-  }
+class GeneratorPage extends StatelessWidget {
+  final GeneratorPageViewModel model;
+  const GeneratorPage({required this.model, super.key});
 
   @override
   Widget build(BuildContext context) {

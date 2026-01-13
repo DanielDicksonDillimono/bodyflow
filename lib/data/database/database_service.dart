@@ -58,4 +58,26 @@ class DatabaseService {
       throw Exception('Failed to delete user: $e');
     }
   }
+
+  Future<void> saveSession(Map<String, dynamic> sessionData) async {
+    try {
+      await usersCollection
+          .doc(_user!.uid)
+          .collection('Sessions')
+          .add(sessionData);
+    } catch (e) {
+      throw Exception('Failed to save session: $e');
+    }
+  }
+
+  Future<void> saveSchedule(Map<String, dynamic> scheduleData) async {
+    try {
+      await usersCollection
+          .doc(_user!.uid)
+          .collection('Schedules')
+          .add(scheduleData);
+    } catch (e) {
+      throw Exception('Failed to save schedule: $e');
+    }
+  }
 }

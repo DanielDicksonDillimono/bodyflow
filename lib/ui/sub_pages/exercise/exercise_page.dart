@@ -21,29 +21,15 @@ class ExercisePage extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
-                      image: exercise.imagePath != null
-                          ? DecorationImage(
-                              image: AssetImage(exercise.imagePath!),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withValues(alpha: 0.3),
-                                BlendMode.darken,
-                              ),
-                            )
-                          : null,
-                      color: exercise.imagePath == null
-                          ? Theme.of(context).colorScheme.primaryContainer
-                          : null,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
-                    child: exercise.imagePath == null
-                        ? Center(
-                            child: Icon(
-                              Icons.fitness_center,
-                              size: 80,
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
-                            ),
-                          )
-                        : null,
+                    child: Center(
+                      child: Icon(
+                        Icons.fitness_center,
+                        size: 80,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                    ),
                   ),
                   // Back Button
                   Positioned(
@@ -77,10 +63,8 @@ class ExercisePage extends StatelessWidget {
                     // Exercise Title
                     Text(
                       exercise.name.toUpperCase(),
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 32,
-                          ),
+                      style: Theme.of(context).textTheme.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.bold, fontSize: 32),
                     ),
                     SizedBox(height: Dimens.paddingVerticalSmall),
                     // Difficulty badge
@@ -91,12 +75,16 @@ class ExercisePage extends StatelessWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: _getDifficultyColor(context, exercise.difficulty!),
+                          color: _getDifficultyColor(
+                            context,
+                            exercise.difficulty!,
+                          ),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Text(
                           exercise.difficulty!.toUpperCase(),
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -113,7 +101,9 @@ class ExercisePage extends StatelessWidget {
                       SizedBox(height: Dimens.paddingVertical),
                     ],
                     // Exercise Stats
-                    if (exercise.sets != null || exercise.reps != null || exercise.durationMinutes != null)
+                    if (exercise.sets != null ||
+                        exercise.reps != null ||
+                        exercise.durationMinutes != null)
                       _buildStatsSection(context),
                     // Instructions
                     if (exercise.instructions != null) ...[
@@ -121,8 +111,8 @@ class ExercisePage extends StatelessWidget {
                       Text(
                         'Instructions',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: Dimens.paddingVerticalSmall),
                       Text(
@@ -185,23 +175,16 @@ class ExercisePage extends StatelessWidget {
   }) {
     return Column(
       children: [
-        Icon(
-          icon,
-          size: 32,
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        Icon(icon, size: 32, color: Theme.of(context).colorScheme.primary),
         const SizedBox(height: 8),
         Text(
           value,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 4),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }

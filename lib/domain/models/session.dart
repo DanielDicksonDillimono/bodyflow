@@ -1,13 +1,13 @@
 import 'package:bodyflow/domain/models/exercise.dart';
 
-class Workout {
+class Session {
   final String name;
   final String description;
   final String imagePath;
   final int? durationMinutes;
   final List<Exercise>? exercises;
 
-  Workout({
+  Session({
     required this.name,
     required this.description,
     required this.imagePath,

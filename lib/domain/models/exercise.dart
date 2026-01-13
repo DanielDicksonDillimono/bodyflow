@@ -1,7 +1,6 @@
 class Exercise {
   final String name;
   final String? description;
-  final String? imagePath;
   final int? sets;
   final int? reps;
   final int? durationMinutes;
@@ -10,7 +9,6 @@ class Exercise {
 
   Exercise({
     required this.name,
-    required this.imagePath,
     this.description,
     this.sets,
     this.reps,

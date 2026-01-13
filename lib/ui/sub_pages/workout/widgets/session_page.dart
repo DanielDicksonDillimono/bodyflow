@@ -1,47 +1,15 @@
 import 'package:bodyflow/domain/models/exercise.dart';
+import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/ui/sub_pages/workout/view_model/workout_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class WorkoutPage extends StatelessWidget {
-  final WorkoutPageViewmodel viewModel = WorkoutPageViewmodel();
+class SessionPage extends StatelessWidget {
+  final Session session;
 
-  WorkoutPage({super.key});
-
-  List<Exercise> _getExercises() {
-    return [
-      Exercise(
-        name: 'Cardio',
-        imagePath: 'assets/images/threadmill.jpg',
-        durationMinutes: 10,
-        description: 'Cardio warm-up exercise',
-        difficulty: 'Easy',
-      ),
-      Exercise(
-        name: 'Squats',
-        imagePath: 'assets/images/frontSquat.jpg',
-        sets: 5,
-        reps: 10,
-        description:
-            'Lower body exercise targeting quads, hamstrings, and glutes.',
-        instructions:
-            'Stand shoulder-width apart. Lower by bending knees and hips. Keep back straight. Return to start.',
-        difficulty: 'Medium',
-      ),
-      Exercise(
-        name: 'Deadlifts',
-        imagePath: 'assets/images/barbell.jpg',
-        sets: 3,
-        reps: 12,
-        description: 'Full body compound exercise for strength building.',
-        instructions:
-            'Stand with feet hip-width. Bend at hips and knees, grip bar. Lift by extending hips and knees.',
-        difficulty: 'Hard',
-      ),
-    ];
-  }
+  const SessionPage({required this.session, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +26,9 @@ class WorkoutPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/squat.jpg'),
+                        image: session.imagePath.isNotEmpty
+                            ? AssetImage(session.imagePath) as ImageProvider
+                            : AssetImage('assets/images/workout_hero.jpg'),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
                           Colors.black.withValues(alpha: 0.3),
@@ -98,7 +68,7 @@ class WorkoutPage extends StatelessWidget {
                     SizedBox(height: Dimens.paddingVertical),
                     // Workout Title
                     Text(
-                      'LEGS',
+                      session.name,
                       style: Theme.of(context).textTheme.headlineLarge
                           ?.copyWith(fontWeight: FontWeight.bold, fontSize: 32),
                     ),
@@ -113,7 +83,9 @@ class WorkoutPage extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          '45 minutes',
+                          session.durationMinutes != null
+                              ? '${session.durationMinutes} minutes'
+                              : 'Duration not specified',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],
@@ -131,7 +103,9 @@ class WorkoutPage extends StatelessWidget {
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'squats, deadlifts, lunges',
+                            session.exercises!
+                                .map((exercise) => exercise.name)
+                                .join(' |'),
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
@@ -147,11 +121,12 @@ class WorkoutPage extends StatelessWidget {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-                  itemCount: _getExercises().length,
+                  itemCount: session.exercises?.length ?? 0,
                   separatorBuilder: (context, index) =>
                       SizedBox(width: Dimens.paddingHorizontal),
                   itemBuilder: (context, index) {
-                    final exercise = _getExercises()[index];
+                    final exercise =
+                        session.exercises?[index] ?? Exercise(name: 'Unknown');
 
                     return _buildExerciseCard(context, exercise: exercise);
                   },
@@ -197,25 +172,17 @@ class WorkoutPage extends StatelessWidget {
               width: Dimens.textCardWidth(context),
               height: Dimens.textCardHeight(context),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: AssetImage(
-                    exercise.imagePath ?? 'assets/images/barbell.jpg',
-                  ),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withValues(alpha: 0.3),
-                    BlendMode.darken,
-                  ),
-                ),
+                color: AppColors.appBlue.withValues(alpha: 0.8),
+                borderRadius: BorderRadius.circular(8.0),
               ),
               child: Center(
                 child: Text(
                   exercise.name,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

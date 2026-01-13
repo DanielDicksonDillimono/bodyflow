@@ -1,20 +1,30 @@
-import 'package:bodyflow/data/services/ai_workout_service.dart';
+import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
-import 'package:bodyflow/domain/models/workout.dart';
+import 'package:bodyflow/domain/models/session.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GeneratorPageViewModel with ChangeNotifier {
-  final AiWorkoutService? _aiService;
-  
-  GeneratorPageViewModel({AiWorkoutService? aiService})
-      : _aiService = aiService;
-  
+  final WorkoutRepo _workoutRepo;
+
+  GeneratorPageViewModel({required WorkoutRepo workoutRepo})
+    : _workoutRepo = workoutRepo;
+
   final timeController = TextEditingController.fromValue(
     const TextEditingValue(
       text: '30',
       selection: TextSelection.collapsed(offset: 2),
     ),
   );
+
+  final weekController = TextEditingController.fromValue(
+    const TextEditingValue(
+      text: '1',
+      selection: TextSelection.collapsed(offset: 1),
+    ),
+  );
+
   bool _isGenerating = false;
 
   bool get isGenerating => _isGenerating;
@@ -25,6 +35,7 @@ class GeneratorPageViewModel with ChangeNotifier {
   ActivityType _activityType = ActivityType.session;
 
   int _sessionLengthInMinutes = 30;
+  int _numberOfWeeks = 1;
 
   int get sessionLengthInMinutes => _sessionLengthInMinutes;
 
@@ -53,6 +64,11 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   void setSessionLength(int minutes) {
     _sessionLengthInMinutes = minutes;
+    notifyListeners();
+  }
+
+  void setNumberOfWeeks(int weeks) {
+    _numberOfWeeks = weeks;
     notifyListeners();
   }
 
@@ -110,7 +126,7 @@ class GeneratorPageViewModel with ChangeNotifier {
       );
       return;
     }
-    
+
     if (_activityType == ActivityType.schedule && _selectedDays.isEmpty) {
       _showValidationError(
         context,
@@ -119,7 +135,7 @@ class GeneratorPageViewModel with ChangeNotifier {
       );
       return;
     }
-    
+
     if (_activityType == ActivityType.session) {
       final minutes = int.tryParse(timeController.text) ?? 0;
       if (minutes <= 0) {
@@ -132,39 +148,26 @@ class GeneratorPageViewModel with ChangeNotifier {
       }
       _sessionLengthInMinutes = minutes;
     }
-    
-    // Check if AI service is available
-    if (_aiService == null) {
-      _showValidationError(
-        context,
-        'AI Service Not Available',
-        'Please configure the Gemini API key to use AI-powered workout generation.',
-      );
-      return;
-    }
-    
+
     setIsGenerating(true);
-    
+
     try {
       if (_activityType == ActivityType.session) {
-        // Generate a single workout
-        final workout = await _aiService!.generateWorkout(
-          bodyParts: _selectedBodyParts,
-          durationMinutes: _sessionLengthInMinutes,
+        final workout = await _workoutRepo.generateWorkoutSession(
+          _selectedBodyParts,
+          _sessionLengthInMinutes,
         );
-        
         setIsGenerating(false);
-        _showWorkoutResult(context, workout);
+        _showWorkoutSessionResult(context, workout);
+        return;
       } else {
-        // Generate a schedule
-        final schedule = await _aiService!.generateSchedule(
+        _workoutRepo.generateWorkoutSchedule(
           bodyParts: _selectedBodyParts,
           days: _selectedDays,
+          numberOfWeeks: _numberOfWeeks,
         );
-        
-        setIsGenerating(false);
-        _showScheduleResult(context, schedule);
       }
+      setIsGenerating(false);
     } catch (e) {
       setIsGenerating(false);
       // Log the actual error for debugging
@@ -177,114 +180,119 @@ class GeneratorPageViewModel with ChangeNotifier {
     }
   }
 
-  void _showWorkoutResult(BuildContext context, Workout workout) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(workout.name),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                workout.description,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              if (workout.durationMinutes != null)
-                Text('Duration: ${workout.durationMinutes} minutes'),
-              const SizedBox(height: 16),
-              if (workout.exercises != null && workout.exercises!.isNotEmpty) ...[
-                const Text(
-                  'Exercises:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                ...workout.exercises!.map((exercise) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            exercise.name,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          if (exercise.sets != null && exercise.reps != null)
-                            Text('${exercise.sets} sets × ${exercise.reps} reps'),
-                          if (exercise.instructions != null)
-                            Text(
-                              exercise.instructions!,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                        ],
-                      ),
-                    )),
-              ],
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
+  void _showWorkoutSessionResult(BuildContext context, Session session) {
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => AlertDialog(
+    //     title: Text(workout.name),
+    //     content: SingleChildScrollView(
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         mainAxisSize: MainAxisSize.min,
+    //         children: [
+    //           Text(
+    //             workout.description,
+    //             style: const TextStyle(fontWeight: FontWeight.bold),
+    //           ),
+    //           const SizedBox(height: 8),
+    //           if (workout.durationMinutes != null)
+    //             Text('Duration: ${workout.durationMinutes} minutes'),
+    //           const SizedBox(height: 16),
+    //           if (workout.exercises != null &&
+    //               workout.exercises!.isNotEmpty) ...[
+    //             const Text(
+    //               'Exercises:',
+    //               style: TextStyle(fontWeight: FontWeight.bold),
+    //             ),
+    //             const SizedBox(height: 8),
+    //             ...workout.exercises!.map(
+    //               (exercise) => Padding(
+    //                 padding: const EdgeInsets.only(bottom: 12.0),
+    //                 child: Column(
+    //                   crossAxisAlignment: CrossAxisAlignment.start,
+    //                   children: [
+    //                     Text(
+    //                       exercise.name,
+    //                       style: const TextStyle(fontWeight: FontWeight.w600),
+    //                     ),
+    //                     if (exercise.sets != null && exercise.reps != null)
+    //                       Text('${exercise.sets} sets × ${exercise.reps} reps'),
+    //                     if (exercise.instructions != null)
+    //                       Text(
+    //                         exercise.instructions!,
+    //                         style: const TextStyle(fontSize: 12),
+    //                       ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ],
+    //       ),
+    //     ),
+    //     actions: [
+    //       TextButton(
+    //         onPressed: () => Navigator.of(context).pop(),
+    //         child: const Text('Close'),
+    //       ),
+    //     ],
+    //   ),
+    // );
+
+    context.push(Routes.session, extra: session);
   }
 
-  void _showScheduleResult(
+  void _showWorkoutScheduleResult(
     BuildContext context,
-    Map<Days, Workout> schedule,
+    Map<Days, Session> schedule,
   ) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Weekly Schedule'),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: schedule.entries.map((entry) {
-              final dayName = _getDayName(entry.key);
-              final workout = entry.value;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      dayName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(workout.name),
-                    Text(
-                      workout.description,
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    if (workout.durationMinutes != null)
-                      Text(
-                        'Duration: ${workout.durationMinutes} min',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => AlertDialog(
+    //     title: const Text('Weekly Schedule'),
+    //     content: SingleChildScrollView(
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         mainAxisSize: MainAxisSize.min,
+    //         children: schedule.entries.map((entry) {
+    //           final dayName = _getDayName(entry.key);
+    //           final workout = entry.value;
+    //           return Padding(
+    //             padding: const EdgeInsets.only(bottom: 16.0),
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: [
+    //                 Text(
+    //                   dayName,
+    //                   style: const TextStyle(
+    //                     fontWeight: FontWeight.bold,
+    //                     fontSize: 16,
+    //                   ),
+    //                 ),
+    //                 Text(workout.name),
+    //                 Text(
+    //                   workout.description,
+    //                   style: const TextStyle(fontSize: 12),
+    //                 ),
+    //                 if (workout.durationMinutes != null)
+    //                   Text(
+    //                     'Duration: ${workout.durationMinutes} min',
+    //                     style: const TextStyle(fontSize: 12),
+    //                   ),
+    //               ],
+    //             ),
+    //           );
+    //         }).toList(),
+    //       ),
+    //     ),
+    //     actions: [
+    //       TextButton(
+    //         onPressed: () => Navigator.of(context).pop(),
+    //         child: const Text('Close'),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   String _getDayName(Days day) {
