@@ -47,16 +47,20 @@ class WorkoutRepo {
     // Optionally save to database
   }
 
-  Future generateWorkoutSchedule({
+  Future<Schedule> generateWorkoutSchedule({
     required List<BodyPart> bodyParts,
     required List<Days> days,
     required int numberOfWeeks,
+    required int durationMinutes,
+    required bool varyWeeklySessions,
   }) async {
     try {
       Schedule schedule = await _aiWorkoutService.generateSchedule(
         bodyParts: bodyParts,
         days: days,
         numberOfWeeks: numberOfWeeks,
+        durationMinutes: durationMinutes,
+        varyWeeklySessions: varyWeeklySessions,
       );
       //await _databaseService.saveSchedule(schedule);
       return schedule;

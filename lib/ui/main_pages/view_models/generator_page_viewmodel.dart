@@ -1,5 +1,6 @@
 import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
+import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,11 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   bool _isGenerating = false;
 
+  bool _varyWeeklySessions = false;
+
   bool get isGenerating => _isGenerating;
+
+  bool get varyWeeklySessions => _varyWeeklySessions;
 
   final List<BodyPart> _selectedBodyParts = [];
   final List<Days> _selectedDays = [];
@@ -43,6 +48,11 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   List<BodyPart> get selectedBodyParts => _selectedBodyParts;
   List<Days> get selectedDays => _selectedDays;
+
+  void setVaryWeeklySessions(bool value) {
+    _varyWeeklySessions = value;
+    notifyListeners();
+  }
 
   void setActivityAsSession() {
     if (_activityType == ActivityType.session) return;
@@ -116,6 +126,27 @@ class GeneratorPageViewModel with ChangeNotifier {
     );
   }
 
+  void showTooManyWeeksMessage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Too many weeks!'),
+        content: const Text(
+          'Generating a schedule for more than 12 weeks is not recommended. Please select 12 weeks or less.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              weekController.text = '12';
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> generateWorkout(BuildContext context) async {
     // Validate selections based on activity type
     if (_selectedBodyParts.isEmpty) {
@@ -158,160 +189,44 @@ class GeneratorPageViewModel with ChangeNotifier {
           _sessionLengthInMinutes,
         );
         setIsGenerating(false);
-        _showWorkoutSessionResult(context, workout);
+        if (context.mounted) {
+          _showWorkoutSessionResult(context, workout);
+        }
         return;
-      } else {
-        _workoutRepo.generateWorkoutSchedule(
+      } else if (_activityType == ActivityType.schedule) {
+        final schedule = await _workoutRepo.generateWorkoutSchedule(
           bodyParts: _selectedBodyParts,
           days: _selectedDays,
           numberOfWeeks: _numberOfWeeks,
+          durationMinutes: _sessionLengthInMinutes,
+          varyWeeklySessions: _varyWeeklySessions,
         );
+        setIsGenerating(false);
+        if (context.mounted) {
+          _showWorkoutScheduleResult(context, schedule);
+        }
       }
       setIsGenerating(false);
     } catch (e) {
       setIsGenerating(false);
       // Log the actual error for debugging
       debugPrint('Workout generation error: $e');
-      _showValidationError(
-        context,
-        'Generation Failed',
-        'Unable to generate workout at this time. Please check your internet connection and try again.',
-      );
+      if (context.mounted) {
+        _showValidationError(
+          context,
+          'Generation Failed',
+          'Unable to generate workout at this time. Please check your internet connection and try again.',
+        );
+      }
     }
   }
 
   void _showWorkoutSessionResult(BuildContext context, Session session) {
-    // showDialog(
-    //   context: context,
-    //   builder: (context) => AlertDialog(
-    //     title: Text(workout.name),
-    //     content: SingleChildScrollView(
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: [
-    //           Text(
-    //             workout.description,
-    //             style: const TextStyle(fontWeight: FontWeight.bold),
-    //           ),
-    //           const SizedBox(height: 8),
-    //           if (workout.durationMinutes != null)
-    //             Text('Duration: ${workout.durationMinutes} minutes'),
-    //           const SizedBox(height: 16),
-    //           if (workout.exercises != null &&
-    //               workout.exercises!.isNotEmpty) ...[
-    //             const Text(
-    //               'Exercises:',
-    //               style: TextStyle(fontWeight: FontWeight.bold),
-    //             ),
-    //             const SizedBox(height: 8),
-    //             ...workout.exercises!.map(
-    //               (exercise) => Padding(
-    //                 padding: const EdgeInsets.only(bottom: 12.0),
-    //                 child: Column(
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: [
-    //                     Text(
-    //                       exercise.name,
-    //                       style: const TextStyle(fontWeight: FontWeight.w600),
-    //                     ),
-    //                     if (exercise.sets != null && exercise.reps != null)
-    //                       Text('${exercise.sets} sets × ${exercise.reps} reps'),
-    //                     if (exercise.instructions != null)
-    //                       Text(
-    //                         exercise.instructions!,
-    //                         style: const TextStyle(fontSize: 12),
-    //                       ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ],
-    //       ),
-    //     ),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () => Navigator.of(context).pop(),
-    //         child: const Text('Close'),
-    //       ),
-    //     ],
-    //   ),
-    // );
-
     context.push(Routes.session, extra: session);
   }
 
-  void _showWorkoutScheduleResult(
-    BuildContext context,
-    Map<Days, Session> schedule,
-  ) {
-    // showDialog(
-    //   context: context,
-    //   builder: (context) => AlertDialog(
-    //     title: const Text('Weekly Schedule'),
-    //     content: SingleChildScrollView(
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: schedule.entries.map((entry) {
-    //           final dayName = _getDayName(entry.key);
-    //           final workout = entry.value;
-    //           return Padding(
-    //             padding: const EdgeInsets.only(bottom: 16.0),
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 Text(
-    //                   dayName,
-    //                   style: const TextStyle(
-    //                     fontWeight: FontWeight.bold,
-    //                     fontSize: 16,
-    //                   ),
-    //                 ),
-    //                 Text(workout.name),
-    //                 Text(
-    //                   workout.description,
-    //                   style: const TextStyle(fontSize: 12),
-    //                 ),
-    //                 if (workout.durationMinutes != null)
-    //                   Text(
-    //                     'Duration: ${workout.durationMinutes} min',
-    //                     style: const TextStyle(fontSize: 12),
-    //                   ),
-    //               ],
-    //             ),
-    //           );
-    //         }).toList(),
-    //       ),
-    //     ),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () => Navigator.of(context).pop(),
-    //         child: const Text('Close'),
-    //       ),
-    //     ],
-    //   ),
-    // );
-  }
-
-  String _getDayName(Days day) {
-    switch (day) {
-      case Days.monday:
-        return 'Monday';
-      case Days.tuesday:
-        return 'Tuesday';
-      case Days.wednesday:
-        return 'Wednesday';
-      case Days.thursday:
-        return 'Thursday';
-      case Days.friday:
-        return 'Friday';
-      case Days.saturday:
-        return 'Saturday';
-      case Days.sunday:
-        return 'Sunday';
-    }
+  void _showWorkoutScheduleResult(BuildContext context, Schedule schedule) {
+    context.push(Routes.schedule, extra: schedule);
   }
 
   void _showValidationError(

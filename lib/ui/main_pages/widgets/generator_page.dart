@@ -170,6 +170,98 @@ class GeneratorPage extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      const SizedBox(height: 16),
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Number of Weeks',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.titleLarge,
+                                          children: [
+                                            TextSpan(
+                                              text: ' (1-12)',
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      TextFormField(
+                                        controller: model.weekController,
+                                        decoration: const InputDecoration(
+                                          hintText:
+                                              'Enter number of weeks for schedule',
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (value) {
+                                          final weeks =
+                                              int.tryParse(value) ?? 1;
+                                          if (weeks > 12) {
+                                            model.showTooManyWeeksMessage(
+                                              context,
+                                            );
+                                          } else if (weeks > 0) {
+                                            model.setNumberOfWeeks(weeks);
+                                          }
+                                        },
+                                      ),
+                                      const SizedBox(height: 16),
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Session Length',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.titleLarge,
+                                          children: [
+                                            TextSpan(
+                                              text: ' (in minutes)',
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      TextFormField(
+                                        controller: model.timeController,
+                                        decoration: const InputDecoration(
+                                          hintText:
+                                              'Enter session length in minutes',
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (value) {
+                                          final minutes =
+                                              int.tryParse(value) ?? 0;
+                                          if (minutes > 120) {
+                                            model.showGetALifeMessage(context);
+                                          } else if (minutes > 0) {
+                                            model.setSessionLength(minutes);
+                                          }
+                                        },
+                                      ),
+                                      const SizedBox(height: 32),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Vary Weekly Sessions',
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleLarge,
+                                          ),
+                                          const SizedBox(width: 16),
+                                          Checkbox(
+                                            value: model.varyWeeklySessions,
+                                            onChanged: (value) {
+                                              model.setVaryWeeklySessions(
+                                                value ?? false,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                       const SizedBox(height: 32),
                                       Text(
                                         'Split',

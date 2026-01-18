@@ -11,7 +11,6 @@ import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:bodyflow/ui/sub_pages/workout/widgets/session_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
 import 'package:bodyflow/navigation/routes.dart';
@@ -150,6 +149,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
       return Routes.profile; // Redirect to profile page
     case Routes.session:
       return Routes.session; // Redirect to session page
+    case Routes.schedule:
+      return Routes.schedule; // Redirect to schedule page
     default:
       return Routes.home; // Default redirect to home page
   }

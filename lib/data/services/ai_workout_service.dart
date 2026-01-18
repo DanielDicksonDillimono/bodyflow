@@ -18,36 +18,6 @@ class AiWorkoutService {
         systemInstruction: Content.text('You are a helpful fitness assistant.'),
       );
 
-  final Schema scheduleSchema = Schema.object(
-    properties: {
-      'name': Schema.string(),
-      'description': Schema.string(),
-      'weeklySessions': Schema.array(
-        items: Schema.object(
-          properties: {
-            'day': Schema.string(),
-            'session': Schema.object(
-              properties: {
-                'name': Schema.string(),
-                'description': Schema.string(),
-                'exercises': Schema.array(
-                  items: Schema.object(
-                    properties: {
-                      'name': Schema.string(),
-                      'sets': Schema.integer(),
-                      'reps': Schema.integer(),
-                      'instructions': Schema.string(),
-                    },
-                  ),
-                ),
-              },
-            ),
-          },
-        ),
-      ),
-    },
-  );
-
   final Schema sessionSchema = Schema.object(
     properties: {
       'name': Schema.string(),
@@ -76,34 +46,34 @@ class AiWorkoutService {
 
     final prompt =
         '''
-Generate a workout session with the following specifications:
-- Target body parts: $receivedBodyParts
-- Duration: $durationMinutes minutes
-- each exercise should take approximately 10 minutes to complete
-- Add at least one compound movement exercise
-- 
-- For each exercise, provide: name, sets, reps, and brief instructions
+        Generate a workout session with the following specifications:
+        - Target body parts: $receivedBodyParts
+        - Duration: $durationMinutes minutes
+        - each exercise should take approximately 10 minutes to complete
+        - Add at least one compound movement exercise
+        - For each exercise, provide: name, sets, reps, and brief instructions
+        - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
 
 
-Format the response as follows:
-WORKOUT NAME: [name]
-DESCRIPTION: [brief description]
+        Format the response as follows:
+        WORKOUT NAME: [name] keep it to 2 - 3 words.
+        DESCRIPTION: [brief description]
 
-EXERCISES:
-1. [Exercise Name]
-   Sets: [number]
-   Reps: [number]
-   Instructions: [brief instructions]
+        EXERCISES:
+        1. [Exercise Name]
+          Sets: [number]
+          Reps: [number]
+          Instructions: [brief instructions]
 
-2. [Exercise Name]
-   Sets: [number]
-   Reps: [number]
-   Instructions: [brief instructions]
+        2. [Exercise Name]
+          Sets: [number]
+          Reps: [number]
+          Instructions: [brief instructions]
 
-[continue for all exercises]
+        [continue for all exercises]
 
-Keep it concise and practical.
-''';
+        Keep it concise and practical.
+        ''';
 
     final content = [Content.text(prompt)];
     late final GenerateContentResponse response;
@@ -136,28 +106,96 @@ Keep it concise and practical.
     required List<BodyPart> bodyParts,
     required List<Days> days,
     required int numberOfWeeks,
+    required int durationMinutes,
+    required bool varyWeeklySessions,
   }) async {
-    final List<Content> content = <Content>[];
+    Schedule schedule;
+    String daysStr = days.map((day) => day.name).join(', ');
+    String bodyPartsStr = bodyParts.map((bp) => bp.name).join(', ');
 
-    final response = await _model.generateContent(content);
+    final prompt =
+        '''
+        Generate a workout Schedule for each $daysStr for the next $numberOfWeeks weeks with the following specifications:
+        - Target body parts: $bodyPartsStr
+        - Duration: $durationMinutes minutes
+        - each exercise should take approximately 15 minutes to complete
+        - Add at least one compound movement exercise
+        - For each exercise, provide: name, sets, reps, and brief instructions
+        - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
 
-    Schedule fullSchedule = Schedule(
-      name: 'Custom Schedule',
-      description: 'AI-generated workout schedule',
-      weeklySessions: [],
+
+        Format the response as follows:
+        WORKOUT NAME: [name]
+        DESCRIPTION: [brief description]
+
+        EXERCISES:
+        1. [Exercise Name]
+          Sets: [number]
+          Reps: [number]
+          Instructions: [brief instructions]
+
+        2. [Exercise Name]
+          Sets: [number]
+          Reps: [number]
+          Instructions: [brief instructions]
+
+        [continue for all exercises]
+
+        Keep it concise and practical.
+
+        if varyWeeklySessions is true, make sure each week's sessions are different but keep the overall structure and format consistent i.e.
+        each session should have a similar number of exercises and follow the same format.
+        ''';
+
+    final List<Content> content = [Content.text(prompt)];
+
+    final Schema scheduleSchema = Schema.object(
+      properties: {
+        'name': Schema.string(),
+        'description': Schema.string(),
+        'weeks': Schema.array(
+          items: Schema.array(
+            items: Schema.object(
+              properties: {
+                'day': Schema.string(),
+                'session': Schema.object(
+                  properties: {
+                    'name': Schema.string(),
+                    'description': Schema.string(),
+                    'bodyParts': Schema.string(),
+                    'exercises': Schema.array(
+                      items: Schema.object(
+                        properties: {
+                          'name': Schema.string(),
+                          'sets': Schema.integer(),
+                          'reps': Schema.integer(),
+                          'instructions': Schema.string(),
+                        },
+                      ),
+                    ),
+                  },
+                ),
+              },
+            ),
+          ),
+        ),
+      },
     );
 
-    for (var i = 0; i < numberOfWeeks; i++) {
-      for (var day in days) {
-        final session = await generateSession(
-          bodyParts: bodyParts,
-          durationMinutes: _defaultScheduleDuration,
-        );
-        fullSchedule.weeklySessions.add({day: session});
-      }
-    }
+    final response = await _model.generateContent(
+      content,
+      generationConfig: GenerationConfig(
+        responseSchema: scheduleSchema,
+        responseMimeType: 'application/json',
+      ),
+    );
 
-    return fullSchedule;
+    schedule = _parseScheduleResponse(
+      response.text!,
+      durationMinutes,
+      bodyPartsStr,
+    );
+    return schedule;
   }
 
   Session _parseWorkoutSessionResponse(
@@ -191,13 +229,66 @@ Keep it concise and practical.
     );
   }
 
-  Schedule _parseScheduleResponse(String response, List<Days> days) {
-    final scheduleMap = <Days, Session>{};
+  Schedule _parseScheduleResponse(
+    String response,
+    int durationMinutes,
+    String bodyPartsStr,
+  ) {
+    final Map<String, dynamic> responseMap = jsonDecode(response);
+    final weeks = responseMap['weeks'];
 
     return Schedule(
-      name: 'Custom Schedule',
-      description: 'AI-generated workout schedule',
-      weeklySessions: [scheduleMap],
+      name: responseMap['name'] ?? 'Custom Schedule',
+      description:
+          responseMap['description'] ??
+          'AI-generated workout schedule for $bodyPartsStr',
+      weeks: _parseWeeklySessionsFromList(weeks, durationMinutes),
+    );
+  }
+
+  List<List<Map<Days, Session>>> _parseWeeklySessionsFromList(
+    List<dynamic> weeks,
+    int durationMinutes,
+  ) {
+    List<List<Map<Days, Session>>> weeklySessions = [];
+
+    for (var week in weeks) {
+      List<Map<Days, Session>> dailySessions = [];
+      for (var dayEntry in week) {
+        // add a day and its session
+        final day = _parseDayFromString(dayEntry['day']);
+        final sessionMap = dayEntry['session'] as Map<String, dynamic>;
+        final session = _parseSessionFromMap(sessionMap, durationMinutes);
+        dailySessions.add({day!: session});
+      }
+      // add the week's sessions
+      weeklySessions.add(dailySessions);
+    }
+    return weeklySessions;
+  }
+
+  Session _parseSessionFromMap(
+    Map<String, dynamic> sessionMap,
+    int durationMinutes,
+  ) {
+    final exercises =
+        (sessionMap['exercises'] as List<dynamic>?)
+            ?.map<Exercise>(
+              (exercise) => Exercise(
+                name: exercise['name'],
+                sets: exercise['sets'],
+                reps: exercise['reps'],
+                instructions: exercise['instructions'],
+              ),
+            )
+            .toList() ??
+        [];
+
+    return Session(
+      name: sessionMap['name'] ?? 'Custom Workout',
+      description: sessionMap['description'] ?? 'AI-generated workout session',
+      imagePath: _defaultWorkoutImage,
+      exercises: exercises.isNotEmpty ? exercises : null,
     );
   }
 

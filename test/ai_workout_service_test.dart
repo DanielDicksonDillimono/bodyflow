@@ -7,7 +7,7 @@ void main() {
     test('should be instantiable with API key', () {
       // This test verifies the service can be created
       // Actual API calls require a valid key and internet connection
-      final service = AiWorkoutService('test_api_key');
+      final service = AiWorkoutService();
       expect(service, isNotNull);
     });
 

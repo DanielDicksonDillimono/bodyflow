@@ -1,6 +1,5 @@
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/ui/sub_pages/workout/widgets/session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

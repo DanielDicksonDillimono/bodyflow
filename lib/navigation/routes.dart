@@ -9,4 +9,5 @@ abstract class Routes {
   static const generate = '/generate';
   static const exercise = '/exercise';
   static const session = '/session';
+  static const schedule = '/schedule';
 }
