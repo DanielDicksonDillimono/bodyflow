@@ -1,9 +1,11 @@
 import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SchedulePage extends StatelessWidget {
   final Schedule schedule;
@@ -121,8 +123,8 @@ class SchedulePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 padding: Dimens.of(context).edgeInsetsScreenHorizontal,
                 child: Row(
-                  children: sessions.map((session) {
-                    return _buildWorkoutCard(context, session);
+                  children: sessions.asMap().entries.map((entry) {
+                    return _buildWorkoutCard(context, entry.value);
                   }).toList(),
                 ),
               ),
@@ -135,77 +137,82 @@ class SchedulePage extends StatelessWidget {
   }
 
   Widget _buildWorkoutCard(BuildContext context, Session session) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Card Header
-          Container(
-            width: 150,
-            height: 200,
-            decoration: BoxDecoration(
-              color: AppColors.appBlue.withValues(alpha: 0.9),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Center(
-              child: Text(
-                session.name.toUpperCase(),
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                textAlign: TextAlign.center,
+    return InkWell(
+      onTap: () {
+        context.push(Routes.session, extra: session);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Card Header
+            Container(
+              width: 150,
+              height: 200,
+              decoration: BoxDecoration(
+                color: AppColors.appBlue.withValues(alpha: 0.9),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Center(
+                child: Text(
+                  session.name.toUpperCase(),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 8.0),
-          // Duration Info
-          SizedBox(
-            width: 150,
-            child: Row(
-              children: [
-                Icon(
-                  Icons.timer,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                SizedBox(width: 4),
-                Text(
-                  '${session.durationMinutes ?? 45} ${AppLocalization.of(context).minutesText}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.0),
-          // Exercise Info
-          SizedBox(
-            width: 150,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.fitness_center,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                SizedBox(width: 4),
-                Expanded(
-                  child: Text(
-                    session.exercises
-                            ?.map((e) => e.name)
-                            .join(', ') ??
-                        AppLocalization.of(context).squats,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+            SizedBox(height: 8.0),
+            // Duration Info
+            SizedBox(
+              width: 150,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.timer,
+                    size: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
-                ),
-              ],
+                  SizedBox(width: 4),
+                  Text(
+                    '${session.durationMinutes ?? 45} ${AppLocalization.of(context).minutesText}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: 4.0),
+            // Exercise Info
+            SizedBox(
+              width: 150,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.fitness_center,
+                    size: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      session.exercises
+                              ?.map((e) => e.name)
+                              .join(', ') ??
+                          AppLocalization.of(context).squats,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
