@@ -64,6 +64,12 @@ class AppLocalization {
     'duration': 'Duration',
     'instructions': 'Instructions',
     
+    // Schedule Page
+    'current_schedule': 'Current Schedule',
+    'week': 'week',
+    'shoulders': 'SHOULDERS',
+    'upper_body': 'UPPER BODY',
+    
     // Profile Page
     'last_months_stats': 'Last Months Stats',
     'about_bodyflow': 'About BodyFlow',
@@ -173,6 +179,12 @@ class AppLocalization {
   String get reps => _get('reps');
   String get duration => _get('duration');
   String get instructions => _get('instructions');
+  
+  // Schedule Page
+  String get currentSchedule => _get('current_schedule');
+  String get week => _get('week');
+  String get shoulders => _get('shoulders');
+  String get upperBody => _get('upper_body');
   
   // Profile Page
   String get lastMonthsStats => _get('last_months_stats');

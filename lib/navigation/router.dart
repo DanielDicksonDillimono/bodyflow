@@ -1,4 +1,5 @@
 import 'package:bodyflow/domain/models/exercise.dart';
+import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
@@ -9,6 +10,7 @@ import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
+import 'package:bodyflow/ui/sub_pages/schedule/widgets/schedule_page.dart';
 import 'package:bodyflow/ui/sub_pages/workout/widgets/session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -81,6 +83,18 @@ GoRouter router() => GoRouter(
           context: context,
           state: state,
           child: SessionPage(session: session),
+        );
+      },
+    ),
+    //this is the route for schedule page
+    GoRoute(
+      path: Routes.schedule,
+      pageBuilder: (context, state) {
+        final schedule = state.extra as Schedule;
+        return buildPageWithPlatformTransitions(
+          context: context,
+          state: state,
+          child: SchedulePage(schedule: schedule),
         );
       },
     ),
