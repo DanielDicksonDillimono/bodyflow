@@ -43,7 +43,9 @@ dependencies:
   cloud_firestore: ^6.1.0
   google_generative_ai: ^0.4.6
   firebase_ai: ^3.6.1
-  flutter_localization: ^0.3.3
+  #flutter_localization: ^0.3.3
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

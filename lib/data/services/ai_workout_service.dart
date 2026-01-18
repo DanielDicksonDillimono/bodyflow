@@ -8,7 +8,6 @@ import 'package:firebase_ai/firebase_ai.dart';
 
 class AiWorkoutService {
   static const String _defaultWorkoutImage = 'assets/images/barbell.jpg';
-  static const int _defaultScheduleDuration = 60;
 
   final GenerativeModel _model;
 
