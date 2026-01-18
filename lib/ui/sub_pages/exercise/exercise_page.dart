@@ -23,31 +23,15 @@ class ExercisePage extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
-                      image: exercise.imagePath != null
-                          ? DecorationImage(
-                              image: AssetImage(exercise.imagePath!),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withValues(alpha: 0.3),
-                                BlendMode.darken,
-                              ),
-                            )
-                          : null,
-                      color: exercise.imagePath == null
-                          ? Theme.of(context).colorScheme.primaryContainer
-                          : null,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
-                    child: exercise.imagePath == null
-                        ? Center(
-                            child: Icon(
-                              Icons.fitness_center,
-                              size: 80,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onPrimaryContainer,
-                            ),
-                          )
-                        : null,
+                    child: Center(
+                      child: Icon(
+                        Icons.fitness_center,
+                        size: 80,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                    ),
                   ),
                   // Back Button
                   Positioned(

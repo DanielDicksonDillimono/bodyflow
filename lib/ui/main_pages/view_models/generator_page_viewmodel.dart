@@ -1,17 +1,39 @@
+import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
+import 'package:bodyflow/domain/models/schedule.dart';
+import 'package:bodyflow/domain/models/session.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GeneratorPageViewModel with ChangeNotifier {
+  final WorkoutRepo _workoutRepo;
+
+  GeneratorPageViewModel({required WorkoutRepo workoutRepo})
+    : _workoutRepo = workoutRepo;
+
   final timeController = TextEditingController.fromValue(
     const TextEditingValue(
       text: '30',
       selection: TextSelection.collapsed(offset: 2),
     ),
   );
+
+  final weekController = TextEditingController.fromValue(
+    const TextEditingValue(
+      text: '1',
+      selection: TextSelection.collapsed(offset: 1),
+    ),
+  );
+
   bool _isGenerating = false;
 
+  bool _varyWeeklySessions = false;
+
   bool get isGenerating => _isGenerating;
+
+  bool get varyWeeklySessions => _varyWeeklySessions;
 
   final List<BodyPart> _selectedBodyParts = [];
   final List<Days> _selectedDays = [];
@@ -19,6 +41,7 @@ class GeneratorPageViewModel with ChangeNotifier {
   ActivityType _activityType = ActivityType.session;
 
   int _sessionLengthInMinutes = 30;
+  int _numberOfWeeks = 1;
 
   int get sessionLengthInMinutes => _sessionLengthInMinutes;
 
@@ -26,6 +49,11 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   List<BodyPart> get selectedBodyParts => _selectedBodyParts;
   List<Days> get selectedDays => _selectedDays;
+
+  void setVaryWeeklySessions(bool value) {
+    _varyWeeklySessions = value;
+    notifyListeners();
+  }
 
   void setActivityAsSession() {
     if (_activityType == ActivityType.session) return;
@@ -47,6 +75,11 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   void setSessionLength(int minutes) {
     _sessionLengthInMinutes = minutes;
+    notifyListeners();
+  }
+
+  void setNumberOfWeeks(int weeks) {
+    _numberOfWeeks = weeks;
     notifyListeners();
   }
 
@@ -79,9 +112,7 @@ class GeneratorPageViewModel with ChangeNotifier {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(localization.getALife),
-        content: Text(
-          localization.getALifeMessage,
-        ),
+        content: Text(localization.getALifeMessage),
         actions: [
           TextButton(
             onPressed: () {
@@ -89,6 +120,27 @@ class GeneratorPageViewModel with ChangeNotifier {
               Navigator.of(context).pop();
             },
             child: Text(localization.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showTooManyWeeksMessage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Too many weeks!'),
+        content: const Text(
+          'Generating a schedule for more than 12 weeks is not recommended. Please select 12 weeks or less.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              weekController.text = '12';
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -106,7 +158,7 @@ class GeneratorPageViewModel with ChangeNotifier {
       );
       return;
     }
-    
+
     if (_activityType == ActivityType.schedule && _selectedDays.isEmpty) {
       _showValidationError(
         context,
@@ -115,7 +167,7 @@ class GeneratorPageViewModel with ChangeNotifier {
       );
       return;
     }
-    
+
     if (_activityType == ActivityType.session) {
       final minutes = int.tryParse(timeController.text) ?? 0;
       if (minutes <= 0) {
@@ -128,13 +180,54 @@ class GeneratorPageViewModel with ChangeNotifier {
       }
       _sessionLengthInMinutes = minutes;
     }
-    
+
     setIsGenerating(true);
-    // Simulate workout generation delay
-    await Future.delayed(const Duration(seconds: 2));
-    setIsGenerating(false);
-    
-    // TODO: Implement actual workout generation logic
+
+    try {
+      if (_activityType == ActivityType.session) {
+        final workout = await _workoutRepo.generateWorkoutSession(
+          _selectedBodyParts,
+          _sessionLengthInMinutes,
+        );
+        setIsGenerating(false);
+        if (context.mounted) {
+          _showWorkoutSessionResult(context, workout);
+        }
+        return;
+      } else if (_activityType == ActivityType.schedule) {
+        final schedule = await _workoutRepo.generateWorkoutSchedule(
+          bodyParts: _selectedBodyParts,
+          days: _selectedDays,
+          numberOfWeeks: _numberOfWeeks,
+          durationMinutes: _sessionLengthInMinutes,
+          varyWeeklySessions: _varyWeeklySessions,
+        );
+        setIsGenerating(false);
+        if (context.mounted) {
+          _showWorkoutScheduleResult(context, schedule);
+        }
+      }
+      setIsGenerating(false);
+    } catch (e) {
+      setIsGenerating(false);
+      // Log the actual error for debugging
+      debugPrint('Workout generation error: $e');
+      if (context.mounted) {
+        _showValidationError(
+          context,
+          'Generation Failed',
+          'Unable to generate workout at this time. Please check your internet connection and try again.',
+        );
+      }
+    }
+  }
+
+  void _showWorkoutSessionResult(BuildContext context, Session session) {
+    context.push(Routes.session, extra: session);
+  }
+
+  void _showWorkoutScheduleResult(BuildContext context, Schedule schedule) {
+    context.push(Routes.schedule, extra: schedule);
   }
 
   void _showValidationError(
