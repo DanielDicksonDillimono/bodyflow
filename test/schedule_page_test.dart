@@ -35,7 +35,7 @@ void main() {
       
       final schedule = Schedule(
         name: 'Body Blaster',
-        description: 'Yada Daba du. Something about this workout schedule. It is goal and efficiency.',
+        description: 'Yada Daba du. Something about this workout schedule. It is about goal and efficiency.',
         weeks: [
           [
             {Days.monday: legsSession},

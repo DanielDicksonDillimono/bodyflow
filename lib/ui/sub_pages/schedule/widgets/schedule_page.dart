@@ -9,6 +9,10 @@ import 'package:go_router/go_router.dart';
 
 class SchedulePage extends StatelessWidget {
   final Schedule schedule;
+  
+  // Default values
+  static const String _defaultHeroImage = 'assets/images/squat.jpg';
+  static const int _defaultDurationMinutes = 45;
 
   const SchedulePage({required this.schedule, super.key});
 
@@ -39,7 +43,7 @@ class SchedulePage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.35,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/squat.jpg'),
+                    image: AssetImage(_defaultHeroImage),
                     fit: BoxFit.cover,
                     colorFilter: ColorFilter.mode(
                       Colors.black.withValues(alpha: 0.5),
@@ -178,7 +182,7 @@ class SchedulePage extends StatelessWidget {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    '${session.durationMinutes ?? 45} ${AppLocalization.of(context).minutesText}',
+                    '${session.durationMinutes ?? _defaultDurationMinutes} ${AppLocalization.of(context).minutesText}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
