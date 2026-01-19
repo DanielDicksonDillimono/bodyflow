@@ -10,6 +10,7 @@ import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
+import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/widgets/schedule_page.dart';
 import 'package:bodyflow/ui/sub_pages/workout/widgets/session_page.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,7 @@ GoRouter router() => GoRouter(
         return buildPageWithPlatformTransitions(
           context: context,
           state: state,
-          child: SchedulePage(schedule: schedule),
+          child: SchedulePage(model: ScheduleViewModel(schedule: schedule)),
         );
       },
     ),

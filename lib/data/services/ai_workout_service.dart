@@ -214,6 +214,7 @@ class AiWorkoutService {
                 sets: exercise['sets'],
                 reps: exercise['reps'],
                 instructions: exercise['instructions'],
+                durationMinutes: exercise['durationMinutes'],
               ),
             )
             .toList() ??
