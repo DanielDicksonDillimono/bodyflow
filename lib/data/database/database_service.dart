@@ -9,6 +9,9 @@ class DatabaseService {
   User? get _user => FirebaseAuth.instance.currentUser;
 
   var usersCollection = FirebaseFirestore.instance.collection('users');
+  var appGeneratedSessionsCollection = FirebaseFirestore.instance.collection(
+    'app_generated_sessions',
+  );
 
   Stream<QuerySnapshot> getSchedulesStream() {
     return usersCollection
@@ -17,9 +20,23 @@ class DatabaseService {
         .snapshots();
   }
 
-  Future<void> createUser(String userId, Map<String, dynamic> data) async {
+  Stream<QuerySnapshot> getSessionsStream() {
+    return usersCollection
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('Sessions')
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> appGeneratedSessionsStream() {
+    return appGeneratedSessionsCollection.snapshots();
+  }
+
+  Future<void> createUserAccount(Map<String, dynamic> data) async {
     try {
-      await _firestore.collection('users').doc(userId).set(data);
+      await _firestore
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(data);
     } catch (e) {
       throw Exception('Failed to create user: $e');
     }
@@ -45,7 +62,7 @@ class DatabaseService {
     }
   }
 
-  Future<void> deleteUser() async {
+  Future<void> deleteUserAccount() async {
     try {
       await _firestore.collection('users').doc(_user!.uid).delete();
     } catch (e) {

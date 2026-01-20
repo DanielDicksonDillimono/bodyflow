@@ -8,6 +8,7 @@ import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/create_account_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
@@ -29,7 +30,9 @@ GoRouter router() => GoRouter(
       pageBuilder: (context, state) => buildPageWithPlatformTransitions(
         context: context,
         state: state,
-        child: const CreateAccountPage(),
+        child: CreateAccountPage(
+          viewModel: CreateAccountViewmodel(authService: context.read()),
+        ),
       ),
     ),
     GoRoute(

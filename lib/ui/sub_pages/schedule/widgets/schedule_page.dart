@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:bodyflow/domain/misc/globalenums.dart';
-import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';

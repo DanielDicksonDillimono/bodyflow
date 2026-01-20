@@ -61,13 +61,15 @@ abstract final class AppTheme {
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
-      labelStyle: TextStyle(color: AppColors.grey1),
+      labelStyle: TextStyle(color: AppColors.grey2),
       prefixIconColor: AppColors.appBlue,
       filled: true,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
+      errorStyle: TextStyle(color: Colors.red),
     ),
+
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),

@@ -1,3 +1,5 @@
+import 'package:bodyflow/domain/misc/p_and_p_string.dart';
+import 'package:bodyflow/domain/misc/t_and_c_string.dart';
 import 'package:flutter/material.dart';
 
 class AppLocalization {
@@ -11,6 +13,7 @@ class AppLocalization {
     'bodyflow': 'BODYFLOW',
     'welcome': 'Welcome',
     'welcome_message': 'Welcome to Body Therapy',
+    'full_name': 'Full Name',
     'login': 'Login',
     'name': 'Name',
     'sign_up': 'Sign Up',
@@ -23,9 +26,10 @@ class AppLocalization {
     'already_have_account': 'Already have an account',
     'dont_have_account': "Don't have an account?",
     'password_recovery': 'Password\nRecovery',
-    'password_reset_instruction': 'Enter email to receive a password reset link',
+    'password_reset_instruction':
+        'Enter email to receive a password reset link',
     'reset': 'Reset',
-    
+
     // Navigation
     'home': 'Home',
     'create': 'Create',
@@ -33,7 +37,7 @@ class AppLocalization {
     'exercises': 'Exercises',
     'reports': 'Reports',
     'preferences': 'Preferences',
-    
+
     // Home Page
     'recently_generated': 'Recently generated',
     'quick_workouts': 'Quick Workouts',
@@ -41,11 +45,12 @@ class AppLocalization {
     'full_body_blast': 'Full Body Blast',
     'minutes_45': '45 mins',
     'minutes_text': 'minutes',
-    
+
     // Generator Page
     'generator': 'Generator',
     'generator_subtitle': 'Create workout sessions or schedules',
-    'generator_description': 'Workouts are one-time sessions, while schedules are recurring plans.',
+    'generator_description':
+        'Workouts are one-time sessions, while schedules are recurring plans.',
     'workout': 'Workout',
     'schedule': 'Schedule',
     'split': 'Split',
@@ -55,7 +60,7 @@ class AppLocalization {
     'enter_session_length': 'Enter session length in minutes',
     'target': 'Target',
     'generate': 'Generate',
-    
+
     // Workout and Exercise Pages
     'legs': 'LEGS',
     'squats': 'squats, deadlifts, lunges',
@@ -63,13 +68,13 @@ class AppLocalization {
     'reps': 'Reps',
     'duration': 'Duration',
     'instructions': 'Instructions',
-    
+
     // Schedule Page
     'current_schedule': 'Current Schedule',
     'week': 'week',
     'shoulders': 'SHOULDERS',
     'upper_body': 'UPPER BODY',
-    
+
     // Profile Page
     'last_months_stats': 'Last Months Stats',
     'about_bodyflow': 'About BodyFlow',
@@ -77,18 +82,29 @@ class AppLocalization {
     'delete_account': 'Delete Account',
     'visit_website': 'Visit Website',
     'licenses': 'Licenses',
-    
+
     // Validation and Errors
     'get_a_life': 'Get a life!',
-    'get_a_life_message': 'More than 2 hour workout? You should really get a life outside of the gym.',
+    'get_a_life_message':
+        'More than 2 hour workout? You should really get a life outside of the gym.',
     'ok': 'OK',
     'no_body_parts_selected': 'No body parts selected',
-    'select_body_part_message': 'Please select at least one body part to generate a workout.',
+    'select_body_part_message':
+        'Please select at least one body part to generate a workout.',
     'no_days_selected': 'No days selected',
     'select_day_message': 'Please select at least one day for your schedule.',
     'invalid_duration': 'Invalid duration',
-    'invalid_duration_message': 'Please enter a valid session length greater than 0 minutes.',
-    
+    'invalid_duration_message':
+        'Please enter a valid session length greater than 0 minutes.',
+    'full_name_required': 'Full name is required.',
+    'email_required': 'Email is required.',
+    'invalid_email': 'Invalid email address.',
+    'password_required': 'Password is required.',
+    'confirm_password_required': 'Confirm password is required.',
+    'passwords_do_not_match': 'Passwords do not match.',
+    'password_too_short': 'Password must be at least 6 characters long.',
+    'terms_not_accepted': 'You must accept the terms and conditions.',
+
     // Existing strings
     'login_message': 'Please login to continue',
     'sign_up_message': 'Create Account',
@@ -115,6 +131,13 @@ class AppLocalization {
     'i_accept': 'I Accept',
     'disclaimer':
         'This app is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.',
+
+    'terms_and_conditions': 'Terms and Conditions',
+    'current_terms_and_conditions': termsAndConditionsText,
+    'privacy_policy': 'Privacy Policy',
+    'current_privacy_policy': privacyPolicyText,
+
+    'close': 'Close',
   };
 
   //in case the key is not found, it will return the key itself
@@ -125,6 +148,7 @@ class AppLocalization {
   // App and Authentication
   String get appName => _get('app_name');
   String get bodyflow => _get('bodyflow');
+  String get fullName => _get('full_name');
   String get welcome => _get('welcome');
   String get welcomeMessage => _get('welcome_message');
   String get login => _get('login');
@@ -141,7 +165,7 @@ class AppLocalization {
   String get passwordRecovery => _get('password_recovery');
   String get passwordResetInstruction => _get('password_reset_instruction');
   String get reset => _get('reset');
-  
+
   // Navigation
   String get home => _get('home');
   String get create => _get('create');
@@ -149,7 +173,7 @@ class AppLocalization {
   String get exercises => _get('exercises');
   String get reports => _get('reports');
   String get preferences => _get('preferences');
-  
+
   // Home Page
   String get recentlyGenerated => _get('recently_generated');
   String get quickWorkouts => _get('quick_workouts');
@@ -157,7 +181,7 @@ class AppLocalization {
   String get fullBodyBlast => _get('full_body_blast');
   String get minutes45 => _get('minutes_45');
   String get minutesText => _get('minutes_text');
-  
+
   // Generator Page
   String get generator => _get('generator');
   String get generatorSubtitle => _get('generator_subtitle');
@@ -171,7 +195,7 @@ class AppLocalization {
   String get enterSessionLength => _get('enter_session_length');
   String get target => _get('target');
   String get generate => _get('generate');
-  
+
   // Workout and Exercise Pages
   String get legs => _get('legs');
   String get squats => _get('squats');
@@ -179,13 +203,13 @@ class AppLocalization {
   String get reps => _get('reps');
   String get duration => _get('duration');
   String get instructions => _get('instructions');
-  
+
   // Schedule Page
   String get currentSchedule => _get('current_schedule');
   String get week => _get('week');
   String get shoulders => _get('shoulders');
   String get upperBody => _get('upper_body');
-  
+
   // Profile Page
   String get lastMonthsStats => _get('last_months_stats');
   String get aboutBodyflow => _get('about_bodyflow');
@@ -193,7 +217,7 @@ class AppLocalization {
   String get deleteAccount => _get('delete_account');
   String get visitWebsite => _get('visit_website');
   String get licenses => _get('licenses');
-  
+
   // Validation and Errors
   String get getALife => _get('get_a_life');
   String get getALifeMessage => _get('get_a_life_message');
@@ -204,7 +228,15 @@ class AppLocalization {
   String get selectDayMessage => _get('select_day_message');
   String get invalidDuration => _get('invalid_duration');
   String get invalidDurationMessage => _get('invalid_duration_message');
-  
+  String get fullNameRequired => _get('full_name_required');
+  String get emailRequired => _get('email_required');
+  String get invalidEmail => _get('invalid_email');
+  String get passwordRequired => _get('password_required');
+  String get confirmPasswordRequired => _get('confirm_password_required');
+  String get passwordsDoNotMatch => _get('passwords_do_not_match');
+  String get passwordTooShort => _get('password_too_short');
+  String get mustAcceptTerms => _get('terms_not_accepted');
+
   // Existing strings
   String get loginMessage => _get('login_message');
   String get signUpMessage => _get('sign_up_message');
@@ -227,14 +259,21 @@ class AppLocalization {
   String get signUpFailed => _get('key_sign_up_failed');
   String get createReport => _get('Create Report');
   String get acceptTerms => _get('accept_terms');
-  String get termsConditions => _get('terms_conditions');
+
   String get iAccept => _get('i_accept');
   String get disclaimer => _get('disclaimer');
+  String get currentTermsAndConditions => termsAndConditionsText;
+  String get termsAndConditions => _get('terms_conditions');
+  String get privacyPolicy => _get('privacy_policy');
+  String get currentPrivacyPolicy => privacyPolicyText;
+  String get close => _get('close');
 
   String defaultError(String message) =>
       '$message An error occurred. Please try again.';
 
   String get emailRegex => r'^[^@]+@[^@]+\.[^@]+';
+  String get passwordRegex =>
+      r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$';
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
