@@ -1,4 +1,5 @@
 # bodyflow
+<img width="393" height="862" alt="BodFlow - Workout page" src="https://github.com/user-attachments/assets/c50e0345-c91b-42fc-a0b2-315dd2138db8" />
 
 Create time-efficient workout plans with AI-powered generation.
 
