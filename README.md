@@ -15,7 +15,6 @@ Create time-efficient workout plans with AI-powered generation.
 
 - Flutter SDK (^3.8.1)
 - Firebase account for authentication
-- Google Gemini API key for AI workout generation
 
 ### Setup
 
@@ -65,6 +64,4 @@ For more information, see [AI_SETUP.md](AI_SETUP.md).
 
 For help getting started with Flutter development:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 - [Flutter online documentation](https://docs.flutter.dev/)
