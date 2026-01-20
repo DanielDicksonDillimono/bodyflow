@@ -13,6 +13,7 @@ import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_pag
 import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/widgets/schedule_page.dart';
 import 'package:bodyflow/ui/sub_pages/workout/widgets/session_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/create_account_page.dart';
@@ -122,9 +123,13 @@ GoRouter router() => GoRouter(
               pageBuilder: (context, state) => buildPageWithPlatformTransitions(
                 context: context,
                 state: state,
-                child: GeneratorPage(
-                  model: GeneratorPageViewModel(workoutRepo: context.read()),
-                ),
+                child: FirebaseAuth.instance.currentUser != null
+                    ? GeneratorPage(
+                        model: GeneratorPageViewModel(
+                          workoutRepo: context.read(),
+                        ),
+                      )
+                    : LoginPage(),
               ),
             ),
           ],
@@ -136,7 +141,9 @@ GoRouter router() => GoRouter(
               pageBuilder: (context, state) => buildPageWithPlatformTransitions(
                 context: context,
                 state: state,
-                child: ProfilePage(),
+                child: FirebaseAuth.instance.currentUser != null
+                    ? ProfilePage()
+                    : LoginPage(),
               ),
             ),
           ],
