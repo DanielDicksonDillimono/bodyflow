@@ -1,5 +1,7 @@
 # bodyflow
-<img width="393" height="862" alt="BodFlow - Workout page" src="https://github.com/user-attachments/assets/c50e0345-c91b-42fc-a0b2-315dd2138db8" />
+<img width="393" height="862" alt="BodFlow - Workout page" src="https://github.com/user-attachments/assets/c50e0345-c91b-42fc-a0b2-315dd2138db8" /><img width="393" height="862" alt="BodFlow - Generator" src="https://github.com/user-attachments/assets/8a267573-9592-4b2b-8fd5-352c351dc415" /><img width="393" height="862" alt="BodFlow - workout Schedule" src="https://github.com/user-attachments/assets/9e987b2c-91c9-4604-8414-42c17bb827a2" />
+
+
 
 Create time-efficient workout plans with AI-powered generation.
 
