@@ -1,3 +1,4 @@
+import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
@@ -147,6 +148,14 @@ GoRouter router() => GoRouter(
 );
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
+  final userAuth = Provider.of<UserAuthentication>(context, listen: false);
+  final isLoggedIn = userAuth.currentUser() != null;
+
+  // If user is not logged in and trying to access generator page, redirect to login
+  if (!isLoggedIn && state.fullPath == Routes.generate) {
+    return Routes.login;
+  }
+
   switch (state.fullPath) {
     case Routes.login:
       return Routes.login; // Already on login page

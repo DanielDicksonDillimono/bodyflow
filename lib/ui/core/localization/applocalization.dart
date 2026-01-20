@@ -88,6 +88,8 @@ class AppLocalization {
     'select_day_message': 'Please select at least one day for your schedule.',
     'invalid_duration': 'Invalid duration',
     'invalid_duration_message': 'Please enter a valid session length greater than 0 minutes.',
+    'login_required': 'Login Required',
+    'login_required_message': 'You must be logged in to generate workouts and schedules. Please sign in or create an account.',
     
     // Existing strings
     'login_message': 'Please login to continue',
@@ -204,6 +206,8 @@ class AppLocalization {
   String get selectDayMessage => _get('select_day_message');
   String get invalidDuration => _get('invalid_duration');
   String get invalidDurationMessage => _get('invalid_duration_message');
+  String get loginRequired => _get('login_required');
+  String get loginRequiredMessage => _get('login_required_message');
   
   // Existing strings
   String get loginMessage => _get('login_message');

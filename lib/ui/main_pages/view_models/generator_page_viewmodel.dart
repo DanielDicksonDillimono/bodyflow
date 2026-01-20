@@ -1,4 +1,5 @@
 import 'package:bodyflow/data/repos/workout_repo.dart';
+import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
@@ -6,6 +7,7 @@ import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class GeneratorPageViewModel with ChangeNotifier {
   final WorkoutRepo _workoutRepo;
@@ -149,6 +151,18 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   Future<void> generateWorkout(BuildContext context) async {
     final localization = AppLocalization.of(context);
+    
+    // Check if user is logged in
+    final userAuth = Provider.of<UserAuthentication>(context, listen: false);
+    if (userAuth.currentUser() == null) {
+      _showValidationError(
+        context,
+        localization.loginRequired,
+        localization.loginRequiredMessage,
+      );
+      return;
+    }
+    
     // Validate selections based on activity type
     if (_selectedBodyParts.isEmpty) {
       _showValidationError(
