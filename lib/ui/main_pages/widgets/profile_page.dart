@@ -18,40 +18,7 @@ class ProfilePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.75,
-              // child: Column(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     SizedBox(height: 16),
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Image(image: AssetImage('assets/images/logo.png')),
-              //         TextButton(
-              //           onPressed: () => viewModel.showAboutPage(context),
-              //           child: Text('About BodyFlow'),
-              //         ),
-              //       ],
-              //     ),
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Text(
-              //           'Sign in or create an account to create workout schedules and to view your personal workout stats',
-              //           textAlign: TextAlign.center,
-              //           style: Theme.of(context).textTheme.bodyLarge,
-              //         ),
-              //         SizedBox(
-              //           width: double.infinity,
-              //           child: ElevatedButton(
-              //             onPressed: () => viewModel.signIn(context),
-              //             style: Theme.of(context).elevatedButtonTheme.style,
-              //             child: const Text('Sign In'),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
+
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
