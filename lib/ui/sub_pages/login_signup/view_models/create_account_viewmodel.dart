@@ -1,17 +1,27 @@
+import 'package:bodyflow/data/database/database_service.dart';
 import 'package:bodyflow/data/services/user_authentication.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CreateAccountViewmodel extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController confirmEmailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final UserAuthentication _authService;
-  CreateAccountViewmodel({required UserAuthentication authService})
-    : _authService = authService;
+  final DatabaseService _databaseService;
+  CreateAccountViewmodel({
+    required UserAuthentication authService,
+    required DatabaseService databaseService,
+  }) : _authService = authService,
+       _databaseService = databaseService;
 
   bool isLoading = false;
   bool termsAccepted = false;
@@ -23,7 +33,7 @@ class CreateAccountViewmodel extends ChangeNotifier {
     confirmPasswordController.dispose();
   }
 
-  void createAccount() {
+  void createAccount(BuildContext context) async {
     if (termsAccepted == false) {
       showErrorMessage(
         formKey.currentContext!,
@@ -43,16 +53,19 @@ class CreateAccountViewmodel extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      _authService
+      await _authService
           .createUserWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
           )
-          .then((_) {
+          .then((credentials) async {
             // Account created successfully
+            await saveUserData(credentials, fullNameController.text.trim());
             isLoading = false;
             notifyListeners();
-            // Navigate to next page or show success message
+            if (context.mounted) {
+              context.go(Routes.home);
+            }
           })
           .catchError((error) {
             // Handle errors during account creation
@@ -61,6 +74,17 @@ class CreateAccountViewmodel extends ChangeNotifier {
             showErrorMessage(formKey.currentContext!, error.toString());
           });
     }
+  }
+
+  Future saveUserData(UserCredential userCredential, String fullName) async {
+    final userData = {
+      'name': fullName,
+      'uid': userCredential.user?.uid,
+      'email': emailController.text.trim(),
+      'createdAt': DateTime.now().toIso8601String(),
+    };
+    await _databaseService.createUserAccount(userData);
+    // Implement user data saving logic here
   }
 
   void openTermsAndConditions(BuildContext context) async {

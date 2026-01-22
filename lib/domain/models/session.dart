@@ -14,4 +14,14 @@ class Session {
     this.durationMinutes,
     this.exercises,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'imagePath': imagePath,
+      'durationMinutes': durationMinutes,
+      'exercises': exercises?.map((e) => e.toMap()).toList(),
+    };
+  }
 }

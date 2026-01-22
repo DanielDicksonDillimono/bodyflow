@@ -20,6 +20,7 @@ class AppLocalization {
     'email': 'Email',
     'password': 'Password',
     'confirm_password': 'Confirm Password',
+    'confirm_email': 'Confirm Email',
     'repeat_password': 'Repeat Password',
     'forgot_password': 'Forgot Password?',
     'create_account': 'Create Account',
@@ -104,6 +105,8 @@ class AppLocalization {
     'passwords_do_not_match': 'Passwords do not match.',
     'password_too_short': 'Password must be at least 6 characters long.',
     'terms_not_accepted': 'You must accept the terms and conditions.',
+    'confirm_email_required': 'Confirm email is required.',
+    'emails_do_not_match': 'Emails do not match.',
 
     // Existing strings
     'login_message': 'Please login to continue',
@@ -157,6 +160,7 @@ class AppLocalization {
   String get email => _get('email');
   String get password => _get('password');
   String get confirmPassword => _get('confirm_password');
+  String get confirmEmail => _get('confirm_email');
   String get repeatPassword => _get('repeat_password');
   String get forgotPassword => _get('forgot_password');
   String get createAccount => _get('create_account');
@@ -236,6 +240,8 @@ class AppLocalization {
   String get passwordsDoNotMatch => _get('passwords_do_not_match');
   String get passwordTooShort => _get('password_too_short');
   String get mustAcceptTerms => _get('terms_not_accepted');
+  String get confirmEmailRequired => _get('confirm_email_required');
+  String get emailsDoNotMatch => _get('emails_do_not_match');
 
   // Existing strings
   String get loginMessage => _get('login_message');

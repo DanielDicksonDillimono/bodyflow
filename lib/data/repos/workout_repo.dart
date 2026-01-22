@@ -3,6 +3,7 @@ import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/data/services/ai_workout_service.dart';
 import 'package:bodyflow/data/database/database_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WorkoutRepo {
   final List<Schedule> _schedules = [];
@@ -37,14 +38,15 @@ class WorkoutRepo {
         durationMinutes: durationMinutes,
       );
 
-      //save if user logged in.
-      //await _databaseService.saveSession(session as Map<String, dynamic>);
+      // Save if user logged in. Generating sessions are only for logged in users.
+      if (FirebaseAuth.instance.currentUser != null) {
+        final data = session.toMap();
+        await _databaseService.saveSession(data);
+      }
       return session;
     } catch (e) {
       rethrow;
     }
-
-    // Optionally save to database
   }
 
   Future<Schedule> generateWorkoutSchedule({
@@ -62,14 +64,14 @@ class WorkoutRepo {
         durationMinutes: durationMinutes,
         varyWeeklySessions: varyWeeklySessions,
       );
-      //await _databaseService.saveSchedule(schedule);
+
+      // Save if user logged in. Generating schedules are only for logged in users.
+      if (FirebaseAuth.instance.currentUser != null) {
+        await _databaseService.saveSchedule(schedule.toMap());
+      }
       return schedule;
     } catch (e) {
       rethrow;
     }
-  }
-
-  void getExercise() {
-    // Implementation to fetch exercises for workouts
   }
 }

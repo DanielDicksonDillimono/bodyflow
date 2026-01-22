@@ -10,9 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+import 'package:firebase_app_check/firebase_app_check.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAppCheck.instance.activate(
+    providerWeb: ReCaptchaV3Provider('siteKey'),
+    providerApple: AppleAppAttestProvider(),
+  );
   runApp(MultiProvider(providers: dependencyProviders(), child: const MyApp()));
 }
 

@@ -14,4 +14,16 @@ class Schedule {
     required this.weeks,
     required this.description,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'weeks': weeks.map((week) {
+        return week.map((day) {
+          return MapEntry(day.keys.first, day.values.first.toMap());
+        }).toList();
+      }).toList(),
+    };
+  }
 }

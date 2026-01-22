@@ -14,7 +14,10 @@ class UserAuthentication extends ChangeNotifier {
     initialLogin = value;
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -39,12 +42,12 @@ class UserAuthentication extends ChangeNotifier {
     }
   }
 
-  Future<void> createUserWithEmailAndPassword({
+  Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      return await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );

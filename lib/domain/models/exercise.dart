@@ -16,4 +16,16 @@ class Exercise {
     this.instructions,
     this.difficulty,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'description': description,
+      'sets': sets,
+      'reps': reps,
+      'durationMinutes': durationMinutes,
+      'instructions': instructions,
+      'difficulty': difficulty,
+    };
+  }
 }

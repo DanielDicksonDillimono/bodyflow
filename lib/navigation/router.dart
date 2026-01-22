@@ -4,11 +4,13 @@ import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/create_account_viewmodel.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
@@ -31,7 +33,10 @@ GoRouter router() => GoRouter(
         context: context,
         state: state,
         child: CreateAccountPage(
-          viewModel: CreateAccountViewmodel(authService: context.read()),
+          viewModel: CreateAccountViewmodel(
+            authService: context.read(),
+            databaseService: context.read(),
+          ),
         ),
       ),
     ),
@@ -40,7 +45,7 @@ GoRouter router() => GoRouter(
       pageBuilder: (context, state) => buildPageWithPlatformTransitions(
         context: context,
         state: state,
-        child: LoginPage(),
+        child: LoginPage(model: LoginViewmodel(authService: context.read())),
       ),
     ),
     GoRoute(
@@ -132,7 +137,9 @@ GoRouter router() => GoRouter(
                           workoutRepo: context.read(),
                         ),
                       )
-                    : LoginPage(),
+                    : LoginPage(
+                        model: LoginViewmodel(authService: context.read()),
+                      ),
               ),
             ),
           ],
@@ -145,8 +152,14 @@ GoRouter router() => GoRouter(
                 context: context,
                 state: state,
                 child: FirebaseAuth.instance.currentUser != null
-                    ? ProfilePage()
-                    : LoginPage(),
+                    ? ProfilePage(
+                        viewModel: ProfilePageViewmodel(
+                          authService: context.read(),
+                        ),
+                      )
+                    : LoginPage(
+                        model: LoginViewmodel(authService: context.read()),
+                      ),
               ),
             ),
           ],
@@ -157,6 +170,19 @@ GoRouter router() => GoRouter(
 );
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
+  final isloggedIn = FirebaseAuth.instance.currentUser != null;
+  if (!isloggedIn) {
+    switch (state.fullPath) {
+      case Routes.signUp:
+        return null; // Allow access to sign up page
+      case Routes.passwordRecovery:
+        return null; // Allow access to password recovery page
+      case Routes.login:
+        return null; // Allow access to login page
+      default:
+        return Routes.login; // Redirect unauthenticated users to login page
+    }
+  }
   switch (state.fullPath) {
     case Routes.login:
       return Routes.login; // Already on login page

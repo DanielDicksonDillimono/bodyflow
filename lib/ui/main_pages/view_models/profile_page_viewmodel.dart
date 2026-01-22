@@ -1,3 +1,4 @@
+import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/navigation/routes.dart';
@@ -6,10 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfilePageViewmodel extends ChangeNotifier {
-  ProfilePageViewmodel();
-  bool loggedIn = false;
-  bool get isLoading => false;
-  bool get isLoggedIn => loggedIn;
+  final UserAuthentication _authService;
+  ProfilePageViewmodel({required UserAuthentication authService})
+    : _authService = authService;
   List<Stat> get stats => [
     Stat(statType: StatType.workouts, value: '42'),
     Stat(statType: StatType.calories, value: '12,345'),
@@ -17,11 +17,6 @@ class ProfilePageViewmodel extends ChangeNotifier {
     Stat(statType: StatType.day, value: 'Wednesday'),
     Stat(statType: StatType.bodyPart, value: 'Legs'),
   ];
-  void toggleLoggedIn() {
-    loggedIn = !loggedIn;
-    notifyListeners();
-  }
-
   void showAboutPage(BuildContext context) {
     final localization = AppLocalization.of(context);
     showModalBottomSheet(
@@ -47,7 +42,10 @@ class ProfilePageViewmodel extends ChangeNotifier {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 16),
-              TextButton(onPressed: openWebsite, child: Text(localization.visitWebsite)),
+              TextButton(
+                onPressed: openWebsite,
+                child: Text(localization.visitWebsite),
+              ),
               TextButton(
                 onPressed: () {
                   showLicensePage(
@@ -80,9 +78,53 @@ class ProfilePageViewmodel extends ChangeNotifier {
     context.push(Routes.login);
   }
 
-  void signOut() {
+  void deleteAccount(BuildContext context) async {
+    // Implement delete account logic here
+    //context.push(Routes.deleteAccount);
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Are you sure you want to delete your account?'),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      // Call the delete account method
+                      await _authService.deleteUser();
+                      if (context.mounted) {
+                        context.go(Routes.home);
+                      }
+                    },
+                    child: Text('Delete'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void signOut(BuildContext context) async {
     // Implement sign-out logic here
-    loggedIn = false;
+    await _authService.signOut();
+    if (context.mounted) {
+      context.go(Routes.home);
+    }
     notifyListeners();
   }
 }

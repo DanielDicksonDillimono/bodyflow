@@ -18,5 +18,6 @@ List<SingleChildWidget> dependencyProviders() {
         databaseService: DatabaseService(FirebaseFirestore.instance),
       ),
     ),
+    Provider(create: (context) => DatabaseService(FirebaseFirestore.instance)),
   ];
 }
