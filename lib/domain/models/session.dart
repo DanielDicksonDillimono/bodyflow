@@ -24,4 +24,18 @@ class Session {
       'exercises': exercises?.map((e) => e.toMap()).toList(),
     };
   }
+
+  factory Session.fromMap(Map<String, dynamic> map) {
+    return Session(
+      name: map['name'],
+      description: map['description'],
+      imagePath: map['imagePath'],
+      durationMinutes: map['durationMinutes'],
+      exercises: map['exercises'] != null
+          ? List<Exercise>.from(
+              map['exercises'].map((e) => Exercise.fromMap(e)),
+            )
+          : null,
+    );
+  }
 }

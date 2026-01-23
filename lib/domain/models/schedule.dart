@@ -20,10 +20,31 @@ class Schedule {
       'name': name,
       'description': description,
       'weeks': weeks.map((week) {
-        return week.map((day) {
-          return MapEntry(day.keys.first, day.values.first.toMap());
-        }).toList();
+        final Map<String, Map<String, dynamic>> daysMap = {};
+        for (final day in week) {
+          final dayKey = day.keys.first.toString().split('.').last;
+          daysMap[dayKey] = day.values.first.toMap();
+        }
+        return daysMap;
       }).toList(),
     };
+  }
+
+  factory Schedule.fromMap(Map<String, dynamic> map) {
+    return Schedule(
+      name: map['name'],
+      description: map['description'],
+      weeks: List<List<Map<Days, Session>>>.from(
+        map['weeks'].map(
+          (week) => List<Map<Days, Session>>.from(
+            week.map((day) {
+              final dayKey = day.keys.first;
+              final session = day.values.first;
+              return {dayKey: Session.fromMap(session)};
+            }),
+          ),
+        ),
+      ),
+    );
   }
 }

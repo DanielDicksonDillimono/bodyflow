@@ -169,6 +169,8 @@ class AiWorkoutService {
                           'sets': Schema.integer(),
                           'reps': Schema.integer(),
                           'instructions': Schema.string(),
+                          'imagePath': Schema.string(),
+                          'durationMinutes': Schema.integer(),
                         },
                       ),
                     ),
@@ -279,6 +281,7 @@ class AiWorkoutService {
                 sets: exercise['sets'],
                 reps: exercise['reps'],
                 instructions: exercise['instructions'],
+                durationMinutes: exercise['durationMinutes'],
               ),
             )
             .toList() ??
@@ -289,6 +292,7 @@ class AiWorkoutService {
       description: sessionMap['description'] ?? 'AI-generated workout session',
       imagePath: _defaultWorkoutImage,
       exercises: exercises.isNotEmpty ? exercises : null,
+      durationMinutes: durationMinutes,
     );
   }
 

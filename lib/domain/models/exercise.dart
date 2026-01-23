@@ -28,4 +28,16 @@ class Exercise {
       'difficulty': difficulty,
     };
   }
+
+  factory Exercise.fromMap(Map<String, dynamic> map) {
+    return Exercise(
+      name: map['name'],
+      description: map['description'],
+      sets: map['sets'],
+      reps: map['reps'],
+      durationMinutes: map['durationMinutes'],
+      instructions: map['instructions'],
+      difficulty: map['difficulty'],
+    );
+  }
 }
