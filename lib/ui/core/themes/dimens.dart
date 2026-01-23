@@ -39,6 +39,8 @@ abstract final class Dimens {
 
   static double textCardWidth(BuildContext context) =>
       MediaQuery.of(context).size.height * textCardWidthFactor;
+  static double cardSectionHeight(BuildContext context) =>
+      textCardHeight(context) * 1.5;
 
   /// Symmetric padding for screen edges
   EdgeInsets get edgeInsetsScreenSymmetric => EdgeInsets.symmetric(

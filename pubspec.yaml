@@ -83,6 +83,7 @@ flutter:
     - assets/Themes/darkTheme.json
     - assets/Themes/lightTheme.json
     - assets/TandCBodyflow.pdf
+    - assets/images/schedule.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

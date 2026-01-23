@@ -6,8 +6,8 @@ import 'package:bodyflow/data/database/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class WorkoutRepo {
-  final List<Schedule> _schedules = [];
-  final List<Session> _sessions = [];
+  final List<Schedule> _schedules = []; //TODO probably not needed
+  final List<Session> _sessions = []; //TODO probably not needed
   final AiWorkoutService _aiWorkoutService;
   final DatabaseService _databaseService;
 
@@ -20,12 +20,24 @@ class WorkoutRepo {
   List<Session> get workouts => _sessions;
   List<Schedule> get schedules => _schedules;
 
-  void getAllSchedules() {
-    // Implementation to fetch all schedules from database
+  Stream<List<Schedule>> allSchedulesStream() {
+    return _databaseService.allSchedulesStream().map((snapshot) {
+      try {
+        return snapshot.docs
+            .map((doc) => Schedule.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+      } catch (e) {
+        return <Schedule>[];
+      }
+    });
   }
 
-  void getAllSessions() {
-    // Implementation to fetch all sessions from database
+  Stream<List<Session>> allSessionsStream() {
+    return _databaseService.allSessionsStream().map(
+      (snapshot) => snapshot.docs
+          .map((doc) => Session.fromMap(doc.data() as Map<String, dynamic>))
+          .toList(),
+    );
   }
 
   Future<Session> generateWorkoutSession(

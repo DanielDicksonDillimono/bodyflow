@@ -34,17 +34,19 @@ class Schedule {
     return Schedule(
       name: map['name'],
       description: map['description'],
-      weeks: List<List<Map<Days, Session>>>.from(
-        map['weeks'].map(
-          (week) => List<Map<Days, Session>>.from(
-            week.map((day) {
-              final dayKey = day.keys.first;
-              final session = day.values.first;
-              return {dayKey: Session.fromMap(session)};
-            }),
-          ),
-        ),
-      ),
+      weeks:
+          map['weeks']?.map<List<Map<Days, Session>>>((week) {
+                final List<Map<Days, Session>> dailySessions = [];
+                (week as Map<String, dynamic>).forEach((dayKey, sessionMap) {
+                  final day = Days.values.firstWhere(
+                    (d) => d.toString().split('.').last == dayKey,
+                  );
+                  final session = Session.fromMap(sessionMap);
+                  dailySessions.add({day: session});
+                });
+                return dailySessions;
+              }).toList()
+              as List<List<Map<Days, Session>>>,
     );
   }
 }

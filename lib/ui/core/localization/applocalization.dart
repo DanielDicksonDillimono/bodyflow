@@ -46,6 +46,12 @@ class AppLocalization {
     'full_body_blast': 'Full Body Blast',
     'minutes_45': '45 mins',
     'minutes_text': 'minutes',
+    'generated_sessions': 'Generated Sessions',
+    'no_generated_sessions':
+        'No generated sessions yet. Create one using the generator!',
+    'generated_schedules': 'Generated Schedules',
+    'no_generated_schedules':
+        'No generated schedules yet. Create one using the generator!',
 
     // Generator Page
     'generator': 'Generator',
@@ -185,6 +191,10 @@ class AppLocalization {
   String get fullBodyBlast => _get('full_body_blast');
   String get minutes45 => _get('minutes_45');
   String get minutesText => _get('minutes_text');
+  String get generatedSessions => _get('generated_sessions');
+  String get noGeneratedSessions => _get('no_generated_sessions');
+  String get generatedSchedules => _get('generated_schedules');
+  String get noGeneratedSchedules => _get('no_generated_schedules');
 
   // Generator Page
   String get generator => _get('generator');

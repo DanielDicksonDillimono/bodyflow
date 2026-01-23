@@ -13,14 +13,14 @@ class DatabaseService {
     'app_generated_sessions',
   );
 
-  Stream<QuerySnapshot> getSchedulesStream() {
+  Stream<QuerySnapshot> allSchedulesStream() {
     return usersCollection
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('Schedules')
         .snapshots();
   }
 
-  Stream<QuerySnapshot> getSessionsStream() {
+  Stream<QuerySnapshot> allSessionsStream() {
     return usersCollection
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('Sessions')

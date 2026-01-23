@@ -4,6 +4,7 @@ import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
 import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/view_models/home_page_viewmodel.dart';
 import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
 import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
 import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
@@ -119,7 +120,9 @@ GoRouter router() => GoRouter(
               pageBuilder: (context, state) => buildPageWithPlatformTransitions(
                 context: context,
                 state: state,
-                child: HomePage(),
+                child: HomePage(
+                  viewModel: HomePageViewModel(workoutRepo: context.read()),
+                ),
               ),
             ),
           ],
