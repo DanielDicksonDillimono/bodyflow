@@ -44,6 +44,9 @@ class Schedule {
                   final session = Session.fromMap(sessionMap);
                   dailySessions.add({day: session});
                 });
+                dailySessions.sort(
+                  (a, b) => a.keys.first.index.compareTo(b.keys.first.index),
+                );
                 return dailySessions;
               }).toList()
               as List<List<Map<Days, Session>>>,

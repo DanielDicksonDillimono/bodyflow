@@ -31,36 +31,6 @@ class HomePage extends StatelessWidget {
             children: [
               SizedBox(height: Dimens.paddingVerticalLarge),
 
-              // Quick Workouts Section
-              Container(
-                padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.40,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/boxjump.jpg'),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withValues(alpha: 0.5),
-                      BlendMode.darken,
-                    ),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: Dimens.paddingVerticalSmall),
-                    Text(
-                      localization.quickWorkouts,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineLarge?.copyWith(color: Colors.white),
-                    ),
-                    SizedBox(height: 12.0),
-                  ],
-                ),
-              ),
-
               // Recently Generated Workouts Schedules Section
               Container(
                 padding: Dimens.of(context).edgeInsetsScreenHorizontal,
@@ -142,7 +112,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     SizedBox(height: Dimens.paddingVerticalSmall),
                     Text(
-                      localization.generatedSchedules,
+                      localization.generatedSessions,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineLarge?.copyWith(color: Colors.white),
@@ -298,7 +268,11 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 8.0),
                   Row(
                     children: [
-                      Icon(Icons.timer, color: Colors.white, size: 16.0),
+                      Icon(
+                        Icons.calendar_view_month,
+                        color: Colors.white,
+                        size: 16.0,
+                      ),
                       SizedBox(width: 4.0),
                       Text(
                         "${schedule.weeks.length.toString()} ${localization.week}",
