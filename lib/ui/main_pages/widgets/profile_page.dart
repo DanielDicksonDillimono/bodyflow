@@ -108,13 +108,15 @@ class ProfilePage extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  viewModel.userEmail,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge,
-                                ),
-                                SizedBox(height: 16),
+                                if (viewModel.userEmail.isNotEmpty)
+                                  Text(
+                                    viewModel.userEmail,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge,
+                                  ),
+                                if (viewModel.userEmail.isNotEmpty)
+                                  SizedBox(height: 16),
                                 SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(
