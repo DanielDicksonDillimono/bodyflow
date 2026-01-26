@@ -107,7 +107,7 @@ class GeneratorPage extends StatelessWidget {
                                     elevation: WidgetStatePropertyAll(0),
                                   ),
                                   child: Text(
-                                    localization.workout,
+                                    localization.session,
                                     style: TextStyle(
                                       color:
                                           model.activityType ==
@@ -166,11 +166,32 @@ class GeneratorPage extends StatelessWidget {
                             padding: Dimens.of(
                               context,
                             ).edgeInsetsScreenHorizontal,
-                            child: model.activityType == ActivityType.schedule
+                            child:
+                                model.activityType ==
+                                    ActivityType
+                                        .schedule //TODO: Extract session and schedule widgets
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        localization.extraNotes,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleLarge,
+                                      ),
+                                      TextFormField(
+                                        controller: model.notesController,
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              localization.enterExtraNotes,
+                                        ),
+                                        maxLines: 3,
+                                        onChanged: (value) {
+                                          model.setExtraNotes(value);
+                                        },
+                                      ),
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
@@ -295,6 +316,24 @@ class GeneratorPage extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        localization.extraNotes,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleLarge,
+                                      ),
+                                      TextFormField(
+                                        controller: model.notesController,
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              localization.enterExtraNotes,
+                                        ),
+                                        maxLines: 3,
+                                        onChanged: (value) {
+                                          model.setExtraNotes(value);
+                                        },
+                                      ),
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(

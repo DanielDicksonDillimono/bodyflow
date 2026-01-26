@@ -27,6 +27,10 @@ class GeneratorPageViewModel with ChangeNotifier {
     ),
   );
 
+  final TextEditingController notesController = TextEditingController();
+
+  String get extraNotes => _extraNotes;
+
   bool _isGenerating = false;
 
   bool _varyWeeklySessions = false;
@@ -49,6 +53,13 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   List<BodyPart> get selectedBodyParts => _selectedBodyParts;
   List<Days> get selectedDays => _selectedDays;
+
+  String _extraNotes = '';
+
+  void setExtraNotes(String value) {
+    _extraNotes = value;
+    notifyListeners();
+  }
 
   void setVaryWeeklySessions(bool value) {
     _varyWeeklySessions = value;
@@ -186,8 +197,9 @@ class GeneratorPageViewModel with ChangeNotifier {
     try {
       if (_activityType == ActivityType.session) {
         final workout = await _workoutRepo.generateWorkoutSession(
-          _selectedBodyParts,
-          _sessionLengthInMinutes,
+          bodyParts: _selectedBodyParts,
+          durationMinutes: _sessionLengthInMinutes,
+          extraNotes: _extraNotes,
         );
         setIsGenerating(false);
         if (context.mounted) {
@@ -201,6 +213,7 @@ class GeneratorPageViewModel with ChangeNotifier {
           numberOfWeeks: _numberOfWeeks,
           durationMinutes: _sessionLengthInMinutes,
           varyWeeklySessions: _varyWeeklySessions,
+          extraNotes: _extraNotes,
         );
         setIsGenerating(false);
         if (context.mounted) {

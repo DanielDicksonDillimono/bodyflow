@@ -57,9 +57,10 @@ class AppLocalization {
     'generator': 'Generator',
     'generator_subtitle': 'Create workout sessions or schedules',
     'generator_description':
-        'Workouts are one-time sessions, while schedules are recurring plans.',
+        'Sessions are one-time workouts, while schedules are recurring plans.',
     'workout': 'Workout',
     'schedule': 'Schedule',
+    'session': 'Session',
     'split': 'Split',
     'days': 'Days',
     'time': 'Time',
@@ -67,6 +68,9 @@ class AppLocalization {
     'enter_session_length': 'Enter session length in minutes',
     'target': 'Target',
     'generate': 'Generate',
+    'extra_notes': 'Extra Notes',
+    'enter_extra_notes. Can be left blank.':
+        'Enter extra notes. Can be left blank.',
 
     // Workout and Exercise Pages
     'legs': 'LEGS',
@@ -202,6 +206,7 @@ class AppLocalization {
   String get generatorDescription => _get('generator_description');
   String get workout => _get('workout');
   String get schedule => _get('schedule');
+  String get session => _get('session');
   String get split => _get('split');
   String get days => _get('days');
   String get time => _get('time');
@@ -209,6 +214,8 @@ class AppLocalization {
   String get enterSessionLength => _get('enter_session_length');
   String get target => _get('target');
   String get generate => _get('generate');
+  String get extraNotes => _get('extra_notes');
+  String get enterExtraNotes => _get('enter_extra_notes. Can be left blank.');
 
   // Workout and Exercise Pages
   String get legs => _get('legs');

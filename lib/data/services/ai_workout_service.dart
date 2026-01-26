@@ -40,6 +40,7 @@ class AiWorkoutService {
   Future<Session> generateSession({
     required List<BodyPart> bodyParts,
     required int durationMinutes,
+    String extraNotes = '',
   }) async {
     final receivedBodyParts = bodyParts.map((bp) => bp.name).join(', ');
 
@@ -52,6 +53,8 @@ class AiWorkoutService {
         - Add at least one compound movement exercise
         - For each exercise, provide: name, sets, reps, and brief instructions
         - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
+        - Include any additional notes or tips for the workout session (optional).
+        - if $extraNotes are supplied, include them in the response.
 
 
         Format the response as follows:
@@ -107,6 +110,7 @@ class AiWorkoutService {
     required int numberOfWeeks,
     required int durationMinutes,
     required bool varyWeeklySessions,
+    String extraNotes = '',
   }) async {
     Schedule schedule;
     String daysStr = days.map((day) => day.name).join(', ');
@@ -121,6 +125,8 @@ class AiWorkoutService {
         - Add at least one compound movement exercise
         - For each exercise, provide: name, sets, reps, and brief instructions
         - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
+        - Include any additional notes or tips for the workout sessions (optional).
+        - if $extraNotes are supplied, include them in the response.
 
 
         Format the response as follows:

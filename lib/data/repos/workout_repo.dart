@@ -40,10 +40,11 @@ class WorkoutRepo {
     );
   }
 
-  Future<Session> generateWorkoutSession(
-    List<BodyPart> bodyParts,
-    int durationMinutes,
-  ) async {
+  Future<Session> generateWorkoutSession({
+    required List<BodyPart> bodyParts,
+    required int durationMinutes,
+    String extraNotes = '',
+  }) async {
     try {
       Session session = await _aiWorkoutService.generateSession(
         bodyParts: bodyParts,
@@ -67,6 +68,7 @@ class WorkoutRepo {
     required int numberOfWeeks,
     required int durationMinutes,
     required bool varyWeeklySessions,
+    String extraNotes = '',
   }) async {
     try {
       Schedule schedule = await _aiWorkoutService.generateSchedule(

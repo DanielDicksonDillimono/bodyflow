@@ -41,6 +41,8 @@ abstract final class AppTheme {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
+      errorStyle: TextStyle(color: Colors.red),
+      hintStyle: TextStyle(color: AppColors.grey3),
     ),
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -68,6 +70,7 @@ abstract final class AppTheme {
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       errorStyle: TextStyle(color: Colors.red),
+      hintStyle: TextStyle(color: AppColors.grey3),
     ),
 
     buttonTheme: ButtonThemeData(
