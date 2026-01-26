@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
+import 'package:bodyflow/domain/models/schedule.dart';
+import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
@@ -12,6 +15,8 @@ class ProfilePageViewmodel extends ChangeNotifier {
   final WorkoutRepo _workoutRepo;
   int _schedulesCount = 0;
   int _sessionsCount = 0;
+  StreamSubscription<List<Schedule>>? _schedulesSubscription;
+  StreamSubscription<List<Session>>? _sessionsSubscription;
   
   ProfilePageViewmodel({
     required UserAuthentication authService,
@@ -23,13 +28,13 @@ class ProfilePageViewmodel extends ChangeNotifier {
   
   void _loadStats() {
     // Listen to schedules stream
-    _workoutRepo.allSchedulesStream().listen((schedules) {
+    _schedulesSubscription = _workoutRepo.allSchedulesStream().listen((schedules) {
       _schedulesCount = schedules.length;
       notifyListeners();
     });
     
     // Listen to sessions stream
-    _workoutRepo.allSessionsStream().listen((sessions) {
+    _sessionsSubscription = _workoutRepo.allSessionsStream().listen((sessions) {
       _sessionsCount = sessions.length;
       notifyListeners();
     });
@@ -37,7 +42,14 @@ class ProfilePageViewmodel extends ChangeNotifier {
   
   String get userName {
     final user = _authService.currentUser();
-    return user?.displayName ?? user?.email?.split('@')[0] ?? 'User';
+    if (user?.displayName != null && user!.displayName!.isNotEmpty) {
+      return user.displayName!;
+    }
+    final email = user?.email;
+    if (email != null && email.isNotEmpty && email.contains('@')) {
+      return email.split('@')[0];
+    }
+    return 'User';
   }
   
   String get userEmail {
@@ -49,6 +61,13 @@ class ProfilePageViewmodel extends ChangeNotifier {
     Stat(statType: StatType.schedules, value: '$_schedulesCount'),
     Stat(statType: StatType.sessions, value: '$_sessionsCount'),
   ];
+  
+  @override
+  void dispose() {
+    _schedulesSubscription?.cancel();
+    _sessionsSubscription?.cancel();
+    super.dispose();
+  }
   void showAboutPage(BuildContext context) {
     final localization = AppLocalization.of(context);
     showModalBottomSheet(
