@@ -1,4 +1,4 @@
-enum StatType { workouts, calories, hours, day, bodyPart }
+enum StatType { workouts, calories, hours, day, bodyPart, schedules, sessions }
 
 enum Days { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 

@@ -22,6 +22,12 @@ class Stat {
       case StatType.bodyPart:
         title = "Most Trained Body Part";
         break;
+      case StatType.schedules:
+        title = "Schedules";
+        break;
+      case StatType.sessions:
+        title = "Sessions";
+        break;
     }
   }
 }

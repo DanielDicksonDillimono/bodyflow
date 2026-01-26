@@ -32,6 +32,19 @@ class ProfilePage extends StatelessWidget {
                             padding: Dimens.of(
                               context,
                             ).edgeInsetsScreenHorizontal,
+                            child: Text(
+                              '${localization.allAboutYou}: ${viewModel.userName}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Container(
+                            padding: Dimens.of(
+                              context,
+                            ).edgeInsetsScreenHorizontal,
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height * 0.40,
                             decoration: BoxDecoration(
@@ -95,6 +108,13 @@ class ProfilePage extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                Text(
+                                  viewModel.userEmail,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge,
+                                ),
+                                SizedBox(height: 16),
                                 SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(

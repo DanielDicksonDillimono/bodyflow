@@ -158,6 +158,7 @@ GoRouter router() => GoRouter(
                     ? ProfilePage(
                         viewModel: ProfilePageViewmodel(
                           authService: context.read(),
+                          workoutRepo: context.read(),
                         ),
                       )
                     : LoginPage(

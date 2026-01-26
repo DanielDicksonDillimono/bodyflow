@@ -87,6 +87,7 @@ class AppLocalization {
     'upper_body': 'UPPER BODY',
 
     // Profile Page
+    'all_about_you': 'All about you',
     'last_months_stats': 'Last Months Stats',
     'about_bodyflow': 'About BodyFlow',
     'sign_out': 'Sign out',
@@ -232,6 +233,7 @@ class AppLocalization {
   String get upperBody => _get('upper_body');
 
   // Profile Page
+  String get allAboutYou => _get('all_about_you');
   String get lastMonthsStats => _get('last_months_stats');
   String get aboutBodyflow => _get('about_bodyflow');
   String get signOut => _get('sign_out');

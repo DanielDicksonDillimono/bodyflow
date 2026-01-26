@@ -1,4 +1,5 @@
 import 'package:bodyflow/data/services/user_authentication.dart';
+import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/stat.dart';
 import 'package:bodyflow/navigation/routes.dart';
@@ -8,14 +9,45 @@ import 'package:go_router/go_router.dart';
 
 class ProfilePageViewmodel extends ChangeNotifier {
   final UserAuthentication _authService;
-  ProfilePageViewmodel({required UserAuthentication authService})
-    : _authService = authService;
+  final WorkoutRepo _workoutRepo;
+  int _schedulesCount = 0;
+  int _sessionsCount = 0;
+  
+  ProfilePageViewmodel({
+    required UserAuthentication authService,
+    required WorkoutRepo workoutRepo,
+  }) : _authService = authService,
+       _workoutRepo = workoutRepo {
+    _loadStats();
+  }
+  
+  void _loadStats() {
+    // Listen to schedules stream
+    _workoutRepo.allSchedulesStream().listen((schedules) {
+      _schedulesCount = schedules.length;
+      notifyListeners();
+    });
+    
+    // Listen to sessions stream
+    _workoutRepo.allSessionsStream().listen((sessions) {
+      _sessionsCount = sessions.length;
+      notifyListeners();
+    });
+  }
+  
+  String get userName {
+    final user = _authService.currentUser();
+    return user?.displayName ?? user?.email?.split('@')[0] ?? 'User';
+  }
+  
+  String get userEmail {
+    final user = _authService.currentUser();
+    return user?.email ?? '';
+  }
+  
   List<Stat> get stats => [
-    Stat(statType: StatType.workouts, value: '42'),
-    Stat(statType: StatType.calories, value: '12,345'),
-    Stat(statType: StatType.hours, value: '67'),
-    Stat(statType: StatType.day, value: 'Wednesday'),
-    Stat(statType: StatType.bodyPart, value: 'Legs'),
+    Stat(statType: StatType.schedules, value: '$_schedulesCount'),
+    Stat(statType: StatType.sessions, value: '$_sessionsCount'),
   ];
   void showAboutPage(BuildContext context) {
     final localization = AppLocalization.of(context);
