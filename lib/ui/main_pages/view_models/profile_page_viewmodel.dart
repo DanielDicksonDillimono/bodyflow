@@ -28,21 +28,35 @@ class ProfilePageViewmodel extends ChangeNotifier {
   
   void _loadStats() {
     // Listen to schedules stream
-    _schedulesSubscription = _workoutRepo.allSchedulesStream().listen((schedules) {
-      _schedulesCount = schedules.length;
-      notifyListeners();
-    });
+    _schedulesSubscription = _workoutRepo.allSchedulesStream().listen(
+      (schedules) {
+        _schedulesCount = schedules.length;
+        notifyListeners();
+      },
+      onError: (error) {
+        // Handle error gracefully - keep count at 0
+        _schedulesCount = 0;
+        notifyListeners();
+      },
+    );
     
     // Listen to sessions stream
-    _sessionsSubscription = _workoutRepo.allSessionsStream().listen((sessions) {
-      _sessionsCount = sessions.length;
-      notifyListeners();
-    });
+    _sessionsSubscription = _workoutRepo.allSessionsStream().listen(
+      (sessions) {
+        _sessionsCount = sessions.length;
+        notifyListeners();
+      },
+      onError: (error) {
+        // Handle error gracefully - keep count at 0
+        _sessionsCount = 0;
+        notifyListeners();
+      },
+    );
   }
   
   String get userName {
     final user = _authService.currentUser();
-    if (user?.displayName != null && user!.displayName!.isNotEmpty) {
+    if (user?.displayName != null && user.displayName!.isNotEmpty) {
       return user.displayName!;
     }
     final email = user?.email;
