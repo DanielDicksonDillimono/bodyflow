@@ -45,12 +45,15 @@ class UserAuthentication extends ChangeNotifier {
   Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    required String displayName,
   }) async {
     try {
-      return await _firebaseAuth.createUserWithEmailAndPassword(
+      final useCredentials = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      _firebaseAuth.currentUser?.updateDisplayName(displayName);
+      return useCredentials;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.message);
     } finally {

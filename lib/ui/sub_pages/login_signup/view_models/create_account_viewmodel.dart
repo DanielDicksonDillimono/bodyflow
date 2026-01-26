@@ -57,6 +57,7 @@ class CreateAccountViewmodel extends ChangeNotifier {
           .createUserWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
+            displayName: fullNameController.text.trim(),
           )
           .then((credentials) async {
             // Account created successfully

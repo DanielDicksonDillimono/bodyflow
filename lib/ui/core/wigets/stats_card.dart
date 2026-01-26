@@ -23,6 +23,12 @@ class StatsCard extends StatelessWidget {
       case StatType.bodyPart:
         icon = const Icon(Icons.self_improvement, color: Colors.white);
         break;
+      case StatType.schedules:
+        icon = const Icon(Icons.calendar_view_month, color: Colors.white);
+        break;
+      case StatType.sessions:
+        icon = const Icon(Icons.timer, color: Colors.white);
+        break;
     }
   }
 
@@ -31,13 +37,15 @@ class StatsCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Handle card tap if needed
+        // A modalbottomsheet could be opened here with more details
+        Tooltip(message: '${stat.title}: ${stat.value}', child: Container());
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
+          child: Column(
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -49,7 +57,7 @@ class StatsCard extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     stat.title,

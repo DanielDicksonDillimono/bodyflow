@@ -17,7 +17,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
   int _sessionsCount = 0;
   StreamSubscription<List<Schedule>>? _schedulesSubscription;
   StreamSubscription<List<Session>>? _sessionsSubscription;
-  
+
   ProfilePageViewmodel({
     required UserAuthentication authService,
     required WorkoutRepo workoutRepo,
@@ -25,7 +25,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
        _workoutRepo = workoutRepo {
     _loadStats();
   }
-  
+
   void _loadStats() {
     // Listen to schedules stream
     _schedulesSubscription = _workoutRepo.allSchedulesStream().listen(
@@ -39,7 +39,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
         notifyListeners();
       },
     );
-    
+
     // Listen to sessions stream
     _sessionsSubscription = _workoutRepo.allSessionsStream().listen(
       (sessions) {
@@ -53,35 +53,39 @@ class ProfilePageViewmodel extends ChangeNotifier {
       },
     );
   }
-  
+
   String get userName {
     final user = _authService.currentUser();
-    if (user?.displayName != null && user.displayName!.isNotEmpty) {
-      return user.displayName!;
+    final displayName = user?.displayName;
+    if (displayName != null && displayName.isNotEmpty) {
+      return displayName;
     }
     final email = user?.email;
+
+    // Use the user's email prefix as name if displayName is not set
     if (email != null && email.isNotEmpty && email.contains('@')) {
       return email.split('@')[0];
     }
     return 'User';
   }
-  
+
   String get userEmail {
     final user = _authService.currentUser();
     return user?.email ?? '';
   }
-  
+
   List<Stat> get stats => [
     Stat(statType: StatType.schedules, value: '$_schedulesCount'),
     Stat(statType: StatType.sessions, value: '$_sessionsCount'),
   ];
-  
+
   @override
   void dispose() {
     _schedulesSubscription?.cancel();
     _sessionsSubscription?.cancel();
     super.dispose();
   }
+
   void showAboutPage(BuildContext context) {
     final localization = AppLocalization.of(context);
     showModalBottomSheet(
