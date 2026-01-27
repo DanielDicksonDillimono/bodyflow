@@ -63,6 +63,10 @@ The app uses Google's Gemini AI model to generate:
 
 For more information, see [AI_SETUP.md](AI_SETUP.md).
 
+## Figma
+[Figma](https://www.figma.com/design/8lVX7UgV22ON7ciaO37JpP/BodyTherapy?node-id=352-2824&t=OBGWTnYGj3pMQNLP-1)
+
+
 ## Resources
 
 For help getting started with Flutter development:
