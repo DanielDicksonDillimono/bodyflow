@@ -118,11 +118,21 @@ class SchedulePage extends StatelessWidget {
                       children: model.getSessionsForWeek().map((daySessionMap) {
                         final day = daySessionMap.keys.first;
                         final session = daySessionMap.values.first;
-                        return _buildWorkoutCard(context, session, day.name);
+                        return _buildSessionCard(context, session, day.name);
                       }).toList(),
                     ),
                   ),
                   SizedBox(height: Dimens.paddingVertical),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () => model.deleteSchedule(context),
+                      child: Text(
+                        'Delete Schedule',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
@@ -132,7 +142,7 @@ class SchedulePage extends StatelessWidget {
     );
   }
 
-  Widget _buildWorkoutCard(BuildContext context, Session session, String day) {
+  Widget _buildSessionCard(BuildContext context, Session session, String day) {
     return InkWell(
       onTap: () {
         context.push(Routes.session, extra: session);

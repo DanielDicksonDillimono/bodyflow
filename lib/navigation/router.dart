@@ -16,7 +16,8 @@ import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/widgets/schedule_page.dart';
-import 'package:bodyflow/ui/sub_pages/workout/widgets/session_page.dart';
+import 'package:bodyflow/ui/sub_pages/session/widgets/session_page.dart';
+import 'package:bodyflow/ui/sub_pages/session/view_models/session_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -93,7 +94,9 @@ GoRouter router() => GoRouter(
         return buildPageWithPlatformTransitions(
           context: context,
           state: state,
-          child: SessionPage(session: session),
+          child: SessionPage(
+            model: SessionViewModel(session: session, repo: context.read()),
+          ),
         );
       },
     ),
@@ -105,7 +108,9 @@ GoRouter router() => GoRouter(
         return buildPageWithPlatformTransitions(
           context: context,
           state: state,
-          child: SchedulePage(model: ScheduleViewModel(schedule: schedule)),
+          child: SchedulePage(
+            model: ScheduleViewModel(schedule: schedule, repo: context.read()),
+          ),
         );
       },
     ),

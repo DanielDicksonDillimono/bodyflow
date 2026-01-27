@@ -6,8 +6,9 @@ import 'package:bodyflow/data/database/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class WorkoutRepo {
-  final List<Schedule> _schedules = []; //TODO probably not needed
-  final List<Session> _sessions = []; //TODO probably not needed
+  //TODO probably not needed if we use streams directly from database service
+  final List<Schedule> _schedules = [];
+  final List<Session> _sessions = [];
   final AiWorkoutService _aiWorkoutService;
   final DatabaseService _databaseService;
 
@@ -23,9 +24,11 @@ class WorkoutRepo {
   Stream<List<Schedule>> allSchedulesStream() {
     return _databaseService.allSchedulesStream().map((snapshot) {
       try {
-        return snapshot.docs
-            .map((doc) => Schedule.fromMap(doc.data() as Map<String, dynamic>))
-            .toList();
+        return snapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          data['id'] = doc.id;
+          return Schedule.fromMap(data);
+        }).toList();
       } catch (e) {
         return <Schedule>[];
       }
@@ -34,9 +37,11 @@ class WorkoutRepo {
 
   Stream<List<Session>> allSessionsStream() {
     return _databaseService.allSessionsStream().map(
-      (snapshot) => snapshot.docs
-          .map((doc) => Session.fromMap(doc.data() as Map<String, dynamic>))
-          .toList(),
+      (snapshot) => snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        data['id'] = doc.id;
+        return Session.fromMap(data);
+      }).toList(),
     );
   }
 
@@ -84,6 +89,22 @@ class WorkoutRepo {
         await _databaseService.saveSchedule(schedule.toMap());
       }
       return schedule;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteSession(String sessionId) async {
+    try {
+      await _databaseService.deleteSession(sessionId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteSchedule(String scheduleId) async {
+    try {
+      await _databaseService.deleteSchedule(scheduleId);
     } catch (e) {
       rethrow;
     }

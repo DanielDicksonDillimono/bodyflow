@@ -1,3 +1,6 @@
+import 'package:bodyflow/data/database/database_service.dart';
+import 'package:bodyflow/data/repos/workout_repo.dart';
+import 'package:bodyflow/data/services/ai_workout_service.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/domain/models/schedule.dart';
@@ -5,6 +8,7 @@ import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/widgets/schedule_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,6 +30,7 @@ void main() {
         imagePath: 'assets/images/squat.jpg',
         durationMinutes: 45,
         exercises: exercises,
+        id: 'session',
       );
 
       final shouldersSession = Session(
@@ -34,12 +39,14 @@ void main() {
         imagePath: 'assets/images/barbell.jpg',
         durationMinutes: 45,
         exercises: exercises,
+        id: 'session',
       );
 
       final schedule = Schedule(
         name: 'Body Blaster',
         description:
             'Yada Daba du. Something about this workout schedule. It is about goal and efficiency.',
+        id: 'schedule',
         weeks: [
           [
             {Days.monday: legsSession},
@@ -56,7 +63,15 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           localizationsDelegates: const [AppLocalizationDelegate()],
-          home: SchedulePage(model: ScheduleViewModel(schedule: schedule)),
+          home: SchedulePage(
+            model: ScheduleViewModel(
+              schedule: schedule,
+              repo: WorkoutRepo(
+                aiWorkoutService: AiWorkoutService(),
+                databaseService: DatabaseService(FirebaseFirestore.instance),
+              ),
+            ),
+          ),
         ),
       );
 

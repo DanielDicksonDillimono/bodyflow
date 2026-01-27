@@ -234,6 +234,7 @@ class AiWorkoutService {
       imagePath: _defaultWorkoutImage,
       durationMinutes: durationMinutes,
       exercises: exercises.isNotEmpty ? exercises : null,
+      id: '', // ID can be assigned when saving to database
     );
   }
 
@@ -251,6 +252,7 @@ class AiWorkoutService {
           responseMap['description'] ??
           'AI-generated workout schedule for $bodyPartsStr',
       weeks: _parseWeeklySessionsFromList(weeks, durationMinutes),
+      id: '', // ID can be assigned when saving to database
     );
   }
 
@@ -299,6 +301,7 @@ class AiWorkoutService {
       imagePath: _defaultWorkoutImage,
       exercises: exercises.isNotEmpty ? exercises : null,
       durationMinutes: durationMinutes,
+      id: '', // ID can be assigned when saving to database
     );
   }
 

@@ -1,14 +1,20 @@
+import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
+import 'package:bodyflow/navigation/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ScheduleViewModel with ChangeNotifier {
   // Add properties and methods to manage the schedule state
   final Schedule _schedule;
+  final WorkoutRepo _repo;
   int _currentWeekIndex = 0;
 
-  ScheduleViewModel({required Schedule schedule}) : _schedule = schedule;
+  ScheduleViewModel({required Schedule schedule, required WorkoutRepo repo})
+    : _schedule = schedule,
+      _repo = repo;
 
   Schedule get schedule => _schedule;
   int get currentWeekIndex => _currentWeekIndex;
@@ -36,5 +42,32 @@ class ScheduleViewModel with ChangeNotifier {
       });
     }
     return sessions;
+  }
+
+  Future<void> deleteSchedule(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Schedule'),
+          content: Text('Are you sure you want to delete this schedule?'),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await _repo.deleteSchedule(_schedule.id);
+                if (context.mounted) context.go(Routes.home);
+              },
+              child: Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+            TextButton(
+              onPressed: () {
+                if (context.mounted) context.pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

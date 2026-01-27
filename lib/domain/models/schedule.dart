@@ -9,10 +9,12 @@ class Schedule {
   final String name;
   final String description;
   final List<List<Map<Days, Session>>> weeks;
+  final String id;
   Schedule({
     required this.name,
     required this.weeks,
     required this.description,
+    required this.id,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,6 +36,7 @@ class Schedule {
     return Schedule(
       name: map['name'],
       description: map['description'],
+      id: map['id'] ?? '',
       weeks:
           map['weeks']?.map<List<Map<Days, Session>>>((week) {
                 final List<Map<Days, Session>> dailySessions = [];

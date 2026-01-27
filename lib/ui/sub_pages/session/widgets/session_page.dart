@@ -1,15 +1,15 @@
 import 'package:bodyflow/domain/models/exercise.dart';
-import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
+import 'package:bodyflow/ui/sub_pages/session/view_models/session_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SessionPage extends StatelessWidget {
-  final Session session;
+  final SessionViewModel model;
 
-  const SessionPage({required this.session, super.key});
+  const SessionPage({required this.model, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,9 @@ class SessionPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: session.imagePath.isNotEmpty
-                            ? AssetImage(session.imagePath) as ImageProvider
+                        image: model.session.imagePath.isNotEmpty
+                            ? AssetImage(model.session.imagePath)
+                                  as ImageProvider
                             : AssetImage('assets/images/workout_hero.jpg'),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
@@ -68,7 +69,7 @@ class SessionPage extends StatelessWidget {
                     SizedBox(height: Dimens.paddingVertical),
                     // Workout Title
                     Text(
-                      session.name,
+                      model.session.name,
                       style: Theme.of(context).textTheme.headlineLarge
                           ?.copyWith(fontWeight: FontWeight.bold, fontSize: 32),
                     ),
@@ -83,8 +84,8 @@ class SessionPage extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          session.durationMinutes != null
-                              ? '${session.durationMinutes} minutes'
+                          model.session.durationMinutes != null
+                              ? '${model.session.durationMinutes} minutes'
                               : 'Duration not specified',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
@@ -103,7 +104,7 @@ class SessionPage extends StatelessWidget {
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            session.exercises!
+                            model.session.exercises!
                                 .map((exercise) => exercise.name)
                                 .join(' |'),
                             style: Theme.of(context).textTheme.bodyLarge,
@@ -121,18 +122,30 @@ class SessionPage extends StatelessWidget {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-                  itemCount: session.exercises?.length ?? 0,
+                  itemCount: model.session.exercises?.length ?? 0,
                   separatorBuilder: (context, index) =>
                       SizedBox(width: Dimens.paddingHorizontal),
                   itemBuilder: (context, index) {
                     final exercise =
-                        session.exercises?[index] ?? Exercise(name: 'Unknown');
-
+                        model.session.exercises?[index] ??
+                        Exercise(name: 'Unknown');
                     return _buildExerciseCard(context, exercise: exercise);
                   },
                 ),
               ),
               SizedBox(height: Dimens.paddingVertical),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    model.deleteSession(context);
+                  },
+                  child: Text(
+                    'Delete Session',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

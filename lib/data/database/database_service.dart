@@ -8,6 +8,9 @@ class DatabaseService {
 
   User? get _user => FirebaseAuth.instance.currentUser;
 
+  String schedulesCollection = 'Schedules';
+  String sessionsCollection = 'Sessions';
+
   var usersCollection = FirebaseFirestore.instance.collection('users');
   var appGeneratedSessionsCollection = FirebaseFirestore.instance.collection(
     'app_generated_sessions',
@@ -74,7 +77,7 @@ class DatabaseService {
     try {
       await usersCollection
           .doc(_user!.uid)
-          .collection('Sessions')
+          .collection(sessionsCollection)
           .add(sessionData);
     } catch (e) {
       throw Exception('Failed to save session: $e');
@@ -85,10 +88,34 @@ class DatabaseService {
     try {
       await usersCollection
           .doc(_user!.uid)
-          .collection('Schedules')
+          .collection(schedulesCollection)
           .add(scheduleData);
     } catch (e) {
       throw Exception('Failed to save schedule: $e');
+    }
+  }
+
+  Future<void> deleteSession(String sessionId) async {
+    try {
+      await usersCollection
+          .doc(_user!.uid)
+          .collection(sessionsCollection)
+          .doc(sessionId)
+          .delete();
+    } catch (e) {
+      throw Exception('Failed to delete session: $e');
+    }
+  }
+
+  Future<void> deleteSchedule(String scheduleId) async {
+    try {
+      await usersCollection
+          .doc(_user!.uid)
+          .collection(schedulesCollection)
+          .doc(scheduleId)
+          .delete();
+    } catch (e) {
+      throw Exception('Failed to delete schedule: $e');
     }
   }
 }

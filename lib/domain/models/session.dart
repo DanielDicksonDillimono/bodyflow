@@ -6,6 +6,7 @@ class Session {
   final String imagePath;
   final int? durationMinutes;
   final List<Exercise>? exercises;
+  final String id;
 
   Session({
     required this.name,
@@ -13,6 +14,7 @@ class Session {
     required this.imagePath,
     this.durationMinutes,
     this.exercises,
+    required this.id,
   });
 
   Map<String, dynamic> toMap() {
@@ -31,6 +33,7 @@ class Session {
       description: map['description'],
       imagePath: map['imagePath'],
       durationMinutes: map['durationMinutes'],
+      id: map['id'] ?? '',
       exercises: map['exercises'] != null
           ? List<Exercise>.from(
               map['exercises'].map((e) => Exercise.fromMap(e)),
