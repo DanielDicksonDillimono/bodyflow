@@ -138,20 +138,19 @@ class GeneratorPageViewModel with ChangeNotifier {
   }
 
   void showTooManyWeeksMessage(BuildContext context) {
+    final localization = AppLocalization.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Too many weeks!'),
-        content: const Text(
-          'Generating a schedule for more than 12 weeks is not recommended. Please select 12 weeks or less.',
-        ),
+        title: Text(localization.tooManyWeeks),
+        content: Text(localization.tooManyWeeksMessage),
         actions: [
           TextButton(
             onPressed: () {
               weekController.text = '12';
               Navigator.of(context).pop();
             },
-            child: const Text('OK'),
+            child: Text(localization.ok),
           ),
         ],
       ),
@@ -228,8 +227,8 @@ class GeneratorPageViewModel with ChangeNotifier {
       if (context.mounted) {
         _showValidationError(
           context,
-          'Generation Failed',
-          'Unable to generate workout at this time. Please check your internet connection and try again.',
+          localization.generationFailed,
+          localization.generationFailedMessage,
         );
       }
     }

@@ -154,6 +154,31 @@ class AppLocalization {
     'current_privacy_policy': privacyPolicyText,
 
     'close': 'Close',
+
+    // Delete dialogs
+    'delete_schedule': 'Delete Schedule',
+    'delete_schedule_confirmation':
+        'Are you sure you want to delete this schedule?',
+    'delete_session': 'Delete Session',
+    'delete_session_confirmation':
+        'Are you sure you want to delete this session?',
+    'delete': 'Delete',
+
+    // Generator warnings
+    'too_many_weeks': 'Too many weeks!',
+    'too_many_weeks_message':
+        'Generating a schedule for more than 12 weeks is not recommended. Please select 12 weeks or less.',
+    'generation_failed': 'Generation Failed',
+    'generation_failed_message':
+        'Unable to generate workout at this time. Please check your internet connection and try again.',
+
+    // Profile/About page
+    'app_version': 'Version 1.0.0',
+    'app_description':
+        'BodyFlow is your ultimate workout companion, designed to help you achieve your fitness goals with personalized workout plans and intuitive tracking features.',
+    'copyright_notice': '© 2025 DeeFormed All rights reserved.',
+    'delete_account_confirmation':
+        'Are you sure you want to delete your account?',
   };
 
   //in case the key is not found, it will return the key itself
@@ -296,6 +321,25 @@ class AppLocalization {
   String get privacyPolicy => _get('privacy_policy');
   String get currentPrivacyPolicy => privacyPolicyText;
   String get close => _get('close');
+
+  // Delete dialogs
+  String get deleteSchedule => _get('delete_schedule');
+  String get deleteScheduleConfirmation => _get('delete_schedule_confirmation');
+  String get deleteSession => _get('delete_session');
+  String get deleteSessionConfirmation => _get('delete_session_confirmation');
+  String get delete => _get('delete');
+
+  // Generator warnings
+  String get tooManyWeeks => _get('too_many_weeks');
+  String get tooManyWeeksMessage => _get('too_many_weeks_message');
+  String get generationFailed => _get('generation_failed');
+  String get generationFailedMessage => _get('generation_failed_message');
+
+  // Profile/About page
+  String get appVersion => _get('app_version');
+  String get appDescription => _get('app_description');
+  String get copyrightNotice => _get('copyright_notice');
+  String get deleteAccountConfirmation => _get('delete_account_confirmation');
 
   String defaultError(String message) =>
       '$message An error occurred. Please try again.';

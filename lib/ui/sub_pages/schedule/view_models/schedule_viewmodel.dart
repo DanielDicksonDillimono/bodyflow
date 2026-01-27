@@ -3,6 +3,7 @@ import 'package:bodyflow/domain/misc/globalenums.dart';
 import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,25 +46,26 @@ class ScheduleViewModel with ChangeNotifier {
   }
 
   Future<void> deleteSchedule(BuildContext context) async {
+    final localization = AppLocalization.of(context);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Schedule'),
-          content: Text('Are you sure you want to delete this schedule?'),
+          title: Text(localization.deleteSchedule),
+          content: Text(localization.deleteScheduleConfirmation),
           actions: [
             TextButton(
               onPressed: () async {
                 await _repo.deleteSchedule(_schedule.id);
                 if (context.mounted) context.go(Routes.home);
               },
-              child: Text('Delete', style: TextStyle(color: Colors.red)),
+              child: Text(localization.delete, style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () {
                 if (context.mounted) context.pop();
               },
-              child: Text('Cancel'),
+              child: Text(localization.cancel),
             ),
           ],
         );

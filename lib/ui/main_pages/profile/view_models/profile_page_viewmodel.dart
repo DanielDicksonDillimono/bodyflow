@@ -104,12 +104,12 @@ class ProfilePageViewmodel extends ChangeNotifier {
               Image.asset('assets/images/logoSlogan.png', height: 100),
               SizedBox(height: 16),
               Text(
-                'Version 1.0.0',
+                localization.appVersion,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: 16),
               Text(
-                'BodyFlow is your ultimate workout companion, designed to help you achieve your fitness goals with personalized workout plans and intuitive tracking features.',
+                localization.appDescription,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -124,8 +124,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
                     context: context,
                     applicationName: localization.appName,
                     applicationVersion: '1.0.0',
-                    applicationLegalese:
-                        '© 2025 DeeFormed All rights reserved.',
+                    applicationLegalese: localization.copyrightNotice,
                     applicationIcon: Image.asset(
                       'assets/images/logo.png',
                       height: 100,
@@ -151,6 +150,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
   }
 
   void deleteAccount(BuildContext context) async {
+    final localization = AppLocalization.of(context);
     // Implement delete account logic here
     //context.push(Routes.deleteAccount);
     showDialog(
@@ -158,13 +158,13 @@ class ProfilePageViewmodel extends ChangeNotifier {
       builder: (context) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(16.0),
-          content: Text('Are you sure you want to delete your account?'),
+          content: Text(localization.deleteAccountConfirmation),
           actions: [
             TextButton(
               onPressed: () {
                 context.pop();
               },
-              child: Text('Cancel'),
+              child: Text(localization.cancel),
             ),
             SizedBox(width: 16),
             TextButton(
@@ -181,7 +181,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
                   // Handle error
                 }
               },
-              child: Text('Delete', style: TextStyle(color: Colors.red)),
+              child: Text(localization.delete, style: TextStyle(color: Colors.red)),
             ),
           ],
         );
