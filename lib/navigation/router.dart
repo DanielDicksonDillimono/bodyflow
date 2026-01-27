@@ -3,6 +3,7 @@ import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/main_pages/generator/view_models/generator_page_viewmodel.dart';
 import 'package:bodyflow/ui/main_pages/homepage/view_models/home_page_viewmodel.dart';
 import 'package:bodyflow/ui/main_pages/profile/view_models/profile_page_viewmodel.dart';
@@ -66,7 +67,16 @@ GoRouter router() => GoRouter(
           return buildPageWithPlatformTransitions(
             context: context,
             state: state,
-            child: Scaffold(body: Center(child: Text('Exercise not found'))),
+            child: Builder(
+              builder: (context) {
+                final localization = AppLocalization.of(context);
+                return Scaffold(
+                  body: Center(
+                    child: Text(localization.exerciseNotFound),
+                  ),
+                );
+              },
+            ),
           );
         }
         return buildPageWithPlatformTransitions(

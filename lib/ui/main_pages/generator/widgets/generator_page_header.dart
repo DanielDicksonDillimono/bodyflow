@@ -1,3 +1,4 @@
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class GeneratorPageHeader extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
+    final localization = AppLocalization.of(context);
     final double progress = shrinkOffset / maxExtent;
     return Material(
       child: Stack(
@@ -46,7 +48,7 @@ class GeneratorPageHeader extends SliverPersistentHeaderDelegate {
             alignment: Alignment.centerLeft,
 
             child: Text(
-              'Generator',
+              localization.generator,
               style: TextStyle.lerp(
                 Theme.of(context).textTheme.displayLarge,
                 Theme.of(context).textTheme.titleLarge,

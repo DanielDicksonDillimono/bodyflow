@@ -1,5 +1,6 @@
 import 'package:bodyflow/domain/models/exercise.dart';
 import 'package:bodyflow/navigation/routes.dart';
+import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/sub_pages/session/view_models/session_viewmodel.dart';
@@ -13,6 +14,7 @@ class SessionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -85,8 +87,8 @@ class SessionPage extends StatelessWidget {
                         SizedBox(width: 8),
                         Text(
                           model.session.durationMinutes != null
-                              ? '${model.session.durationMinutes} minutes'
-                              : 'Duration not specified',
+                              ? '${model.session.durationMinutes} ${localization.minutesText}'
+                              : localization.durationNotSpecified,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],
@@ -128,7 +130,7 @@ class SessionPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final exercise =
                         model.session.exercises?[index] ??
-                        Exercise(name: 'Unknown');
+                        Exercise(name: localization.unknownExercise);
                     return _buildExerciseCard(context, exercise: exercise);
                   },
                 ),
@@ -141,7 +143,7 @@ class SessionPage extends StatelessWidget {
                     model.deleteSession(context);
                   },
                   child: Text(
-                    'Delete Session',
+                    localization.deleteSession,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),

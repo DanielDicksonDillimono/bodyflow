@@ -195,13 +195,13 @@ class GeneratorPage extends StatelessWidget {
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
-                                          text: 'Number of Weeks',
+                                          text: localization.numberOfWeeks,
                                           style: Theme.of(
                                             context,
                                           ).textTheme.titleLarge,
                                           children: [
                                             TextSpan(
-                                              text: ' (1-12)',
+                                              text: localization.weeksRange,
                                               style: Theme.of(
                                                 context,
                                               ).textTheme.bodyMedium,
@@ -212,9 +212,8 @@ class GeneratorPage extends StatelessWidget {
                                       const SizedBox(height: 16),
                                       TextFormField(
                                         controller: model.weekController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              'Enter number of weeks for schedule',
+                                        decoration: InputDecoration(
+                                          hintText: localization.enterNumberOfWeeks,
                                         ),
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {
@@ -232,13 +231,13 @@ class GeneratorPage extends StatelessWidget {
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
-                                          text: 'Session Length',
+                                          text: localization.sessionLength,
                                           style: Theme.of(
                                             context,
                                           ).textTheme.titleLarge,
                                           children: [
                                             TextSpan(
-                                              text: ' (in minutes)',
+                                              text: localization.timeInMinutes,
                                               style: Theme.of(
                                                 context,
                                               ).textTheme.bodyMedium,
@@ -249,9 +248,8 @@ class GeneratorPage extends StatelessWidget {
                                       const SizedBox(height: 16),
                                       TextFormField(
                                         controller: model.timeController,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              'Enter session length in minutes',
+                                        decoration: InputDecoration(
+                                          hintText: localization.enterSessionLength,
                                         ),
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {
@@ -268,7 +266,7 @@ class GeneratorPage extends StatelessWidget {
                                       Row(
                                         children: [
                                           Text(
-                                            'Vary Weekly Sessions',
+                                            localization.varyWeeklySessions,
                                             style: Theme.of(
                                               context,
                                             ).textTheme.titleLarge,

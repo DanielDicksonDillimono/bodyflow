@@ -179,6 +179,20 @@ class AppLocalization {
     'copyright_notice': '© 2025 DeeFormed All rights reserved.',
     'delete_account_confirmation':
         'Are you sure you want to delete your account?',
+
+    // Navigation and errors
+    'exercise_not_found': 'Exercise not found',
+
+    // Generator page
+    'number_of_weeks': 'Number of Weeks',
+    'weeks_range': ' (1-12)',
+    'enter_number_of_weeks': 'Enter number of weeks for schedule',
+    'session_length': 'Session Length',
+    'vary_weekly_sessions': 'Vary Weekly Sessions',
+
+    // Session page
+    'duration_not_specified': 'Duration not specified',
+    'unknown_exercise': 'Unknown',
   };
 
   //in case the key is not found, it will return the key itself
@@ -340,6 +354,20 @@ class AppLocalization {
   String get appDescription => _get('app_description');
   String get copyrightNotice => _get('copyright_notice');
   String get deleteAccountConfirmation => _get('delete_account_confirmation');
+
+  // Navigation and errors
+  String get exerciseNotFound => _get('exercise_not_found');
+
+  // Generator page
+  String get numberOfWeeks => _get('number_of_weeks');
+  String get weeksRange => _get('weeks_range');
+  String get enterNumberOfWeeks => _get('enter_number_of_weeks');
+  String get sessionLength => _get('session_length');
+  String get varyWeeklySessions => _get('vary_weekly_sessions');
+
+  // Session page
+  String get durationNotSpecified => _get('duration_not_specified');
+  String get unknownExercise => _get('unknown_exercise');
 
   String defaultError(String message) =>
       '$message An error occurred. Please try again.';
