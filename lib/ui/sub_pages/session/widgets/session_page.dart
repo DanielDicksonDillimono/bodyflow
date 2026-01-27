@@ -165,11 +165,11 @@ class SessionPage extends StatelessWidget {
     if (exercise.durationMinutes != null) {
       displayText = '${exercise.durationMinutes} ${localization.minutesText}';
     } else if (exercise.sets != null && exercise.reps != null) {
-      displayText = '${exercise.sets} ${localization.setsOf} ${exercise.reps} ${localization.reps}';
+      displayText = '${exercise.sets} ${localization.setsOf} ${exercise.reps} ${localization.repsLowercase}';
     } else if (exercise.sets != null) {
-      displayText = '${exercise.sets} ${localization.sets}';
+      displayText = '${exercise.sets} ${localization.setsLowercase}';
     } else if (exercise.reps != null) {
-      displayText = '${exercise.reps} ${localization.reps}';
+      displayText = '${exercise.reps} ${localization.repsLowercase}';
     } else {
       displayText = '';
     }

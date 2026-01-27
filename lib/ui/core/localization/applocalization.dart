@@ -176,7 +176,7 @@ class AppLocalization {
     'app_version': 'Version 1.0.0',
     'app_description':
         'BodyFlow is your ultimate workout companion, designed to help you achieve your fitness goals with personalized workout plans and intuitive tracking features.',
-    'copyright_notice': '© 2025 DeeFormed All rights reserved.',
+    'copyright_notice': '© 2025-2026 DeeFormed All rights reserved.',
     'delete_account_confirmation':
         'Are you sure you want to delete your account?',
 
@@ -194,7 +194,8 @@ class AppLocalization {
     'duration_not_specified': 'Duration not specified',
     'unknown_exercise': 'Unknown',
     'sets_of': 'sets of',
-    'sets': 'sets',
+    'sets_lowercase': 'sets',
+    'reps_lowercase': 'reps',
   };
 
   //in case the key is not found, it will return the key itself
@@ -371,7 +372,8 @@ class AppLocalization {
   String get durationNotSpecified => _get('duration_not_specified');
   String get unknownExercise => _get('unknown_exercise');
   String get setsOf => _get('sets_of');
-  String get sets => _get('sets');
+  String get setsLowercase => _get('sets_lowercase');
+  String get repsLowercase => _get('reps_lowercase');
 
   String defaultError(String message) =>
       '$message An error occurred. Please try again.';
