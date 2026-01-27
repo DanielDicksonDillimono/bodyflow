@@ -18,14 +18,14 @@ class DatabaseService {
 
   Stream<QuerySnapshot> allSchedulesStream() {
     return usersCollection
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection('Schedules')
         .snapshots();
   }
 
   Stream<QuerySnapshot> allSessionsStream() {
     return usersCollection
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection('Sessions')
         .snapshots();
   }

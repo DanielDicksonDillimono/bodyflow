@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bodyflow/data/database/database_service.dart';
 import 'package:bodyflow/data/services/user_authentication.dart';
 import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
@@ -13,6 +14,7 @@ import 'package:go_router/go_router.dart';
 class ProfilePageViewmodel extends ChangeNotifier {
   final UserAuthentication _authService;
   final WorkoutRepo _workoutRepo;
+  final DatabaseService database;
   int _schedulesCount = 0;
   int _sessionsCount = 0;
   StreamSubscription<List<Schedule>>? _schedulesSubscription;
@@ -21,6 +23,7 @@ class ProfilePageViewmodel extends ChangeNotifier {
   ProfilePageViewmodel({
     required UserAuthentication authService,
     required WorkoutRepo workoutRepo,
+    required this.database,
   }) : _authService = authService,
        _workoutRepo = workoutRepo {
     _loadStats();
@@ -150,39 +153,37 @@ class ProfilePageViewmodel extends ChangeNotifier {
   void deleteAccount(BuildContext context) async {
     // Implement delete account logic here
     //context.push(Routes.deleteAccount);
-    showModalBottomSheet(
+    showDialog(
       context: context,
       builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Are you sure you want to delete your account?'),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // Call the delete account method
-                      await _authService.deleteUser();
-                      if (context.mounted) {
-                        context.go(Routes.home);
-                      }
-                    },
-                    child: Text('Delete'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(16.0),
+          content: Text('Are you sure you want to delete your account?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: Text('Cancel'),
+            ),
+            SizedBox(width: 16),
+            TextButton(
+              onPressed: () async {
+                // Call the delete account method
+                try {
+                  await database.deleteUserAccount().then((_) async {
+                    await _authService.deleteUser();
+                  });
+                  if (context.mounted) {
+                    context.go(Routes.home);
+                  }
+                } catch (e) {
+                  // Handle error
+                }
+              },
+              child: Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+          ],
         );
       },
     );
@@ -195,5 +196,22 @@ class ProfilePageViewmodel extends ChangeNotifier {
       context.go(Routes.home);
     }
     notifyListeners();
+  }
+
+  void showErrorMessage(BuildContext context, String message) {
+    final localization = AppLocalization.of(context);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(localization.error),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(localization.ok),
+          ),
+        ],
+      ),
+    );
   }
 }

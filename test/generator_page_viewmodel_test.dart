@@ -2,7 +2,7 @@ import 'package:bodyflow/data/database/database_service.dart';
 import 'package:bodyflow/data/repos/workout_repo.dart';
 import 'package:bodyflow/data/services/ai_workout_service.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
-import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/generator/view_models/generator_page_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 

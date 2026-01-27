@@ -2,7 +2,7 @@ import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
 import 'package:bodyflow/ui/core/wigets/stats_card.dart';
-import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/profile/view_models/profile_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {

@@ -1,9 +1,9 @@
-import 'package:bodyflow/ui/core/loading.dart';
+import 'package:bodyflow/ui/core/wigets/loading.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
-import 'package:bodyflow/ui/main_pages/widgets/body_part_selection_grid.dart';
-import 'package:bodyflow/ui/main_pages/widgets/day_selection_grid.dart';
+import 'package:bodyflow/ui/main_pages/generator/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/generator/widgets/body_part_selection_grid.dart';
+import 'package:bodyflow/ui/main_pages/generator/widgets/day_selection_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bodyflow/domain/misc/globalenums.dart';
 

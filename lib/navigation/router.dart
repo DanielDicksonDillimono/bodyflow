@@ -3,12 +3,12 @@ import 'package:bodyflow/domain/models/schedule.dart';
 import 'package:bodyflow/domain/models/session.dart';
 import 'package:bodyflow/navigation/custom_page_builder.dart';
 import 'package:bodyflow/navigation/scaffold_with_bottom_nav.dart';
-import 'package:bodyflow/ui/main_pages/view_models/generator_page_viewmodel.dart';
-import 'package:bodyflow/ui/main_pages/view_models/home_page_viewmodel.dart';
-import 'package:bodyflow/ui/main_pages/view_models/profile_page_viewmodel.dart';
-import 'package:bodyflow/ui/main_pages/widgets/generator_page.dart';
-import 'package:bodyflow/ui/main_pages/widgets/home_page.dart';
-import 'package:bodyflow/ui/main_pages/widgets/profile_page.dart';
+import 'package:bodyflow/ui/main_pages/generator/view_models/generator_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/homepage/view_models/home_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/profile/view_models/profile_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/generator/widgets/generator_page.dart';
+import 'package:bodyflow/ui/main_pages/homepage/widgets/home_page.dart';
+import 'package:bodyflow/ui/main_pages/profile/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/create_account_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
@@ -164,6 +164,7 @@ GoRouter router() => GoRouter(
                         viewModel: ProfilePageViewmodel(
                           authService: context.read(),
                           workoutRepo: context.read(),
+                          database: context.read(),
                         ),
                       )
                     : LoginPage(

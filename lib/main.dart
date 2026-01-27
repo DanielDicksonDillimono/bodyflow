@@ -18,6 +18,7 @@ Future<void> main() async {
   await FirebaseAppCheck.instance.activate(
     providerWeb: ReCaptchaV3Provider('siteKey'),
     providerApple: AppleAppAttestProvider(),
+    appleProvider: AppleProvider.appAttest,
   );
   runApp(MultiProvider(providers: dependencyProviders(), child: const MyApp()));
 }

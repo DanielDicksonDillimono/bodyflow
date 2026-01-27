@@ -4,7 +4,7 @@ import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:bodyflow/ui/core/themes/colors.dart';
 import 'package:bodyflow/ui/core/themes/dimens.dart';
-import 'package:bodyflow/ui/main_pages/view_models/home_page_viewmodel.dart';
+import 'package:bodyflow/ui/main_pages/homepage/view_models/home_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart' as router;
 

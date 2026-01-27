@@ -118,6 +118,8 @@ class AppLocalization {
     'terms_not_accepted': 'You must accept the terms and conditions.',
     'confirm_email_required': 'Confirm email is required.',
     'emails_do_not_match': 'Emails do not match.',
+    'error': 'Error',
+    'error_occurred': 'An error occurred. Please try again.',
 
     // Existing strings
     'login_message': 'Please login to continue',
@@ -261,6 +263,8 @@ class AppLocalization {
   String get mustAcceptTerms => _get('terms_not_accepted');
   String get confirmEmailRequired => _get('confirm_email_required');
   String get emailsDoNotMatch => _get('emails_do_not_match');
+  String get error => _get('error');
+  String get errorOccurredMessage => _get('error_occurred');
 
   // Existing strings
   String get loginMessage => _get('login_message');
