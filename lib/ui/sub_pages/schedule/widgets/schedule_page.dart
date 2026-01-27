@@ -128,7 +128,7 @@ class SchedulePage extends StatelessWidget {
                     child: TextButton(
                       onPressed: () => model.deleteSchedule(context),
                       child: Text(
-                        'Delete Schedule',
+                        localization.deleteSchedule,
                         style: TextStyle(color: Colors.red),
                       ),
                     ),

@@ -159,16 +159,17 @@ class SessionPage extends StatelessWidget {
     BuildContext context, {
     required Exercise exercise,
   }) {
+    final localization = AppLocalization.of(context);
     // Format display text for the card
     String displayText;
     if (exercise.durationMinutes != null) {
-      displayText = '${exercise.durationMinutes} minutes';
+      displayText = '${exercise.durationMinutes} ${localization.minutesText}';
     } else if (exercise.sets != null && exercise.reps != null) {
-      displayText = '${exercise.sets} sets of ${exercise.reps} reps';
+      displayText = '${exercise.sets} ${localization.setsOf} ${exercise.reps} ${localization.reps}';
     } else if (exercise.sets != null) {
-      displayText = '${exercise.sets} sets';
+      displayText = '${exercise.sets} ${localization.sets}';
     } else if (exercise.reps != null) {
-      displayText = '${exercise.reps} reps';
+      displayText = '${exercise.reps} ${localization.reps}';
     } else {
       displayText = '';
     }

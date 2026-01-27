@@ -193,6 +193,8 @@ class AppLocalization {
     // Session page
     'duration_not_specified': 'Duration not specified',
     'unknown_exercise': 'Unknown',
+    'sets_of': 'sets of',
+    'sets': 'sets',
   };
 
   //in case the key is not found, it will return the key itself
@@ -368,6 +370,8 @@ class AppLocalization {
   // Session page
   String get durationNotSpecified => _get('duration_not_specified');
   String get unknownExercise => _get('unknown_exercise');
+  String get setsOf => _get('sets_of');
+  String get sets => _get('sets');
 
   String defaultError(String message) =>
       '$message An error occurred. Please try again.';
