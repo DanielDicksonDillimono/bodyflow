@@ -10,4 +10,5 @@ abstract class Routes {
   static const exercise = '/exercise';
   static const session = '/session';
   static const schedule = '/schedule';
+  static const emailVerification = '/email_verification';
 }

@@ -175,24 +175,6 @@ class GeneratorPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 16),
-                                      Text(
-                                        localization.extraNotes,
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.titleLarge,
-                                      ),
-                                      TextFormField(
-                                        controller: model.notesController,
-                                        decoration: InputDecoration(
-                                          hintText:
-                                              localization.enterExtraNotes,
-                                        ),
-                                        maxLines: 3,
-                                        onChanged: (value) {
-                                          model.setExtraNotes(value);
-                                        },
-                                      ),
-                                      const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
                                           text: localization.numberOfWeeks,
@@ -213,7 +195,8 @@ class GeneratorPage extends StatelessWidget {
                                       TextFormField(
                                         controller: model.weekController,
                                         decoration: InputDecoration(
-                                          hintText: localization.enterNumberOfWeeks,
+                                          hintText:
+                                              localization.enterNumberOfWeeks,
                                         ),
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {
@@ -249,7 +232,8 @@ class GeneratorPage extends StatelessWidget {
                                       TextFormField(
                                         controller: model.timeController,
                                         decoration: InputDecoration(
-                                          hintText: localization.enterSessionLength,
+                                          hintText:
+                                              localization.enterSessionLength,
                                         ),
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {
@@ -308,12 +292,6 @@ class GeneratorPage extends StatelessWidget {
                                         selectedDays: model.selectedDays,
                                         onDayToggle: model.addOrRemoveDay,
                                       ),
-                                    ],
-                                  )
-                                : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
                                       const SizedBox(height: 16),
                                       Text(
                                         localization.extraNotes,
@@ -332,6 +310,12 @@ class GeneratorPage extends StatelessWidget {
                                           model.setExtraNotes(value);
                                         },
                                       ),
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
                                       const SizedBox(height: 16),
                                       RichText(
                                         text: TextSpan(
@@ -380,6 +364,24 @@ class GeneratorPage extends StatelessWidget {
                                             model.selectedBodyParts,
                                         onBodyPartToggle:
                                             model.addOrRemoveBodyPart,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        localization.extraNotes,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleLarge,
+                                      ),
+                                      TextFormField(
+                                        controller: model.notesController,
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              localization.enterExtraNotes,
+                                        ),
+                                        maxLines: 3,
+                                        onChanged: (value) {
+                                          model.setExtraNotes(value);
+                                        },
                                       ),
                                     ],
                                   ),

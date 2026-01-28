@@ -69,6 +69,19 @@ class UserAuthentication extends ChangeNotifier {
     }
   }
 
+  Future<void> sendEmailVerification() async {
+    User? user = _firebaseAuth.currentUser;
+    if (user != null) {
+      try {
+        await user.sendEmailVerification();
+      } on FirebaseAuthException catch (e) {
+        throw Exception(e.message);
+      }
+    } else {
+      throw Exception('No user is currently signed in.');
+    }
+  }
+
   Future<void> deleteUser() async {
     User? user = _firebaseAuth.currentUser;
     if (user != null) {

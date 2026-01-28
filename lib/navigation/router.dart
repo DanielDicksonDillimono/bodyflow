@@ -12,7 +12,9 @@ import 'package:bodyflow/ui/main_pages/homepage/widgets/home_page.dart';
 import 'package:bodyflow/ui/main_pages/profile/widgets/profile_page.dart';
 import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/create_account_viewmodel.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/email_verification_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/widgets/email_verification_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
 import 'package:bodyflow/ui/sub_pages/schedule/view_models/schedule_viewmodel.dart';
@@ -30,6 +32,18 @@ GoRouter router() => GoRouter(
   initialLocation: Routes.home,
   redirect: _redirect,
   routes: [
+    GoRoute(
+      path: Routes.emailVerification,
+      pageBuilder: (context, state) {
+        return buildPageWithPlatformTransitions(
+          context: context,
+          state: state,
+          child: EmailVerificationPage(
+            viewModel: EmailVerificationViewmodel(authService: context.read()),
+          ),
+        );
+      },
+    ),
     GoRoute(
       path: Routes.signUp,
       pageBuilder: (context, state) => buildPageWithPlatformTransitions(
@@ -189,6 +203,8 @@ GoRouter router() => GoRouter(
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   final isloggedIn = FirebaseAuth.instance.currentUser != null;
+  final userEmailVerified =
+      FirebaseAuth.instance.currentUser?.emailVerified ?? false;
 
   if (!isloggedIn) {
     switch (state.fullPath) {
@@ -200,6 +216,14 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
         return null; // Allow access to login page
       default:
         return Routes.login; // Redirect unauthenticated users to login page
+    }
+  }
+
+  if (isloggedIn && !userEmailVerified) {
+    if (state.fullPath != Routes.emailVerification) {
+      return Routes.emailVerification; // Redirect to email verification page
+    } else {
+      return null; // Allow access to email verification page
     }
   }
 

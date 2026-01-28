@@ -30,6 +30,15 @@ class AppLocalization {
     'password_reset_instruction':
         'Enter email to receive a password reset link',
     'reset': 'Reset',
+    'verification_email_sent':
+        'Verification email sent. Please check your inbox.',
+    'error_sending_verification_email':
+        'Error sending verification email. Please try again.',
+    'email_verification': 'Email Verification',
+    'email_verification_message':
+        'Please verify your email address. A verification link has been sent to your email. check your spam folder if you do not see it.',
+    'resend_verification_email': 'Resend Verification Email',
+    'i_have_verified_my_email': 'I have verified my email',
 
     // Navigation
     'home': 'Home',
@@ -224,6 +233,13 @@ class AppLocalization {
   String get passwordRecovery => _get('password_recovery');
   String get passwordResetInstruction => _get('password_reset_instruction');
   String get reset => _get('reset');
+  String get verificationEmailSent => _get('verification_email_sent');
+  String get errorSendingVerificationEmail =>
+      _get('error_sending_verification_email');
+  String get emailVerification => _get('email_verification');
+  String get emailVerificationMessage => _get('email_verification_message');
+  String get resendVerificationEmail => _get('resend_verification_email');
+  String get iHaveVerifiedMyEmail => _get('i_have_verified_my_email');
 
   // Navigation
   String get home => _get('home');
