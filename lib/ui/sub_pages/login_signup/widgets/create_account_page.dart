@@ -13,13 +13,13 @@ class CreateAccountPage extends StatelessWidget {
     final localization = AppLocalization.of(context);
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: ListenableBuilder(
-            listenable: viewModel,
-            builder: (context, child) {
-              return viewModel.isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : Form(
+        child: viewModel.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (context, child) {
+                    return Form(
                       key: viewModel.formKey,
                       child: Container(
                         padding: const EdgeInsets.all(16.0),
@@ -93,7 +93,10 @@ class CreateAccountPage extends StatelessWidget {
                                 if (value == null || value.isEmpty) {
                                   return localization.confirmEmailRequired;
                                 }
-                                if (value != viewModel.emailController.text) {
+                                if (value.trim().toLowerCase() !=
+                                    viewModel.emailController.text
+                                        .trim()
+                                        .toLowerCase()) {
                                   return localization.emailsDoNotMatch;
                                 }
                                 return null;
@@ -230,9 +233,9 @@ class CreateAccountPage extends StatelessWidget {
                         ),
                       ),
                     );
-            },
-          ),
-        ),
+                  },
+                ),
+              ),
       ),
     );
   }

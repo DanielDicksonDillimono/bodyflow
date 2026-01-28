@@ -12,6 +12,7 @@ class LoginViewmodel extends ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
 
   bool isPasswordObscured = true;
+  bool isLoading = false;
 
   void togglePasswordVisibility() {
     isPasswordObscured = !isPasswordObscured;
@@ -20,6 +21,8 @@ class LoginViewmodel extends ChangeNotifier {
 
   void login(BuildContext context) {
     if (formKey.currentState?.validate() ?? false) {
+      isLoading = true;
+      notifyListeners();
       _authService
           .signInWithEmailAndPassword(
             email: emailController.text,
@@ -31,6 +34,8 @@ class LoginViewmodel extends ChangeNotifier {
             }
           })
           .catchError((error) {
+            isLoading = false;
+            notifyListeners();
             // Handle login errors here
             if (context.mounted) {
               ScaffoldMessenger.of(

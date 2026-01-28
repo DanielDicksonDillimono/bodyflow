@@ -55,7 +55,9 @@ class CreateAccountViewmodel extends ChangeNotifier {
 
       await _authService
           .createUserWithEmailAndPassword(
-            email: emailController.text.trim(),
+            email: emailController.text
+                .trim()
+                .toLowerCase(), //not necessary but just in case.
             password: passwordController.text.trim(),
             displayName: fullNameController.text.trim(),
           )

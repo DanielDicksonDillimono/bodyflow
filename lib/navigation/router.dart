@@ -71,9 +71,7 @@ GoRouter router() => GoRouter(
               builder: (context) {
                 final localization = AppLocalization.of(context);
                 return Scaffold(
-                  body: Center(
-                    child: Text(localization.exerciseNotFound),
-                  ),
+                  body: Center(child: Text(localization.exerciseNotFound)),
                 );
               },
             ),
@@ -191,6 +189,7 @@ GoRouter router() => GoRouter(
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   final isloggedIn = FirebaseAuth.instance.currentUser != null;
+
   if (!isloggedIn) {
     switch (state.fullPath) {
       case Routes.signUp:
@@ -203,6 +202,7 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
         return Routes.login; // Redirect unauthenticated users to login page
     }
   }
+
   switch (state.fullPath) {
     case Routes.login:
       return Routes.login; // Already on login page
