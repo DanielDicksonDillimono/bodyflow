@@ -59,7 +59,10 @@ class ScheduleViewModel with ChangeNotifier {
                 await _repo.deleteSchedule(_schedule.id);
                 if (context.mounted) context.go(Routes.home);
               },
-              child: Text(localization.delete, style: TextStyle(color: Colors.red)),
+              child: Text(
+                localization.delete,
+                style: TextStyle(color: Colors.red),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -71,5 +74,9 @@ class ScheduleViewModel with ChangeNotifier {
         );
       },
     );
+  }
+
+  void goBack(BuildContext context) {
+    context.pop();
   }
 }

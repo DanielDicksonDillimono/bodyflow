@@ -45,7 +45,7 @@ class SessionPage extends StatelessWidget {
                     top: 16,
                     left: 16,
                     child: InkWell(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => model.goBack(context),
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -165,7 +165,8 @@ class SessionPage extends StatelessWidget {
     if (exercise.durationMinutes != null) {
       displayText = '${exercise.durationMinutes} ${localization.minutesText}';
     } else if (exercise.sets != null && exercise.reps != null) {
-      displayText = '${exercise.sets} ${localization.setsOf} ${exercise.reps} ${localization.repsLowercase}';
+      displayText =
+          '${exercise.sets} ${localization.setsOf} ${exercise.reps} ${localization.repsLowercase}';
     } else if (exercise.sets != null) {
       displayText = '${exercise.sets} ${localization.setsLowercase}';
     } else if (exercise.reps != null) {
@@ -187,6 +188,7 @@ class SessionPage extends StatelessWidget {
             Container(
               width: Dimens.textCardWidth(context),
               height: Dimens.textCardHeight(context),
+              padding: Dimens.edgeInsetsCardPadding,
               decoration: BoxDecoration(
                 color: AppColors.appBlue.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(8.0),

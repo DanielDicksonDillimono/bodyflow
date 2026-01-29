@@ -30,7 +30,10 @@ class SessionViewModel extends ChangeNotifier {
                 notifyListeners();
                 if (context.mounted) context.go(Routes.home);
               },
-              child: Text(localization.delete, style: TextStyle(color: Colors.red)),
+              child: Text(
+                localization.delete,
+                style: TextStyle(color: Colors.red),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -44,5 +47,9 @@ class SessionViewModel extends ChangeNotifier {
         );
       },
     );
+  }
+
+  void goBack(BuildContext context) {
+    context.pop();
   }
 }

@@ -30,34 +30,57 @@ class SchedulePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Hero Image Section
-                  Container(
-                    padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(_defaultHeroImage),
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withValues(alpha: 0.5),
-                          BlendMode.darken,
+                  Stack(
+                    children: [
+                      Container(
+                        padding: Dimens.of(context).edgeInsetsScreenHorizontal,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(_defaultHeroImage),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(
+                              Colors.black.withValues(alpha: 0.5),
+                              BlendMode.darken,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              model.schedule.name,
+                              style: Theme.of(context).textTheme.displaySmall
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          model.schedule.name,
-                          style: Theme.of(context).textTheme.displaySmall
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      Positioned(
+                        top: 16,
+                        left: 16,
+                        child: InkWell(
+                          onTap: () => model.goBack(context),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.3),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: Dimens.paddingVertical),
 
@@ -165,8 +188,9 @@ class SchedulePage extends StatelessWidget {
               ),
             ),
             Container(
-              width: 150,
-              height: 200,
+              width: Dimens.textCardWidth(context),
+              height: Dimens.textCardHeight(context),
+              padding: Dimens.edgeInsetsCardPadding,
               decoration: BoxDecoration(
                 color: AppColors.appBlue.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(8.0),

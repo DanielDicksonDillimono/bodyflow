@@ -171,6 +171,7 @@ class HomePage extends StatelessWidget {
             Container(
               width: Dimens.textCardWidth(context),
               height: Dimens.textCardHeight(context),
+              padding: Dimens.edgeInsetsCardPadding,
               decoration: BoxDecoration(
                 color: AppColors.appBlue.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(8.0),
@@ -180,7 +181,9 @@ class HomePage extends StatelessWidget {
                   session.name,
                   style: Theme.of(
                     context,
-                  ).textTheme.bodyLarge?.copyWith(color: AppColors.grey1),
+                  ).textTheme.titleLarge?.copyWith(color: AppColors.grey1),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -246,6 +249,7 @@ class HomePage extends StatelessWidget {
             Container(
               width: Dimens.textCardWidth(context),
               height: Dimens.textCardHeight(context),
+              padding: Dimens.edgeInsetsCardPadding,
               decoration: BoxDecoration(
                 color: AppColors.appBlue.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(8.0),
@@ -255,8 +259,10 @@ class HomePage extends StatelessWidget {
                   schedule.name,
                   style: Theme.of(
                     context,
-                  ).textTheme.bodyLarge?.copyWith(color: AppColors.grey1),
+                  ).textTheme.titleLarge?.copyWith(color: AppColors.grey1),
+
                   textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
