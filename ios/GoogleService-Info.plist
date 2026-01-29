@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>368812404194-ifsnlq1vff99h4lvu892eni6pahmsmgo.apps.googleusercontent.com</string>
+	<string>368812404194-i62an7bc3kfmvljcprcuebor5ootfabo.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.368812404194-ifsnlq1vff99h4lvu892eni6pahmsmgo</string>
+	<string>com.googleusercontent.apps.368812404194-i62an7bc3kfmvljcprcuebor5ootfabo</string>
 	<key>API_KEY</key>
 	<string>AIzaSyASQYZYeZetPzlzHtLdaVqTvYz3h4Ullvs</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.bodyflow</string>
+	<string>com.bodyflow.deeformed</string>
 	<key>PROJECT_ID</key>
 	<string>bodyflow-7f4bf</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:368812404194:ios:907a58b37815ab6df61dbb</string>
+	<string>1:368812404194:ios:2d9633045b71730ff61dbb</string>
 </dict>
 </plist>
