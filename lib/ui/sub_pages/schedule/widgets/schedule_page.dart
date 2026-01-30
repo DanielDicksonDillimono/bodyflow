@@ -181,10 +181,9 @@ class SchedulePage extends StatelessWidget {
 
               child: Text(
                 day,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             Container(

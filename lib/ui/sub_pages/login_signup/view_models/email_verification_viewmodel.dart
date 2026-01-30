@@ -22,7 +22,10 @@ class EmailVerificationViewmodel extends ChangeNotifier {
     try {
       await _authService.sendEmailVerification();
       if (context.mounted) {
-        showMessage(context, AppLocalization.of(context).verificationEmailSent);
+        showMessage(
+          context,
+          '${AppLocalization.of(context).verificationEmailSent} $userEmail',
+        );
       }
     } catch (e) {
       if (context.mounted) {

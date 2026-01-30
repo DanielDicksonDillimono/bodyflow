@@ -77,6 +77,8 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
 
+                    SizedBox(height: Dimens.paddingVerticalSmall),
+
                     Column(
                       children: [
                         SizedBox(

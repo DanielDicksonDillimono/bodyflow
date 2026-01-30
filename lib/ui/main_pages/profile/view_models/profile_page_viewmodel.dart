@@ -10,6 +10,7 @@ import 'package:bodyflow/navigation/routes.dart';
 import 'package:bodyflow/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePageViewmodel extends ChangeNotifier {
   final UserAuthentication _authService;
@@ -140,8 +141,18 @@ class ProfilePageViewmodel extends ChangeNotifier {
     );
   }
 
-  void openWebsite() {
-    // Implement website opening logic here
+  void openWebsite() async {
+    String url = 'https://dillimono.com/projects';
+    final uri = Uri.parse(url);
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      throw 'Could not launch $url';
+    }
   }
 
   void signIn(BuildContext context) {
@@ -181,7 +192,10 @@ class ProfilePageViewmodel extends ChangeNotifier {
                   // Handle error
                 }
               },
-              child: Text(localization.delete, style: TextStyle(color: Colors.red)),
+              child: Text(
+                localization.delete,
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );

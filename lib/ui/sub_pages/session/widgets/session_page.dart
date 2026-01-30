@@ -119,20 +119,13 @@ class SessionPage extends StatelessWidget {
                 ),
               ),
               // Exercise Cards Section
-              SizedBox(
-                height: 220,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: Dimens.of(context).edgeInsetsScreenHorizontal,
-                  itemCount: model.session.exercises?.length ?? 0,
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: Dimens.paddingHorizontal),
-                  itemBuilder: (context, index) {
-                    final exercise =
-                        model.session.exercises?[index] ??
-                        Exercise(name: localization.unknownExercise);
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: Dimens.of(context).edgeInsetsScreenHorizontal,
+                child: Row(
+                  children: model.session.exercises!.map((exercise) {
                     return _buildExerciseCard(context, exercise: exercise);
-                  },
+                  }).toList(),
                 ),
               ),
               SizedBox(height: Dimens.paddingVertical),

@@ -184,7 +184,7 @@ class AppLocalization {
     // Profile/About page
     'app_version': 'Version 1.0.0',
     'app_description':
-        'BodyFlow is your ultimate workout companion, designed to help you achieve your fitness goals with personalized workout plans and intuitive tracking features.',
+        'BodyFlow is designed to help you achieve your fitness goals. By generating personalized workout sessions and schedules, BodyFlow makes it easy to stay on track and motivated.',
     'copyright_notice': '© 2025-2026 DeeFormed All rights reserved.',
     'delete_account_confirmation':
         'Are you sure you want to delete your account?',
