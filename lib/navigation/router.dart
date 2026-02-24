@@ -14,6 +14,7 @@ import 'package:bodyflow/ui/sub_pages/exercise/exercise_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/create_account_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/email_verification_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/view_models/login_viewmodel.dart';
+import 'package:bodyflow/ui/sub_pages/login_signup/view_models/password_recovery_viewmodel.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/email_verification_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/login_page.dart';
 import 'package:bodyflow/ui/sub_pages/login_signup/widgets/password_recovery_page.dart';
@@ -70,7 +71,9 @@ GoRouter router() => GoRouter(
       pageBuilder: (context, state) => buildPageWithPlatformTransitions(
         context: context,
         state: state,
-        child: PasswordRecoveryPage(),
+        child: PasswordRecoveryPage(
+          viewModel: PasswordRecoveryViewModel(authService: context.read()),
+        ),
       ),
     ),
     GoRoute(

@@ -61,7 +61,7 @@ class UserAuthentication extends ChangeNotifier {
     }
   }
 
-  Future<void> resetPassword(String email) async {
+  Future<void> resetPassword({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
