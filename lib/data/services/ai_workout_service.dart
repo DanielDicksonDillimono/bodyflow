@@ -40,21 +40,24 @@ class AiWorkoutService {
   Future<Session> generateSession({
     required List<BodyPart> bodyParts,
     required int durationMinutes,
+    required bool includeBodyweightExercises,
     String extraNotes = '',
+    bool includeWarmup = true,
   }) async {
     final receivedBodyParts = bodyParts.map((bp) => bp.name).join(', ');
 
     final prompt =
         '''
-        Generate a workout session with the following specifications:
+        Generate a workout session with the following specifications and $extraNotes:
         - Target body parts: $receivedBodyParts
         - Duration: $durationMinutes minutes
         - each exercise should take approximately 10 minutes to complete
         - Add at least one compound movement exercise
         - For each exercise, provide: name, sets, reps, and brief instructions
-        - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
+        - ${includeBodyweightExercises ? '' : 'No '}bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
+        - ${includeWarmup ? 'Include a warmup exercise at the beginning of the session.' : 'No warmup exercises.'}
         - Include any additional notes or tips for the workout session (optional).
-        - if $extraNotes are supplied, include them in the response.
+       
 
 
         Format the response as follows:
@@ -110,6 +113,8 @@ class AiWorkoutService {
     required int numberOfWeeks,
     required int durationMinutes,
     required bool varyWeeklySessions,
+    required bool includeBodyweightExercises,
+    required bool includeWarmup,
     String extraNotes = '',
   }) async {
     Schedule schedule;
@@ -127,6 +132,8 @@ class AiWorkoutService {
         - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
         - Include any additional notes or tips for the workout sessions (optional).
         - if $extraNotes are supplied, include them in the response.
+        - ${includeWarmup ? 'Include a warmup exercise at the beginning of the session.' : 'No warmup exercises.'}
+        - ${includeBodyweightExercises ? 'Include bodyweight exercises as needed.' : 'No bodyweight exercises.'}
 
 
         Format the response as follows:

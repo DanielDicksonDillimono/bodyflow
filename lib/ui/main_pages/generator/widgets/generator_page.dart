@@ -247,6 +247,50 @@ class GeneratorPage extends StatelessWidget {
                                         },
                                       ),
                                       const SizedBox(height: 32),
+                                      FittedBox(
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              localization
+                                                  .includeBodyweightExercises,
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.titleLarge,
+                                            ),
+                                            const SizedBox(width: 16),
+                                            Checkbox(
+                                              value: model
+                                                  .includeBodyweightExercises,
+                                              onChanged: (value) {
+                                                model
+                                                    .setIncludeBodyweightExercises(
+                                                      value ?? false,
+                                                    );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Row(
+                                        children: [
+                                          Text(
+                                            localization.includeWarmup,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleLarge,
+                                          ),
+                                          const SizedBox(width: 16),
+                                          Checkbox(
+                                            value: model.includeWarmup,
+                                            onChanged: (value) {
+                                              model.setIncludeWarmup(
+                                                value ?? false,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                       Row(
                                         children: [
                                           Text(
@@ -350,6 +394,51 @@ class GeneratorPage extends StatelessWidget {
                                             model.setSessionLength(minutes);
                                           }
                                         },
+                                      ),
+                                      const SizedBox(height: 32),
+                                      FittedBox(
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              localization
+                                                  .includeBodyweightExercises,
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.titleLarge,
+                                            ),
+                                            const SizedBox(width: 16),
+                                            Checkbox(
+                                              value: model
+                                                  .includeBodyweightExercises,
+                                              onChanged: (value) {
+                                                model
+                                                    .setIncludeBodyweightExercises(
+                                                      value ?? false,
+                                                    );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Row(
+                                        children: [
+                                          Text(
+                                            localization.includeWarmup,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleLarge,
+                                          ),
+                                          const SizedBox(width: 16),
+                                          Checkbox(
+                                            value: model.includeWarmup,
+                                            onChanged: (value) {
+                                              model.setIncludeWarmup(
+                                                value ?? false,
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: 32),
                                       Text(

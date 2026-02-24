@@ -21,6 +21,13 @@ class WorkoutRepo {
   List<Session> get workouts => _sessions;
   List<Schedule> get schedules => _schedules;
 
+  int _currentWeekIndex = 0;
+  int get currentWeekIndex => _currentWeekIndex;
+
+  void setCurrentWeekIndex(int index) {
+    _currentWeekIndex = index;
+  }
+
   Stream<List<Schedule>> allSchedulesStream() {
     return _databaseService.allSchedulesStream().map((snapshot) {
       try {
@@ -49,11 +56,16 @@ class WorkoutRepo {
     required List<BodyPart> bodyParts,
     required int durationMinutes,
     String extraNotes = '',
+    required bool includeWarmup,
+    required bool includeBodyweightExercises,
   }) async {
     try {
       Session session = await _aiWorkoutService.generateSession(
         bodyParts: bodyParts,
         durationMinutes: durationMinutes,
+        extraNotes: extraNotes,
+        includeWarmup: includeWarmup,
+        includeBodyweightExercises: includeBodyweightExercises,
       );
 
       // Save if user logged in. Generating sessions are only for logged in users.
@@ -73,6 +85,8 @@ class WorkoutRepo {
     required int numberOfWeeks,
     required int durationMinutes,
     required bool varyWeeklySessions,
+    required bool includeWarmup,
+    required bool includeBodyweightExercises,
     String extraNotes = '',
   }) async {
     try {
@@ -82,6 +96,9 @@ class WorkoutRepo {
         numberOfWeeks: numberOfWeeks,
         durationMinutes: durationMinutes,
         varyWeeklySessions: varyWeeklySessions,
+        extraNotes: extraNotes,
+        includeWarmup: includeWarmup,
+        includeBodyweightExercises: includeBodyweightExercises,
       );
 
       // Save if user logged in. Generating schedules are only for logged in users.

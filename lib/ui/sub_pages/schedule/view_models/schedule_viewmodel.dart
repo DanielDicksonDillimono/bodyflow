@@ -11,25 +11,25 @@ class ScheduleViewModel with ChangeNotifier {
   // Add properties and methods to manage the schedule state
   final Schedule _schedule;
   final WorkoutRepo _repo;
-  int _currentWeekIndex = 0;
 
   ScheduleViewModel({required Schedule schedule, required WorkoutRepo repo})
     : _schedule = schedule,
       _repo = repo;
 
   Schedule get schedule => _schedule;
-  int get currentWeekIndex => _currentWeekIndex;
+
+  int get currentWeekIndex => _repo.currentWeekIndex;
 
   void goToNextWeek() {
-    if (_currentWeekIndex < _schedule.weeks.length - 1) {
-      _currentWeekIndex++;
+    if (_repo.currentWeekIndex < _schedule.weeks.length - 1) {
+      _repo.setCurrentWeekIndex(_repo.currentWeekIndex + 1);
       notifyListeners();
     }
   }
 
   void goToPreviousWeek() {
-    if (_currentWeekIndex > 0) {
-      _currentWeekIndex--;
+    if (_repo.currentWeekIndex > 0) {
+      _repo.setCurrentWeekIndex(_repo.currentWeekIndex - 1);
       notifyListeners();
     }
   }
@@ -37,7 +37,7 @@ class ScheduleViewModel with ChangeNotifier {
   List<Map<Days, Session>> getSessionsForWeek() {
     List<Map<Days, Session>> sessions = [];
 
-    for (var dayMap in _schedule.weeks[_currentWeekIndex]) {
+    for (var dayMap in _schedule.weeks[_repo.currentWeekIndex]) {
       dayMap.forEach((day, session) {
         sessions.add({day: session});
       });

@@ -198,6 +198,8 @@ class AppLocalization {
     'enter_number_of_weeks': 'Enter number of weeks for schedule',
     'session_length': 'Session Length',
     'vary_weekly_sessions': 'Vary Weekly Sessions',
+    'include_warmup': 'Include Warmup',
+    'include_bodyweight_exercises': 'Include Bodyweight Exercises',
 
     // Session page
     'duration_not_specified': 'Duration not specified',
@@ -277,6 +279,8 @@ class AppLocalization {
   String get generate => _get('generate');
   String get extraNotes => _get('extra_notes');
   String get enterExtraNotes => _get('enter_extra_notes. Can be left blank.');
+  String get includeWarmup => _get('include_warmup');
+  String get includeBodyweightExercises => _get('include_bodyweight_exercises');
 
   // Workout and Exercise Pages
   String get legs => _get('legs');

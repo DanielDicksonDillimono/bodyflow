@@ -35,9 +35,14 @@ class GeneratorPageViewModel with ChangeNotifier {
 
   bool _varyWeeklySessions = false;
 
+  bool _includeWarmup = true;
+  bool _includeBodyweightExercises = false;
+
   bool get isGenerating => _isGenerating;
 
   bool get varyWeeklySessions => _varyWeeklySessions;
+  bool get includeWarmup => _includeWarmup;
+  bool get includeBodyweightExercises => _includeBodyweightExercises;
 
   final List<BodyPart> _selectedBodyParts = [];
   final List<Days> _selectedDays = [];
@@ -66,6 +71,16 @@ class GeneratorPageViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void setIncludeWarmup(bool value) {
+    _includeWarmup = value;
+    notifyListeners();
+  }
+
+  void setIncludeBodyweightExercises(bool value) {
+    _includeBodyweightExercises = value;
+    notifyListeners();
+  }
+
   void setActivityAsSession() {
     if (_activityType == ActivityType.session) return;
     _activityType = ActivityType.session;
@@ -75,6 +90,10 @@ class GeneratorPageViewModel with ChangeNotifier {
   void clearSelections() {
     _selectedBodyParts.clear();
     _selectedDays.clear();
+    _extraNotes = '';
+    _includeBodyweightExercises = false;
+    _includeWarmup = true;
+    _varyWeeklySessions = false;
     notifyListeners();
   }
 
@@ -199,6 +218,8 @@ class GeneratorPageViewModel with ChangeNotifier {
           bodyParts: _selectedBodyParts,
           durationMinutes: _sessionLengthInMinutes,
           extraNotes: _extraNotes,
+          includeWarmup: _includeWarmup,
+          includeBodyweightExercises: _includeBodyweightExercises,
         );
         setIsGenerating(false);
         if (context.mounted) {
@@ -213,6 +234,8 @@ class GeneratorPageViewModel with ChangeNotifier {
           durationMinutes: _sessionLengthInMinutes,
           varyWeeklySessions: _varyWeeklySessions,
           extraNotes: _extraNotes,
+          includeWarmup: _includeWarmup,
+          includeBodyweightExercises: _includeBodyweightExercises,
         );
         setIsGenerating(false);
         if (context.mounted) {
