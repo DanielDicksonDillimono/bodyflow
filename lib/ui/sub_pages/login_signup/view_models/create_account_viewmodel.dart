@@ -63,6 +63,7 @@ class CreateAccountViewmodel extends ChangeNotifier {
           )
           .then((credentials) async {
             // Account created successfully
+            _authService.sendEmailVerification();
             await saveUserData(credentials, fullNameController.text.trim());
             isLoading = false;
             notifyListeners();

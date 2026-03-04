@@ -57,8 +57,6 @@ class AiWorkoutService {
         - ${includeBodyweightExercises ? '' : 'No '}bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
         - ${includeWarmup ? 'Include a warmup exercise at the beginning of the session.' : 'No warmup exercises.'}
         - Include any additional notes or tips for the workout session (optional).
-       
-
 
         Format the response as follows:
         WORKOUT NAME: [name] keep it to 2 - 3 words.
@@ -129,12 +127,19 @@ class AiWorkoutService {
         - each exercise should take approximately 15 minutes to complete
         - Add at least one compound movement exercise
         - For each exercise, provide: name, sets, reps, and brief instructions
-        - No bodyweight exercises, only use equipment like dumbbells, barbells, machines, cables, etc.
         - Include any additional notes or tips for the workout sessions (optional).
         - if $extraNotes are supplied, include them in the response.
         - ${includeWarmup ? 'Include a warmup exercise at the beginning of the session.' : 'No warmup exercises.'}
         - ${includeBodyweightExercises ? 'Include bodyweight exercises as needed.' : 'No bodyweight exercises.'}
 
+        Follow these guidelines when generating the workout:
+        - Avoid training the same muscle groups on consecutive days. For example:
+        - Back should not be worked out the next day after biceps.
+        - Triceps should not be worked out the next day after chest.
+        - chest and triceps can be trained together.
+        - Back and Biceps can be trained together.
+        - Deadlift is a leg exercise.
+        - Shoulders should not be trained after triceps or chest.
 
         Format the response as follows:
         WORKOUT NAME: [name]
